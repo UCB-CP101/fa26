@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CP 101 · Final Project Success Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f2ede3;
+  --card: #ffffff;
+  --navy: #1b2742;
+  --text: #261f18;
+  --muted: #6e635d;
+  --border: rgba(38,31,24,0.10);
+  --radius: 14px;
+  --accent: #5c43c0;
+  --accent-light: rgba(92,67,192,0.07);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* HEADER */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--navy);
+}
+.pbar-track { height: 3px; background: rgba(255,255,255,0.12); }
+.pbar-fill {
+  height: 100%;
+  background: #4de8a8;
+  width: 0%;
+  transition: width 0.5s cubic-bezier(.22,.68,0,1.2);
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 24px;
+  gap: 16px;
+}
+.course-badge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  padding: 3px 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.pbar-label {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+.pbar-label strong { color: #4de8a8; font-weight: 600; }
+.reset-btn {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+.reset-btn:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
+
+/* HERO */
+.hero {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 52px 28px 28px;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: #c96018;
+  margin-bottom: 16px;
+}
+.hero h1 em { font-style: italic; }
+.hero-sub {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 100%;
+  line-height: 1.7;
+}
+
+/* SCORECARD */
+.scorecard {
+  max-width: 820px;
+  margin: 0 auto 28px;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+.sc-cell {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.sc-cell:hover { border-color: rgba(38,31,24,0.22); transform: translateY(-1px); }
+.sc-cell.done { border-color: #1d9e75; }
+.sc-n {
+  font-family: 'Fraunces', serif;
+  font-size: 10px;
+  font-style: italic;
+}
+.sc-frac {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 2px;
+  transition: color 0.3s;
+}
+.sc-name {
+  font-size: 9.5px;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.3;
+}
+
+/* SECTIONS */
+.sections {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 28px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.section-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  overflow: hidden;
+  scroll-margin-top: 56px;
+  transition: border-color 0.35s, box-shadow 0.35s;
+}
+.section-card.complete { border-color: #1d9e75; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1.5px solid transparent;
+  transition: background 0.12s, border-color 0.2s;
+}
+.section-header:hover { background: rgba(0,0,0,0.018); }
+.section-card.open .section-header { border-bottom-color: var(--border); }
+
+.sec-num {
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 400;
+  min-width: 22px;
+  color: var(--accent);
+  opacity: 0.85;
+}
+.sec-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--accent-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+.sec-icon svg { width: 18px; height: 18px; }
+.sec-titles { flex: 1; min-width: 0; }
+.sec-titles h2 { font-size: 15.5px; font-weight: 600; line-height: 1.3; }
+.sec-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.sec-meta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.sec-frac {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 28px;
+  text-align: right;
+  transition: color 0.3s;
+}
+.sec-frac.all-done { color: #1d9e75; }
+.done-badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #1d9e75;
+  background: rgba(29,158,117,0.1);
+  padding: 3px 8px;
+  border-radius: 5px;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.section-card.complete .done-badge { opacity: 1; transform: scale(1); }
+.chevron {
+  color: var(--muted);
+  font-size: 16px;
+  transition: transform 0.25s ease;
+  line-height: 1;
+  opacity: 0.7;
+}
+.section-card.open .chevron { transform: rotate(180deg); }
+
+.section-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.section-card.open .section-body { max-height: 2000px; }
+.section-body-inner { padding: 20px 20px 24px; }
+
+.sec-intro {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  background: var(--accent-light);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+  line-height: 1.65;
+}
+
+/* CHECKLIST */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 1px; }
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.check-item:hover { background: rgba(0,0,0,0.025); }
+.check-item input { display: none; }
+
+.cbox {
+  width: 19px; height: 19px;
+  border: 1.5px solid rgba(0,0,0,0.18);
+  border-radius: 5px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  background: white;
+  transition: background 0.18s, border-color 0.18s, transform 0.15s;
+}
+.check-item input:checked ~ .cbox {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.check-item input:checked ~ .cbox::after {
+  content: '';
+  position: absolute;
+  left: 5px; top: 2px;
+  width: 5px; height: 9px;
+  border: 2px solid white;
+  border-top: none; border-left: none;
+  transform: rotate(42deg);
+}
+.cbox.pop { animation: popck 0.22s ease; }
+@keyframes popck {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+.ctext {
+  font-size: 13.5px;
+  line-height: 1.55;
+  flex: 1;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.check-item input:checked ~ .ctext {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: rgba(0,0,0,0.18);
+}
+
+/* GLOSSARY TOOLTIPS */
+.term {
+  border-bottom: 1.5px dotted var(--muted);
+  cursor: help;
+  position: relative;
+  white-space: nowrap;
+}
+.term::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  background: var(--navy);
+  color: rgba(255,255,255,0.88);
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 10px 13px;
+  border-radius: 8px;
+  width: 260px;
+  z-index: 300;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.18s, transform 0.18s;
+  white-space: normal;
+  font-style: normal;
+}
+.term:hover::after { opacity: 1; transform: translateY(0); }
+
+/* QUICK REF */
+.quick-ref {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 28px 80px;
+}
+.qr-title {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  font-weight: 300;
+  color: var(--navy);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  font-size: 13.5px;
+}
+.ref-table thead th {
+  background: var(--navy);
+  color: rgba(255,255,255,0.75);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 13px 18px;
+  text-align: left;
+}
+.ref-table td {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.ref-table tr:last-child td { border-bottom: none; }
+.ref-table tbody tr:hover td { background: rgba(0,0,0,0.018); }
+.ref-area { font-weight: 600; white-space: nowrap; font-size: 13px; }
+.ref-mode { color: var(--muted); }
+.severity-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* FOOTER */
+.site-footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 12px;
+  color: var(--muted);
+  opacity: 0.6;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="pbar-track"><div class="pbar-fill" id="pbar"></div></div>
+  <div class="header-row">
+    <span class="course-badge">CP 101</span>
+    <span class="pbar-label"><strong id="pcount">0</strong> of <span id="ptotal">0</span> items complete</span>
+    <button class="reset-btn" onclick="resetAll()">Reset</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">Final Project · Submission Checklist</p>
+    <h1>Make your<br>work <em>count.</em></h1>
+    <p class="hero-sub">Work through each section before submitting. Check off every item you have confirmed. Progress is saved in your browser automatically.</p>
+  </section>
+
+  <div class="scorecard" id="scorecard"></div>
+  <div class="sections" id="sections"></div>
+
+  <section class="quick-ref">
+    <h2 class="qr-title">Where points are most often lost</h2>
+    <table class="ref-table">
+      <thead><tr><th style="width:32%">Area</th><th>Common failure mode</th></tr></thead>
+      <tbody id="qr-body"></tbody>
+    </table>
+  </section>
+</main>
+
+<footer class="site-footer">CP 101 · Introduction to Urban Data Analytics · UC Berkeley</footer>
+
+<script>
+const SECTIONS = [
+  {
+    id:'s1', color:'#5c43c0', light:'rgba(92,67,192,0.07)', label:'Interpret', shortLabel:'01',
+    title:'Interpret your results',
+    sub:'Description is not interpretation',
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`,
+    intro:'A number without interpretation is an observation waiting to be analyzed. Every finding needs a plain-language meaning, a caveat, and at least one follow-up question your analysis raises but cannot answer.',
+    items:[
+      {id:'s1a', text:'Every major finding includes a plain-language explanation of what it means for your research question, not just a number'},
+      {id:'s1b', text:'Each finding identifies the limits of what the analysis can tell you, what it cannot show, or what it does not account for'},
+      {id:'s1c', text:'At least one follow-up question is raised per major result, something your data surfaces but cannot answer'},
+    ]
+  },
+  {
+    id:'s2', color:'#138b72', light:'rgba(19,139,114,0.07)', label:'Justify', shortLabel:'02',
+    title:'Justify every methodological choice',
+    sub:'Every decision needs a reason and an alternative',
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+    intro:'Every analytical decision is a choice, not a default. You should be able to explain why you made each one, name the alternative, and say why you did not take it.',
+    items:[
+      {id:'s2a', text:'Data cleaning rules are explained and defended, not just described'},
+      {id:'s2b', text:'If you used listwise deletion, you explain why dropping was more appropriate than imputation or flagging missing as its own category',
+        term:{w:'listwise deletion',tip:'Removing any row that contains at least one missing value. It is fast but can introduce substantial bias if missingness is non-random, i.e., if certain groups are systematically more likely to have missing values.'}},
+      {id:'s2c', text:'If you summarized a distribution using a mean rather than a median, you explain why, especially important for skewed data'},
+      {id:'s2d', text:'If your project includes a regression or model, you state its core assumptions and whether your data plausibly meets them'},
+      {id:'s2e', text:'At least one alternative approach is named per major analytical decision, with a brief explanation of why you did not use it'},
+      {id:'s2f', text:'Your spatial unit choice is stated and justified, why that unit, and why not coarser or finer?'},
+      {id:'s2g', text:'You acknowledge the MAUP: results at your aggregation level may not hold at a different scale',
+        term:{w:'MAUP',tip:'Modifiable Areal Unit Problem: correlations, rates, and spatial patterns can change substantially, or even reverse, depending on which geographic unit you aggregate to. This is not an error in your analysis; it is an inherent property of spatial data.'}},
+      {id:'s2h', text:'You do not draw individual-level conclusions from aggregate-level data without explicit qualification, you are aware of the ecological fallacy',
+        term:{w:'ecological fallacy',tip:'Inferring that a pattern observed at the aggregate level (tracts, ZIP codes) holds for individuals within those units. If high-income tracts have more park access, that does not mean wealthy residents are the ones using those parks.'}},
+    ]
+  },
+  {
+    id:'s3', color:'#b87210', light:'rgba(184,114,16,0.07)', label:'Missing data', shortLabel:'03',
+    title:'Take missing data seriously',
+    sub:'Missingness is not a footnote, it shapes your results',
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    intro:'How data goes missing determines what your results mean and whether your sample is representative of the full population. Ignoring this introduces bias you cannot quantify after the fact.',
+    items:[
+      {id:'s3a', text:'You report how many rows or fields have missing values, and whether the pattern is concentrated in a subgroup, geography, or time period'},
+      {id:'s3b', text:'For each variable with missing values, you identify which dark data type applies and explain your reasoning, do not just assert it',
+        term:{w:'dark data type',tip:'The course distinguishes five types of data missingness, each with different causes and consequences. Identify which type applies to your variable based on how the data was collected, and show your reasoning.'}},
+      {id:'s3c', text:'You explain how the missingness could bias your results and in which direction'},
+      {id:'s3d', text:'Your handling method, dropping rows, imputation, or flagging missingness, is explicitly justified given the dark data type you identified',
+        term:{w:'imputation',tip:'Filling in a missing value with an estimate, for example, the variable mean, median, or a model-predicted value. Can reduce bias when data is missing at random, but can introduce its own distortions if done carelessly.'}},
+    ]
+  },
+  {
+    id:'s4', color:'#c43822', light:'rgba(196,56,34,0.07)', label:'Visuals', shortLabel:'04',
+    title:'Make every visualization earn its place',
+    sub:'If you cannot say why it is there, cut it',
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>`,
+    intro:'Before including any figure, ask: what would the reader fail to understand without this? If you cannot answer that clearly, the figure should not be in the report.',
+    items:[
+      {id:'s4a', text:'Every axis is labeled with units, "Median Household Income (2022 USD)", not just "income"'},
+      {id:'s4b', text:'Every figure has a title, substantive caption, and legend (where needed): data source, geographic scope, time period, and any transformations applied'},
+      {id:'s4c', text:'A colorblind-safe palette is used for categorical data, seaborn colorblind or a ColorBrewer palette'},
+      {id:'s4d', text:'Chartjunk is removed: no unnecessary gridlines, redundant tick marks, border boxes around plots, or legend entries for series not shown',
+        term:{w:'chartjunk',tip:'Edward Tufte\'s term for graphical elements that add visual noise without adding information, decorative gridlines, redundant borders, 3D effects on 2D data, clip-art, patterned fills, etc.'}},
+      {id:'s4e', text:'Bar charts with more than about 10 categories use an alternative: dot plot, ranked horizontal bar, small multiples, or a table'},
+      {id:'s4f', text:'Choropleth map classification scheme is named and justified, quantile, equal interval, or Jenks natural breaks',
+        term:{w:'Jenks natural breaks',tip:'A classification scheme that minimizes within-class variance and maximizes between-class variance. Also called "natural breaks." Good for variables with distinct clusters, but class boundaries may be hard to interpret intuitively.'}},
+      {id:'s4g', text:'Scatter plots with 500+ points use transparency (alpha), hexbin, or a 2D density plot to avoid overplotting'},
+      {id:'s4h', text:'Every figure is interpreted in the surrounding prose, you never just say "see Figure 3" and move on'},
+      {id:'s4i', text:'No exploratory or scratch figures appear in the final submission'},
+    ]
+  },
+  {
+    id:'s5', color:'#267840', light:'rgba(38,120,64,0.07)', label:'Repro', shortLabel:'05',
+    title:'Make your project fully reproducible',
+    sub:'Clone, install, run, no manual steps',
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>`,
+    intro:'A grader should be able to clone your repository, install your dependencies, and run your notebook from top to bottom, no errors, no manual steps, no cell-ordering tricks.',
+    items:[
+      {id:'s5a', text:'Repository has a README explaining what the project does and how to run it, plus a data folder, notebooks or src folder, and an outputs folder'},
+      {id:'s5b', text:'A requirements.txt or environment.yml lists every imported library with version numbers'},
+      {id:'s5c', text:'No files over 50 MB are committed to the repo, large datasets have a download script or source link in the README, and data file paths are relative, not hardcoded'},
+      {id:'s5d', text:'You have restarted the kernel and run all cells from top to bottom in order, the notebook completes without errors'},
+      {id:'s5e', text:'Dead code is removed: no commented-out blocks, scratch cells, or cells with error outputs in the final submission'},
+      {id:'s5f', text:'Variable names are descriptive, tract_median_income or walk_score_2022, not df2 or temp'},
+    ]
+  },
+  {
+    id:'s6', color:'#1b2742', light:'rgba(27,39,66,0.07)', label:'Writing', shortLabel:'06',
+    title:'Write and present professionally',
+    sub:'Polished deliverable, not a lab notebook',
+    icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>`,
+    intro:'Apply the same standards you would to a report submitted to a city agency or a research client. Precision, coherence, and no overclaiming.',
+    items:[
+      {id:'s6a', text:'The report is proofread, no typographical or grammatical errors'},
+      {id:'s6b', text:'Vague qualifiers, "very," "a lot," "somewhat", are replaced with specific quantities and a stated baseline'},
+      {id:'s6c', text:'Correlations are not described as causal relationships'},
+      {id:'s6d', text:'Findings are not generalized beyond the data\'s actual scope (city, year, dataset) without explicit qualification'},
+      {id:'s6e', text:'The report stays within the page limit'},
+      {id:'s6f', text:'The report reads as a single unified argument, each section sets up the next, and the logic connecting them is explicit'},
+      {id:'s6g', text:'The introduction states the research question clearly and explains why it matters'},
+      {id:'s6h', text:'The conclusion directly answers the research question using evidence from the analysis, with appropriate qualifications'},
+      {id:'s6i', text:'Every empirical claim in the text, about a place, population, trend, or pattern, is supported by a figure, a table, or a cited source'},
+    ]
+  }
+];
+
+const DANGER_ZONES = [
+  {area:'Interpretation', mode:'Reporting numbers or patterns without explaining what they mean for the research question'},
+  {area:'Methodological reasoning', mode:'Presenting analytical decisions as obvious defaults rather than justified choices with named alternatives'},
+  {area:'Spatial unit / MAUP', mode:'Not explaining why a particular geographic unit was chosen, or failing to acknowledge that results could differ at another scale'},
+  {area:'Ecological fallacy', mode:'Drawing conclusions about individuals from data aggregated to the neighborhood or tract level'},
+  {area:'Missing data', mode:'Dropping rows without identifying the dark data type or discussing how the missingness could bias results'},
+  {area:'Visualizations', mode:'Unlabeled axes, missing captions/titles/legends, inaccessible color palettes, cluttered or purposeless figures'},
+  {area:'Map classification', mode:'Not stating or justifying the classification scheme used for choropleth maps'},
+  {area:'Reproducibility', mode:'Notebook fails when run from top to bottom; dependencies not listed; raw data missing from repository'},
+  {area:'Overclaiming', mode:'Describing a correlation as a cause, or generalizing findings beyond the data\'s actual scope'},
+  {area:'Writing', mode:'Vague language, unsupported empirical claims, or exceeding the page limit'},
+];
+
+const KEY = 'cp101';
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
+}
+function save(s) {
+  try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
+}
+
+let state = load();
+
+function totalItems() { return SECTIONS.reduce((a,s) => a + s.items.length, 0); }
+function totalDone() { return SECTIONS.reduce((a,s) => a + s.items.filter(i => state[i.id]).length, 0); }
+function sectionDone(s) { return s.items.filter(i => state[i.id]).length; }
+function isComplete(s) { return sectionDone(s) === s.items.length; }
+
+function updateProgress() {
+  const done = totalDone(), total = totalItems();
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('pbar').style.width = pct + '%';
+  document.getElementById('pcount').textContent = done;
+  document.getElementById('ptotal').textContent = total;
+}
+
+function buildText(item) {
+  if (!item.term) return item.text;
+  const {w, tip} = item.term;
+  return item.text.replace(w, `<span class="term" data-tip="${tip.replace(/"/g,"&quot;")}">${w}</span>`);
+}
+
+function renderScorecard() {
+  document.getElementById('scorecard').innerHTML = SECTIONS.map((s,i) => {
+    const done = sectionDone(s), total = s.items.length, ok = done === total;
+    return `<div class="sc-cell${ok?' done':''}" onclick="goToSection('${s.id}')" title="${s.title}">
+      <div class="sc-n" style="color:${s.color}">${s.shortLabel}</div>
+      <span class="sc-frac" style="color:${ok?'#1d9e75':s.color}">${done}/${total}</span>
+      <div class="sc-name">${s.label}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderSections() {
+  document.getElementById('sections').innerHTML = SECTIONS.map((s,i) => {
+    const done = sectionDone(s), total = s.items.length, ok = isComplete(s);
+    const items = s.items.map(item => `
+      <li><label class="check-item">
+        <input type="checkbox" ${state[item.id]?'checked':''} onchange="handleCheck('${s.id}','${item.id}',this.checked,this)">
+        <span class="cbox" id="cb-${item.id}"></span>
+        <span class="ctext">${buildText(item)}</span>
+      </label></li>`).join('');
+    return `<div class="section-card${i===0?' open':''}${ok?' complete':''}" id="${s.id}"
+                 style="--accent:${s.color};--accent-light:${s.light}">
+      <div class="section-header" onclick="toggleSection('${s.id}')">
+        <span class="sec-num">${s.shortLabel}</span>
+        <span class="sec-icon">${s.icon}</span>
+        <div class="sec-titles">
+          <h2>${s.title}</h2>
+          <span class="sec-sub">${s.sub}</span>
+        </div>
+        <div class="sec-meta">
+          <span class="done-badge">complete</span>
+          <span class="sec-frac${ok?' all-done':''}" id="frac-${s.id}">${done}/${total}</span>
+          <span class="chevron">&#9662;</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="section-body-inner">
+          <p class="sec-intro">${s.intro}</p>
+          <ul class="checklist">${items}</ul>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderDangerZones() {
+  document.getElementById('qr-body').innerHTML = DANGER_ZONES.map(r =>
+    `<tr><td class="ref-area">${r.area}</td><td class="ref-mode">${r.mode}</td></tr>`
+  ).join('');
+}
+
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function goToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('open');
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function handleCheck(secId, itemId, checked, input) {
+  state[itemId] = checked;
+  save(state);
+
+  const box = document.getElementById('cb-' + itemId);
+  if (box) { box.classList.add('pop'); setTimeout(() => box.classList.remove('pop'), 250); }
+
+  SECTIONS.forEach(s => {
+    const done = sectionDone(s), total = s.items.length, ok = done === total;
+    const frac = document.getElementById('frac-' + s.id);
+    const card = document.getElementById(s.id);
+    if (frac) { frac.textContent = `${done}/${total}`; frac.className = 'sec-frac' + (ok?' all-done':''); }
+    if (card) card.classList.toggle('complete', ok);
+  });
+
+  updateProgress();
+  renderScorecard();
+}
+
+function resetAll() {
+  if (!confirm('Reset all checkboxes?')) return;
+  state = {};
+  save(state);
+  renderSections();
+  renderScorecard();
+  updateProgress();
+}
+
+renderSections();
+renderScorecard();
+renderDangerZones();
+updateProgress();
+</script>
+</body>
+</html>

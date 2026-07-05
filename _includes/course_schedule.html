@@ -1,0 +1,130 @@
+{%- comment -%}
+  Course schedule, rendered from _data/schedule.yml.
+  Edit that file to update weeks, sessions, topics, and resource links.
+{%- endcomment -%}
+<div class="course-schedule">
+<div class="schedule-meta">
+<p><a class="btn btn-outline" href="#" onclick="jumpToCurrentWeek(); return false;">Jump to Current Week</a></p>
+</div>
+{%- for week in site.data.schedule.weeks -%}
+<h2 id="week-{{ week.week }}" class="schedule-week-heading">
+  <span class="schedule-week-title">Week {{ week.week }}</span>
+  {%- if week.module -%}
+  <span class="label {{ week.module.label_class }} schedule-week-module">{{ week.module.text | escape }}</span>
+  {%- endif -%}
+</h2>
+<table class="week{% if week.recess %} recess{% endif %}" data-start="{{ week.start }}" data-end="{{ week.end }}">
+<thead>
+<tr>
+<th scope="col">Date</th>
+<th scope="col">Topics</th>
+<th scope="col">Resources</th>
+</tr>
+</thead>
+<tbody>
+{%- for session in week.sessions -%}
+<tr class="{{ session.type }}{% if session.type == 'holiday' %} recess{% endif %}">
+<td>
+<p class="{{ session.type }} content-type">
+{%- for d in session.dates -%}
+<time datetime="{{ d.date }}">{{ d.text }}</time>
+{%- unless forloop.last %} &amp; {% endunless -%}
+{%- endfor -%}
+</p>
+</td>
+<td class="topics">
+<div class="schedule-session-topics">
+{%- for topic in session.topics -%}
+{%- if topic.url -%}
+<a class="schedule-topic-title" href="{% if topic.internal %}{{ topic.url | relative_url }}{% else %}{{ topic.url }}{% endif %}">{% if topic.title_html %}{{ topic.title_html }}{% else %}{{ topic.title | escape }}{% endif %}</a>
+{%- else -%}
+<span class="schedule-topic-title">{% if topic.title_html %}{{ topic.title_html }}{% else %}{{ topic.title | escape }}{% endif %}</span>
+{%- endif -%}
+{%- if topic.subtopics -%}
+<p class="schedule-topic-detail">{%- for sub in topic.subtopics -%}{{ sub | escape }}{%- unless forloop.last %} · {% endunless -%}{%- endfor -%}</p>
+{%- endif -%}
+{%- endfor -%}
+{%- if session.flags -%}
+<div class="schedule-flags">
+{%- for flag in session.flags -%}
+<span class="label {{ flag.label_class }}">{{ flag.text | escape }}</span>
+{%- endfor -%}
+</div>
+{%- endif -%}
+</div>
+</td>
+<td class="resources">
+{%- for group in session.resources -%}
+<p class="resources-title">{{ group.title | escape }}</p>
+<ul class="resources resources-{{ group.class }}">
+{%- for item in group.items -%}
+<li><a class="{{ item.class }}" href="{% if item.internal %}{{ item.url | relative_url }}{% else %}{{ item.url }}{% endif %}" target="_blank" rel="noopener noreferrer">{% if item.html %}{{ item.html }}{% else %}{{ item.text | escape }}{% endif %}</a></li>
+{%- endfor -%}
+</ul>
+{%- endfor -%}
+</td>
+</tr>
+{%- endfor -%}
+</tbody>
+</table>
+{%- endfor -%}
+</div>
+<script>
+function getPacificDateString() {
+    const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Los_Angeles",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).formatToParts(new Date());
+    const map = {};
+    for (const part of parts) {
+        map[part.type] = part.value;
+    }
+    return `${map.year}-${map.month}-${map.day}`;
+}
+
+function jumpToCurrentWeek() {
+    const todayStr = getPacificDateString();
+    const tables = document.querySelectorAll('table.week');
+    let targetWeek = null;
+
+    tables.forEach(table => {
+        const startStr = table.dataset.start;
+        const endStr = table.dataset.end;
+
+        if (todayStr >= startStr && todayStr <= endStr) {
+            targetWeek = table;
+        } else if (todayStr < startStr && !targetWeek) {
+            targetWeek = table;
+        }
+    });
+
+    if (!targetWeek && tables.length > 0) {
+        targetWeek = tables[tables.length - 1];
+    }
+
+    if (targetWeek) {
+        let weekHeader = targetWeek.previousElementSibling;
+        while (weekHeader && weekHeader.tagName !== 'H2') {
+            weekHeader = weekHeader.previousElementSibling;
+        }
+
+        if (weekHeader) {
+            weekHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            targetWeek.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        targetWeek.style.transition = 'box-shadow 0.3s ease';
+        targetWeek.style.boxShadow = '0 0 10px 3px rgba(74, 96, 160, 0.5)';
+        setTimeout(() => {
+            targetWeek.style.boxShadow = 'none';
+        }, 2000);
+    }
+}
+
+if (window.location.hash === '#current') {
+    document.addEventListener('DOMContentLoaded', jumpToCurrentWeek);
+}
+</script>

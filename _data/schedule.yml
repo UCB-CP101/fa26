@@ -1,0 +1,765 @@
+# Course schedule data, rendered by _includes/course_schedule.html
+# CP 101 · Introduction to Urban Data Analytics · Fall 2026
+# Calendar weeks: Mon–Sun bounds from _data/academic_calendar_fa26.yml
+# Validate with: bundle exec rspec spec/schedule_dates_spec.rb
+
+weeks:
+- week: 1
+  module:
+    label_class: label-purple
+    text: 'Module 1: Foundations'
+  start: '2026-08-24'
+  end: '2026-08-30'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-08-26'
+      text: Wed, Aug 26
+    topics:
+    - title: Cities as complex systems
+      subtopics:
+      - 'Emergence, feedback loops, nonlinearity: why urban questions are harder than they look'
+      - Course logistics and tool setup
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Wing (2006) Computational Thinking
+        url: https://www.cs.cmu.edu/~15110-s13/Wing06-ct.pdf
+      - class: ref
+        text: Bad Choices Ch.1
+        url: https://bookofbadchoices.com/index.html#page/3
+  - type: lab
+    dates:
+    - date: '2026-08-26'
+      text: Wed, Aug 26
+    topics:
+    - title: Jupyter + GitHub environment setup
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Jupyter + GitHub environment setup
+        url: "#"
+- week: 2
+  module:
+    label_class: label-purple
+    text: 'Module 1: Foundations'
+  start: '2026-08-31'
+  end: '2026-09-06'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-08-31'
+      text: Mon, Aug 31
+    topics:
+    - title: Computational thinking through urban problems
+      subtopics:
+      - Decomposition · Abstraction · Pattern recognition
+    flags:
+    - text: 'A0: in-class activity · Mon Aug 31 · ungraded diagnostic'
+      label_class: label-homework-released
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Wing (2006) Computational Thinking
+        url: https://www.cs.cmu.edu/~15110-s13/Wing06-ct.pdf
+  - type: lecture
+    dates:
+    - date: '2026-09-02'
+      text: Wed, Sep 2
+    topics:
+    - title: The data behind the map
+      subtopics:
+      - CRS & projections · Raster vs. vector · Why maps lie
+    resources:
+    - title: Optional
+      class: optional
+      items:
+      - class: ext_ref
+        text: USGS Map Projections
+        url: https://pubs.usgs.gov/gip/70047422/report.pdf
+      - class: ext_ref
+        text: True Size of Africa
+        url: http://kai.sub.blue/images/True-Size-of-Africa-kk-v3.pdf
+  - type: lab
+    dates:
+    - date: '2026-09-02'
+      text: Wed, Sep 2
+    topics:
+    - title: 'Bad Choices Ch.1: paired discussion'
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: 'Bad Choices Ch.1: paired discussion'
+        url: https://bookofbadchoices.com/index.html#page/3
+- week: 3
+  module:
+    label_class: label-purple
+    text: 'Module 1: Foundations'
+  start: '2026-09-07'
+  end: '2026-09-13'
+  sessions:
+  - type: holiday
+    dates:
+    - date: '2026-09-07'
+      text: Mon, Sep 7
+    topics:
+    - title: Labor Day · no class
+  - type: lecture
+    dates:
+    - date: '2026-09-09'
+      text: Wed, Sep 9
+    topics:
+    - title: Python basics I
+      subtopics:
+      - Variables · Types · Collections
+    flags:
+    - text: 'A1 released: Building "My Places" Dataset (due Thu Sep 17)'
+      label_class: label-homework-released
+    - text: 'A3 released: Variables, Data Types & Basic Operations (due Mon Sep 28)'
+      label_class: label-homework-released
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: 'GDS Python: Part I'
+        url: https://geographicdata.science/book/intro_part_i.html
+      - class: ref
+        text: Variables tutorial
+        url: "/docs/tutorials/basic/variables/"
+        internal: true
+      - class: ref
+        text: Strings tutorial
+        url: "/docs/tutorials/basic/strings/"
+        internal: true
+    - title: Watch
+      class: optional
+      items:
+      - class: video
+        text: Variables (cs50)
+        url: https://cs50.harvard.edu/python/shorts/variables/
+      - class: video
+        text: Lists (cs50)
+        url: https://cs50.harvard.edu/python/shorts/lists/
+  - type: lab
+    dates:
+    - date: '2026-09-09'
+      text: Wed, Sep 9
+    topics:
+    - title: Module 1 review
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Module 1 review
+        url: "#"
+- week: 4
+  module:
+    label_class: label-purple
+    text: 'Module 1: Foundations'
+  start: '2026-09-14'
+  end: '2026-09-20'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-09-14'
+      text: Mon, Sep 14
+    topics:
+    - title: Python basics II
+      subtopics:
+      - 'Conditionals · Loops: examples use real transit data'
+  - type: lecture
+    dates:
+    - date: '2026-09-16'
+      text: Wed, Sep 16
+    topics:
+    - title: Control flow & reading error messages
+      subtopics:
+      - Common patterns · How to read a traceback
+    flags:
+    - text: 'A4 released: Loops, Conditionals & Booleans (due Mon Oct 5)'
+      label_class: label-homework-released
+    - text: Team formation due this week
+      label_class: label-gray
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: video
+        text: Conditionals (cs50)
+        url: https://cs50.harvard.edu/python/shorts/conditionals/
+      - class: video
+        text: Loops (cs50)
+        url: https://cs50.harvard.edu/python/shorts/for_loops/
+      - class: ref
+        text: Conditional Execution (py4e)
+        url: https://www.py4e.com/html3/03-conditional
+  - type: lab
+    dates:
+    - date: '2026-09-16'
+      text: Wed, Sep 16
+    topics:
+    - title: Python basics practice
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Python basics practice
+        url: "#"
+- week: 5
+  module:
+    label_class: label-purple
+    text: 'Module 1: Foundations'
+  start: '2026-09-21'
+  end: '2026-09-27'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-09-21'
+      text: Mon, Sep 21
+    topics:
+    - title: Urban data reality
+      subtopics:
+      - Data types & sources · What isn't measured and why
+    flags:
+    - text: A3 due Mon Sep 28
+      label_class: label-homework
+  - type: lecture
+    dates:
+    - date: '2026-09-23'
+      text: Wed, Sep 23
+    topics:
+    - title: Pandas I
+      subtopics:
+      - Loading · Inspecting · Cleaning · Vectorized thinking
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Dark Data Ch.1-2
+        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
+      - class: ref
+        text: Glaeser et al. (2018)
+        url: https://research-ebsco-com.libproxy.berkeley.edu/c/p54vgy/viewer/pdf/5jaxv75lv5
+      - class: ref
+        text: Getting Started with pandas
+        url: https://wesmckinney.com/book/pandas-basics
+  - type: lab
+    dates:
+    - date: '2026-09-23'
+      text: Wed, Sep 23
+    topics:
+    - title: Python error types
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Python Error Types Lab
+        url: "/docs/tutorials/sandbox/error_types_lab/"
+        internal: true
+- week: 6
+  module:
+    label_class: label-blue
+    text: 'Module 2: Data Wrangling & Visualization'
+  start: '2026-09-28'
+  end: '2026-10-04'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-09-28'
+      text: Mon, Sep 28
+    topics:
+    - title: Pandas II
+      subtopics:
+      - groupby · merge · sanity checks
+    flags:
+    - text: A4 due Mon Oct 5
+      label_class: label-homework
+  - type: lecture
+    dates:
+    - date: '2026-09-30'
+      text: Wed, Sep 30
+    topics:
+    - title: GeoPandas I
+      subtopics:
+      - GeoDataFrame · CRS management · Reading & writing spatial data
+    flags:
+    - text: 'A2 released after Wed Oct 7: Add Coordinates & New Categories (due Sat Oct 10)'
+      label_class: label-homework-released
+    - text: 'FP proposal due: 1 slide: research question, dataset idea, team names'
+      label_class: label-project
+    resources:
+    - title: Watch before class
+      class: optional
+      items:
+      - class: video
+        text: 'What is spatial analysis?: Anselin'
+        url: https://www.youtube.com/watch?v=C_owY6-ybJQ
+  - type: lab
+    dates:
+    - date: '2026-09-30'
+      text: Wed, Sep 30
+    topics:
+    - title: A3 walkthrough & review
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: A3 walkthrough & review
+        url: "#"
+- week: 7
+  module:
+    label_class: label-blue
+    text: 'Module 2: Data Wrangling & Visualization'
+  start: '2026-10-05'
+  end: '2026-10-11'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-10-05'
+      text: Mon, Oct 5
+    topics:
+    - title: GeoPandas II
+      subtopics:
+      - Spatial predicates · Spatial join
+  - type: lecture
+    dates:
+    - date: '2026-10-07'
+      text: Wed, Oct 7
+    topics:
+    - title: GeoPandas III
+      subtopics:
+      - Overlay · Missing data · Workshop
+    flags:
+    - text: A5 released Wed Oct 14
+      label_class: label-homework-released
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Dark Data Ch.3
+        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
+      - class: ref
+        text: Spatial Predicates Lab
+        url: "/docs/tutorials/sandbox/predicates_lab/"
+        internal: true
+  - type: lab
+    dates:
+    - date: '2026-10-07'
+      text: Wed, Oct 7
+    topics:
+    - title: GeoPandas prep
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: GeoPandas prep
+        url: "#"
+- week: 8
+  module:
+    label_class: label-blue
+    text: 'Module 2: Data Wrangling & Visualization'
+  start: '2026-10-12'
+  end: '2026-10-18'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-10-12'
+      text: Mon, Oct 12
+    topics:
+    - title: Visualization principles
+      subtopics:
+      - Graphical marks · Encoding channels · Expressiveness & effectiveness
+    flags:
+    - text: A5 due Mon Oct 19
+      label_class: label-homework
+  - type: lecture
+    dates:
+    - date: '2026-10-14'
+      text: Wed, Oct 14
+    topics:
+    - title: Color, accessibility & charts
+      subtopics:
+      - 'Live vis critique workshop: bring one map you love and one you think is bad'
+    flags:
+    - text: 'A6 released Wed Oct 21: Functions, Debugging & Data Visualization (due Mon Nov 2)'
+      label_class: label-homework-released
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Wilke FDV Ch.19
+        url: https://clauswilke.com/dataviz/historical-examples.html
+      - class: ref
+        text: Wilke FDV Ch.20
+        url: https://clauswilke.com/dataviz/redundant-coding.html
+      - class: ref
+        text: Do No Harm Guide
+        url: https://urban-institute.medium.com/do-no-harm-guide-applying-equity-awareness-in-data-visualization-38e12f3f20a9
+  - type: lab
+    dates:
+    - date: '2026-10-14'
+      text: Wed, Oct 14
+    topics:
+    - title: A4 walkthrough & review
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: A4 walkthrough & review
+        url: "#"
+- week: 9
+  module:
+    label_class: label-blue
+    text: 'Module 2: Data Wrangling & Visualization'
+  start: '2026-10-19'
+  end: '2026-10-25'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-10-19'
+      text: Mon, Oct 19
+    topics:
+    - title: Thematic mapping
+      subtopics:
+      - Choropleth · Classification schemes · Normalization
+  - type: lecture
+    dates:
+    - date: '2026-10-21'
+      text: Wed, Oct 21
+    topics:
+    - title: Visualization, interactivity & co-design in urban data
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: 'Design and Redesign: Wattenberg & Viégas'
+        url: https://medium.com/@hint_fm/design-and-redesign-4ab77206d788
+  - type: lab
+    dates:
+    - date: '2026-10-21'
+      text: Wed, Oct 21
+    topics:
+    - title: Visualization practice
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Visualization practice
+        url: "#"
+- week: 10
+  module:
+    label_class: label-blue
+    text: 'Module 2: Data Wrangling & Visualization'
+  start: '2026-10-26'
+  end: '2026-11-01'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-10-26'
+      text: Mon, Oct 26
+    topics:
+    - title: Midterm presentations
+      subtopics:
+      - Teams present one map + one chart + one paragraph of interpretation to a practitioner partner
+      - Peer review packets distributed the week before
+    flags:
+    - text: A6 due Mon Nov 2
+      label_class: label-homework
+  - type: lecture
+    dates:
+    - date: '2026-10-28'
+      text: Wed, Oct 28
+    topics:
+    - title: 'Street networks: who can get where, and how fast?'
+      subtopics:
+      - OSMnx · Walkability · Accessibility metrics
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Boeing (2019) Urban Spatial Order
+        url: https://doi.org/10.1371/journal.pone.0224498
+  - type: lab
+    dates:
+    - date: '2026-10-28'
+      text: Wed, Oct 28
+    topics:
+    - title: A5 walkthrough & review
+      subtopics:
+      - Publish a map with StoryMaps + GitHub Pages
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: A5 walkthrough & review · Publish a map with StoryMaps + GitHub Pages
+        url: "#"
+- week: 11
+  module:
+    label_class: label-module4
+    text: 'Module 3a: Transportation & Access'
+  start: '2026-11-02'
+  end: '2026-11-08'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-11-02'
+      text: Mon, Nov 2
+    topics:
+    - title: Network analysis in planning
+      subtopics:
+      - OSMnx · Isochrones · Accessibility indices
+  - type: lecture
+    dates:
+    - date: '2026-11-04'
+      text: Wed, Nov 4
+    topics:
+    - title: Transit equity
+      subtopics:
+      - GTFS · Headways · Service area by income quintile
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Páez et al. (2012) Measuring Accessibility
+        url: https://doi.org/10.1007/s10109-012-0157-2
+  - type: lab
+    dates:
+    - date: '2026-11-04'
+      text: Wed, Nov 4
+    topics:
+    - title: Module 2 review
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Module 2 review
+        url: "#"
+- week: 12
+  module:
+    label_class: label-module4
+    text: 'Module 3a: Transportation & Access'
+  start: '2026-11-09'
+  end: '2026-11-15'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-11-09'
+      text: Mon, Nov 9
+    topics:
+    - title: Parcel & zoning data
+      subtopics:
+      - Aggregation · Large-dataset visualization with Lonboard
+  - type: lab
+    dates:
+    - date: '2026-11-09'
+      text: Mon, Nov 9
+    topics:
+    - title: Module 3a review
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Module 3a review
+        url: "#"
+  - type: holiday
+    dates:
+    - date: '2026-11-11'
+      text: Wed, Nov 11
+    topics:
+    - title: Veterans Day · no class
+- week: 13
+  module:
+    label_class: label-module4
+    text: 'Module 3b: Built Environment & Land Use'
+  start: '2026-11-16'
+  end: '2026-11-22'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-11-16'
+      text: Mon, Nov 16
+    topics:
+    - title: Housing data
+      subtopics:
+      - Affordability metrics · Price-to-income ratios · Spatial mismatch
+  - type: lecture
+    dates:
+    - date: '2026-11-18'
+      text: Wed, Nov 18
+    topics:
+    - title: Raster basics
+      subtopics:
+      - NDVI · Land surface temperature · Urban heat islands
+  - type: lab
+    dates:
+    - date: '2026-11-18'
+      text: Wed, Nov 18
+    topics:
+    - title: Built environment
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Built environment
+        url: "#"
+- week: 14
+  module:
+    label_class: label-module4
+    text: 'Module 3b: Built Environment & Land Use'
+  start: '2026-11-23'
+  end: '2026-11-29'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-11-23'
+      text: Mon, Nov 23
+    topics:
+    - title: Environmental justice
+      subtopics:
+      - Cumulative exposure · CalEnviroScreen · Demographics overlay
+    flags:
+    - text: 'FP midterm check-in due: preliminary findings slide'
+      label_class: label-project
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: CalEnviroScreen 4.0
+        url: https://oehha.ca.gov/calenviroscreen/report/calenviroscreen-40
+  - type: lab
+    dates:
+    - date: '2026-11-23'
+      text: Mon, Nov 23
+    topics:
+    - title: Module 3b review
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Module 3b review
+        url: "#"
+  - type: holiday
+    dates:
+    - date: '2026-11-25'
+      text: Wed, Nov 25
+    topics:
+    - title: Non-instructional day · Thanksgiving recess begins
+    flags:
+    - text: 'Thu-Fri Nov 26-27: Thanksgiving · no class'
+      label_class: label-gray
+- week: 15
+  module:
+    label_class: label-module4
+    text: 'Module 3c: Environment & Climate'
+  start: '2026-11-30'
+  end: '2026-12-06'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-11-30'
+      text: Mon, Nov 30
+    topics:
+    - title: Computer vision & AI in urban planning
+      subtopics:
+      - What models see vs. what planners see · Responsible use
+      - Deceptive visualizations & MAUP
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Dark Data Ch.5-6
+        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
+      - class: ref
+        text: Kwan (2012) Uncertain Geographic Context
+        url: https://doi.org/10.1080/00045608.2012.687349
+  - type: lecture
+    dates:
+    - date: '2026-12-02'
+      text: Wed, Dec 2
+    topics:
+    - title: Dry run presentations
+      subtopics:
+      - 3 min per team · Structured peer feedback before the exhibition
+    flags:
+    - text: Formal classes ended Fri Dec 4.
+      label_class: label-gray
+  - type: lab
+    dates:
+    - date: '2026-12-02'
+      text: Wed, Dec 2
+    topics:
+    - title: Final project prep
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: Final project prep
+        url: "#"
+- week: 16
+  module:
+    label_class: label-gray
+    text: RRR week
+  start: '2026-12-07'
+  end: '2026-12-13'
+  sessions:
+  - type: holiday
+    dates:
+    - date: '2026-12-07'
+      text: Mon, Dec 7
+    topics:
+    - title: RRR week
+    flags:
+    - text: 'RRR week (Dec 7–11)'
+      label_class: label-gray
+    - text: Final artifact due 48 hours before the exhibition.
+      label_class: label-gray
+  - type: holiday
+    dates:
+    - date: '2026-12-09'
+      text: Wed, Dec 9
+    topics:
+    - title: RRR week
+  recess: true
+- week: 17
+  module:
+    label_class: label-orange
+    text: Final Project Exhibition · Finals week
+  start: '2026-12-14'
+  end: '2026-12-20'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-12-14'
+      text: Dec 14-18, 2026
+    topics:
+    - title: Final Project Exhibition

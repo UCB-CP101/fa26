@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spatial Predicates Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&family=Roboto+Slab:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f13;
+  --surf: #17171e;
+  --surf2: #1e1e28;
+  --bdr: #2a2a38;
+  --text: #e8e8f0;
+  --muted: #7a7a96;
+  --gutter: 14px;
+  --K: #93c5fd;
+  --M: #6ee7b7;
+  --P: #fcd34d;
+  --L: #f9a8d4;
+  --T: #4ade80;
+  --F: #f87171;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100%;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.hdr {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 20px var(--gutter) 16px;
+  background: linear-gradient(180deg, #21212b 0%, #17171e 100%);
+  border-bottom: 1px solid var(--bdr);
+  flex-shrink: 0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hdr-title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 29px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.hdr-sub {
+  font-size: 15px;
+  color: #b4b4c8;
+  margin-top: 6px;
+}
+
+.scenario-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 320px;
+  max-width: 560px;
+}
+
+.picker-label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.pair-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 14px 44px 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #5a5a6b;
+  background: linear-gradient(180deg, #2a2a37 0%, #21212d 100%);
+  color: #f4f4fa;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%23c9c9dc' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.pair-select:focus {
+  border-color: #6f8fe8;
+  box-shadow: 0 0 0 3px rgba(111, 143, 232, .15);
+}
+
+.pair-select option {
+  color: #111;
+  background: #fff;
+}
+
+.scenario-row {
+  padding: 12px var(--gutter);
+  border-bottom: 1px solid var(--bdr);
+  background: linear-gradient(180deg, #1e1e2a 0%, #15151c 100%);
+}
+
+.scenario-desc {
+  font-size: 13px;
+  color: #9090aa;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.guide {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px var(--gutter);
+  border-bottom: 1px solid var(--bdr);
+  background: linear-gradient(180deg, #1b1b24 0%, #15151c 100%);
+  flex-shrink: 0;
+}
+
+.guide-title {
+  grid-column: 1 / -1;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 11px;
+  border: 1px solid #323244;
+  border-radius: 10px;
+  background: rgba(11, 11, 16, .62);
+}
+
+.guide-n {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  background: #262635;
+  border: 1px solid #3a3a4c;
+  color: var(--P);
+}
+
+.guide-t {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #b3b3c8;
+}
+
+.guide-t strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.cvs-panel {
+  flex: 0 1 72%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--bdr);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.control-deck {
+  padding: 10px var(--gutter);
+  background: linear-gradient(180deg, #191922 0%, #15151c 100%);
+  border-bottom: 1px solid var(--bdr);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #1f1f2a;
+  border: 1px solid #2f2f3f;
+  border-radius: 12px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.tlbl {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #b4b4c7;
+  margin-right: 4px;
+}
+
+.tbtn {
+  padding: 8px 13px;
+  border-radius: 9px;
+  border: 1px solid #3a3a4a;
+  background: transparent;
+  color: #d0d0de;
+  cursor: pointer;
+  font-size: 14.5px;
+  font-family: 'Roboto', sans-serif;
+  transition: all .15s;
+  white-space: nowrap;
+}
+
+.tbtn:hover {
+  background: var(--surf2);
+  color: var(--text);
+}
+
+.legend {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #b6b6c8;
+}
+
+.lsw {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 2px solid;
+  flex-shrink: 0;
+}
+
+.lln {
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+svg#cvs {
+  display: block;
+  width: 100%;
+  height: clamp(380px, 52vh, 760px);
+  min-height: 380px;
+  background: var(--bg);
+  flex: 0 0 auto;
+}
+
+.canvas-bottom {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px var(--gutter);
+  border-top: 1px solid var(--bdr);
+  background: var(--surf);
+  flex-shrink: 0;
+}
+
+.legend-bottom {
+  padding: 8px 10px;
+  background: #1f1f2a;
+  border: 1px solid #2f2f3f;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 56%;
+}
+
+.legend-bottom .li {
+  font-size: 13px;
+}
+
+.cvs-foot {
+  font-size: 15px;
+  color: var(--muted);
+  text-align: left;
+  padding: 0;
+  background: transparent;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.right-col {
+  width: 28%;
+  min-width: 320px;
+  max-width: 440px;
+  flex: 0 0 28%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-left: 1px solid #2b2b3a;
+}
+
+.res-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #15151d;
+}
+
+.res-hdr {
+  padding: 14px var(--gutter) 12px;
+  border-bottom: 1px solid #303041;
+  background: linear-gradient(180deg, #20202b 0%, #191923 100%);
+}
+
+.res-title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text);
+}
+
+.res-help {
+  font-size: 14px;
+  color: #b1b1c5;
+  line-height: 1.45;
+  margin-top: 6px;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--bdr);
+  flex-shrink: 0;
+}
+
+.tab {
+  flex: 1;
+  padding: 14px 10px;
+  border: none;
+  background: var(--surf);
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: all .15s;
+}
+
+.tab.on {
+  color: var(--text);
+  border-bottom-color: var(--P);
+}
+
+.res-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.rrow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background .1s;
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+
+.rrow:hover { background: var(--surf2); }
+.rrow.sel   { background: var(--surf2); border-color: var(--bdr); }
+
+.rbadge {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  min-width: 38px;
+  text-align: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.rbadge.t  { background: rgba(74, 222, 128, .12); color: var(--T); border: 1px solid rgba(74, 222, 128, .25); }
+.rbadge.f  { background: rgba(248, 113, 113, .1);  color: var(--F); border: 1px solid rgba(248, 113, 113, .2); }
+.rbadge.na { background: var(--surf2); color: var(--muted); border: 1px solid var(--bdr); }
+.rbadge.g  { background: rgba(249, 168, 212, .1); color: var(--L); border: 1px solid rgba(249, 168, 212, .25); font-size: 9px; }
+
+.rname { font-family: 'Roboto Mono', monospace; font-size: 13px; line-height: 1.35; }
+.rdesc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+.rinfo { flex: 1; min-width: 0; }
+
+.code-panel {
+  flex-shrink: 0;
+  border-top: 1px solid var(--bdr);
+  background: #0a0a10;
+  display: flex;
+  flex-direction: column;
+  height: 220px;
+  min-height: 150px;
+  overflow: auto;
+}
+
+.code-hdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px var(--gutter);
+  border-bottom: 1px solid var(--bdr);
+  flex-shrink: 0;
+}
+
+.clbl {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--muted);
+}
+
+.cbtn {
+  padding: 6px 11px;
+  border-radius: 7px;
+  border: 1px solid var(--bdr);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  transition: all .15s;
+}
+
+.cbtn.on {
+  background: var(--surf2);
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+#code {
+  flex: 1;
+  padding: 9px 14px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.75;
+  overflow: auto;
+  color: #c9d1d9;
+  white-space: pre;
+}
+
+.kw  { color: #ff7b72; }
+.fn  { color: #d2a8ff; }
+.str { color: #a5d6ff; }
+.cm  { color: #484f5e; font-style: italic; }
+.vt  { color: #4ade80; }
+.vf  { color: #f87171; }
+
+@media (max-width: 900px) {
+  :root                { --gutter: 12px; }
+  .guide                { grid-template-columns: 1fr; }
+  .hdr                  { padding: 16px var(--gutter) 12px; }
+  .hdr-title            { font-size: 24px; }
+  .hdr-sub              { font-size: 13px; }
+  .scenario-picker      { min-width: 100%; max-width: 100%; }
+  .body                 { flex-direction: column; }
+  .cvs-panel            { border-right: none; border-bottom: 1px solid var(--bdr); min-height: 290px; }
+  .right-col            { width: 100%; max-width: 100%; flex: none; }
+  .res-panel            { height: 43vh; }
+  .canvas-bottom        { flex-direction: column; }
+  .legend-bottom        { max-width: 100%; width: 100%; }
+  .code-panel           { height: 180px; }
+}
+
+body.preview-mode .guide        { display: none; }
+body.preview-mode .scenario-row { display: none; }
+body.preview-mode .right-col    { display: none; }
+body.preview-mode .cvs-panel    { border-right: none; flex: 1 1 auto; }
+body.preview-mode .hdr          { padding: 12px var(--gutter) 10px; }
+body.preview-mode .hdr-title    { font-size: 24px; }
+body.preview-mode .hdr-sub      { font-size: 13px; }
+body.preview-mode .control-deck { padding: 8px var(--gutter); }
+body.preview-mode .toolbar      { padding: 8px 10px; }
+body.preview-mode .canvas-bottom{ padding: 6px 10px; }
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div>
+    <div class="hdr-title">Spatial Predicates Lab</div>
+    <div class="hdr-sub" id="hdrSub">Start with a scenario, drag shapes in the canvas, and read the results panel.</div>
+  </div>
+</div>
+
+<div class="guide">
+  <h3 class="guide-title">Instructions:</h3>
+  <div class="guide-step">
+    <span class="guide-n">1</span>
+    <div class="guide-t"><strong>Choose scenario:</strong> Use the scenario menu to pick what you want to compare.</div>
+  </div>
+  <div class="guide-step">
+    <span class="guide-n">2</span>
+    <div class="guide-t" id="guideDrag"><strong>Move geometry:</strong> Drag K and M inside the canvas to test relationships.</div>
+  </div>
+  <div class="guide-step">
+    <span class="guide-n">3</span>
+    <div class="guide-t" id="guideRead"><strong>Read results:</strong> Click any result row to see code examples below.</div>
+  </div>
+</div>
+
+<div class="scenario-row">
+  <div class="scenario-picker">
+    <label class="picker-label" for="pairSelect">Select Scenario:</label>
+    <select id="pairSelect" class="pair-select" onchange="setPair(this.value)">
+      <option value="km">2 Polygons</option>
+      <option value="kp">Polygon and Point</option>
+      <option value="kl">Polygon and Line</option>
+    </select>
+    <div id="scenarioDesc" class="scenario-desc"></div>
+  </div>
+</div>
+
+<div class="body">
+  <div class="cvs-panel">
+    <div class="control-deck">
+      <div class="toolbar">
+        <span class="tlbl">Start from a preset:</span>
+        <span id="presets-km">
+          <button class="tbtn" onclick="preset('overlap')">Overlap</button>
+          <button class="tbtn" onclick="preset('contains')">K contains M</button>
+          <button class="tbtn" onclick="preset('disjoint')">Disjoint</button>
+        </span>
+        <span id="presets-kp" style="display:none">
+          <button class="tbtn" onclick="preset('pt_inside')">Point inside</button>
+          <button class="tbtn" onclick="preset('pt_outside')">Point outside</button>
+          <button class="tbtn" onclick="preset('pt_on_edge')">Point on edge</button>
+        </span>
+        <span id="presets-kl" style="display:none">
+          <button class="tbtn" onclick="preset('crosses')">Line crosses</button>
+          <button class="tbtn" onclick="preset('l_inside')">Line inside</button>
+          <button class="tbtn" onclick="preset('l_outside')">Line outside</button>
+        </span>
+      </div>
+    </div>
+    <svg id="cvs" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40 0L0 0 0 40" fill="none" stroke="#1a1a24" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="600" height="360" fill="url(#grid)"/>
+      <g id="ov-op"></g>
+      <path id="ov-int" fill="none" stroke="none"/>
+      <g id="gK">
+        <rect id="rK" rx="5" fill="rgba(147,197,253,.10)" stroke="#93c5fd" stroke-width="2" style="cursor:grab"/>
+        <text id="tK" fill="#93c5fd" font-family="Roboto Mono,monospace" font-size="13" font-weight="500" pointer-events="none">K</text>
+      </g>
+      <g id="gM">
+        <ellipse id="eM" fill="rgba(110,231,183,.10)" stroke="#6ee7b7" stroke-width="2" style="cursor:grab"/>
+        <text id="tM" fill="#6ee7b7" font-family="Roboto Mono,monospace" font-size="13" font-weight="500" text-anchor="middle" dominant-baseline="middle" pointer-events="none">M</text>
+      </g>
+      <g id="gP" style="display:none">
+        <circle id="hitP" r="20" fill="transparent" style="cursor:grab"/>
+        <circle id="cP" r="7" fill="#fcd34d" stroke="#0f0f13" stroke-width="2" pointer-events="none"/>
+        <text id="tP" fill="#fcd34d" font-family="Roboto Mono,monospace" font-size="12" font-weight="500" dx="12" dy="-10" pointer-events="none">P</text>
+      </g>
+      <g id="gL" style="display:none">
+        <line id="lnL" stroke="#f9a8d4" stroke-width="2.5" stroke-linecap="round" pointer-events="none"/>
+        <line id="lnL-hit" stroke="transparent" stroke-width="18" stroke-linecap="round" style="cursor:grab"/>
+        <circle id="ep1" r="7" fill="#f9a8d4" stroke="#0f0f13" stroke-width="1.5" style="cursor:crosshair"/>
+        <circle id="ep2" r="7" fill="#f9a8d4" stroke="#0f0f13" stroke-width="1.5" style="cursor:crosshair"/>
+        <text id="tL" fill="#f9a8d4" font-family="Roboto Mono,monospace" font-size="12" font-weight="500" pointer-events="none">L</text>
+      </g>
+      <!-- Top-layer overlay — renders above shapes, used for union so no internal borders show -->
+      <g id="ov-top" pointer-events="none"></g>
+    </svg>
+    <div class="canvas-bottom">
+      <div class="cvs-foot">Drag shapes — K (rectangle) · M (circle) · Line: endpoints to rotate/scale, midpoint or body to move</div>
+      <div class="legend legend-bottom">
+        <div class="li"><div class="lsw" style="border-color:var(--K);background:rgba(147,197,253,.12)"></div><span id="legKlbl">Polygon K — Neighborhood</span></div>
+        <div class="li" id="legM"><div class="lsw" style="border-color:var(--M);background:rgba(110,231,183,.12);border-radius:50%"></div>Polygon M — Flood Zone</div>
+        <div class="li" id="legP" style="display:none"><div class="lsw" style="background:var(--P);border-color:var(--P);border-radius:50%"></div>Point P — 311 Complaint</div>
+        <div class="li" id="legL" style="display:none"><div class="lln" style="background:var(--L)"></div>LineString L — Highway</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="res-panel">
+      <div class="res-hdr">
+        <div class="res-title">Results</div>
+        <div class="res-help" id="resHelp">Click any row to see its meaning and code example below.</div>
+      </div>
+      <div class="tabs">
+        <button class="tab on" id="tabPred" onclick="setMode('pred')">Predicates</button>
+        <button class="tab"    id="tabOps"  onclick="setMode('ops')">Set Operations</button>
+      </div>
+      <div class="res-list" id="resList"></div>
+    </div>
+    <div class="code-panel">
+      <div class="code-hdr">
+        <span class="clbl">Code:</span>
+        <button class="cbtn on" id="btnSh"  onclick="setLang('sh')">Shapely</button>
+        <button class="cbtn"    id="btnGpd" onclick="setLang('gpd')">GeoPandas</button>
+        <span id="codeTitle" style="margin-left:auto;font-size:10px;color:var(--muted);font-family:'Roboto Mono',monospace"></span>
+      </div>
+      <div id="code"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PREVIEW_MODE = new URLSearchParams(window.location.search).get('preview') === '1';
+if (PREVIEW_MODE) document.body.classList.add('preview-mode');
+
+const VW = 600, VH = 360;
+let st   = { pair: 'km', mode: 'pred', lang: 'sh', selPred: 'intersects', selOp: 'intersection' };
+let drag = { on: false, who: null, ep: 0, ox: 0, oy: 0 };
+let S    = {
+  K: { x: 65,  y: 85,  w: 195, h: 160 },
+  M: { cx: 320, cy: 190, r: 75 },
+  P: { cx: 195, cy: 155 },
+  L: { x1: 100, y1: 140, x2: 230, y2: 210 },
+};
+
+const PRESETS = {
+  // km presets
+  overlap:  { pair: 'km', fn: () => { S.K = { x: 65,  y: 85,  w: 195, h: 160 }; S.M = { cx: 320, cy: 190, r: 75 }; } },
+  contains: { pair: 'km', fn: () => { S.K = { x: 50,  y: 60,  w: 280, h: 240 }; S.M = { cx: 195, cy: 185, r: 68 }; } },
+  disjoint: { pair: 'km', fn: () => { S.K = { x: 40,  y: 100, w: 185, h: 150 }; S.M = { cx: 435, cy: 195, r: 70 }; } },
+  // kp presets
+  pt_inside:  { pair: 'kp', fn: () => { S.K = { x: 65, y: 85, w: 195, h: 160 }; S.P = { cx: 195, cy: 165 }; } },
+  pt_outside: { pair: 'kp', fn: () => { S.K = { x: 65, y: 85, w: 195, h: 160 }; S.P = { cx: 430, cy: 165 }; } },
+  pt_on_edge: { pair: 'kp', fn: () => { S.K = { x: 65, y: 85, w: 195, h: 160 }; S.P = { cx: 260, cy: 165 }; } },
+  // kl presets
+  crosses:   { pair: 'kl', fn: () => { S.K = { x: 90, y: 85,  w: 205, h: 165 }; S.L = { x1: 90,  y1: 168, x2: 400, y2: 168 }; } },
+  l_inside:  { pair: 'kl', fn: () => { S.K = { x: 50, y: 60,  w: 280, h: 240 }; S.L = { x1: 100, y1: 150, x2: 280, y2: 260 }; } },
+  l_outside: { pair: 'kl', fn: () => { S.K = { x: 65, y: 85,  w: 195, h: 160 }; S.L = { x1: 330, y1: 110, x2: 480, y2: 240 }; } },
+};
+
+function preset(k) {
+  const p = PRESETS[k];
+  if (!p) return;
+  p.fn();
+  // Switch pair if needed — updates buttons, legend, scenario text
+  if (st.pair !== p.pair) setPair(p.pair);
+  else renderAll();
+}
+
+// Geometry
+function polyK() {
+  const { x, y, w, h } = S.K;
+  return [[x, y], [x+w, y], [x+w, y+h], [x, y+h]];
+}
+
+function polyM(n = 48) {
+  const { cx, cy, r } = S.M;
+  return Array.from({ length: n }, (_, i) => {
+    const a = (i / n) * Math.PI * 2;
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  });
+}
+
+function ptInPoly(px, py, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i], [xj, yj] = poly[j];
+    if (((yi > py) !== (yj > py)) && (px < (xj - xi) * (py - yi) / (yj - yi) + xi))
+      inside = !inside;
+  }
+  return inside;
+}
+
+function segInt(ax, ay, bx, by, cx, cy, dx, dy) {
+  const d = (bx - ax) * (dy - cy) - (by - ay) * (dx - cx);
+  if (Math.abs(d) < 1e-10) return false;
+  const u = ((cx - ax) * (dy - cy) - (cy - ay) * (dx - cx)) / d;
+  const v = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) / d;
+  return u >= 0 && u <= 1 && v >= 0 && v <= 1;
+}
+
+function polyEdgesIntersect(A, B) {
+  for (let i = 0; i < A.length; i++) {
+    const [ax, ay] = A[i], [bx, by] = A[(i + 1) % A.length];
+    for (let j = 0; j < B.length; j++) {
+      const [cx, cy] = B[j], [dx, dy] = B[(j + 1) % B.length];
+      if (segInt(ax, ay, bx, by, cx, cy, dx, dy)) return true;
+    }
+  }
+  return false;
+}
+
+function clipEdge(sub, ax, ay, bx, by) {
+  if (!sub.length) return [];
+  const out = [];
+  let prev = sub[sub.length - 1];
+  const inside = ([x, y]) => (bx - ax) * (y - ay) - (by - ay) * (x - ax) >= 0;
+  for (const cur of sub) {
+    if (inside(cur)) {
+      if (!inside(prev)) {
+        const [px, py] = prev, [cx, cy] = cur;
+        const d = (bx - ax) * (cy - py) - (by - ay) * (cx - px);
+        const t = ((ax - px) * (cy - py) - (ay - py) * (cx - px)) / d;
+        out.push([px + (bx - ax) * t, py + (by - ay) * t]);
+      }
+      out.push(cur);
+    } else if (inside(prev)) {
+      const [px, py] = prev, [cx, cy] = cur;
+      const d = (bx - ax) * (cy - py) - (by - ay) * (cx - px);
+      const t = ((ax - px) * (cy - py) - (ay - py) * (cx - px)) / d;
+      out.push([px + (bx - ax) * t, py + (by - ay) * t]);
+    }
+    prev = cur;
+  }
+  return out;
+}
+
+function polyIntersection(A, B) {
+  let r = A.slice();
+  for (let i = 0; i < B.length; i++) {
+    if (!r.length) return [];
+    const [ax, ay] = B[i], [bx, by] = B[(i + 1) % B.length];
+    r = clipEdge(r, ax, ay, bx, by);
+  }
+  return r;
+}
+
+function polyArea(p) {
+  let a = 0;
+  for (let i = 0, j = p.length - 1; i < p.length; j = i++) {
+    a += p[j][0] * p[i][1];
+    a -= p[i][0] * p[j][1];
+  }
+  return Math.abs(a) / 2;
+}
+
+function polyToPath(pts) {
+  if (!pts || pts.length < 2) return '';
+  return 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z';
+}
+
+function segPolyCrossings(x1, y1, x2, y2, poly) {
+  let n = 0;
+  for (let i = 0; i < poly.length; i++) {
+    const [ax, ay] = poly[i], [bx, by] = poly[(i + 1) % poly.length];
+    if (segInt(x1, y1, x2, y2, ax, ay, bx, by)) n++;
+  }
+  return n;
+}
+
+function ptOnEdge(px, py, poly, tol = 5) {
+  for (let i = 0; i < poly.length; i++) {
+    const [ax, ay] = poly[i], [bx, by] = poly[(i + 1) % poly.length];
+    const len = Math.hypot(bx - ax, by - ay);
+    if (len < 0.01) continue;
+    const t = Math.max(0, Math.min(1, ((px - ax) * (bx - ax) + (py - ay) * (by - ay)) / (len * len)));
+    if (Math.hypot(px - (ax + (bx - ax) * t), py - (ay + (by - ay) * t)) < tol) return true;
+  }
+  return false;
+}
+
+// Minimum distance from point to segment
+function ptToSegDist(px, py, ax, ay, bx, by) {
+  const dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+  if (len2 < 1e-10) return Math.hypot(px - ax, py - ay);
+  const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / len2));
+  return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+}
+
+// Minimum distance between any two edges of poly A and poly B
+// Returns 0 if edges cross (they share a point)
+function minBoundaryDist(A, B) {
+  let min = Infinity;
+  for (let i = 0; i < A.length; i++) {
+    const [ax, ay] = A[i], [bx, by] = A[(i + 1) % A.length];
+    for (let j = 0; j < B.length; j++) {
+      const [cx, cy] = B[j], [dx, dy] = B[(j + 1) % B.length];
+      if (segInt(ax, ay, bx, by, cx, cy, dx, dy)) return 0;
+      min = Math.min(min,
+        ptToSegDist(ax, ay, cx, cy, dx, dy),
+        ptToSegDist(bx, by, cx, cy, dx, dy),
+        ptToSegDist(cx, cy, ax, ay, bx, by),
+        ptToSegDist(dx, dy, ax, ay, bx, by)
+      );
+    }
+  }
+  return min;
+}
+
+// ── Predicates ────────────────────────────────────────
+function computePreds() {
+  const K = polyK(), M = polyM(), { P, L } = S;
+
+  if (st.pair === 'km') {
+    const edg   = polyEdgesIntersect(K, M);
+    const mInK  = M.some(([x, y]) => ptInPoly(x, y, K));
+    const kInM  = K.some(([x, y]) => ptInPoly(x, y, M));
+    const intA  = polyArea(polyIntersection(K, M));
+    // minBoundaryDist: 0 when edges cross, small positive when shapes just touch/nearly touch
+    const bdDist = minBoundaryDist(K, M);
+    const TOUCH_TOL = 6; // px — generous enough to be achievable by dragging
+    const nearBoundary = bdDist < TOUCH_TOL;
+    const intersects = mInK || kInM || edg || nearBoundary;
+    const allMInK = M.every(([x, y]) => ptInPoly(x, y, K));
+    const allKInM = K.every(([x, y]) => ptInPoly(x, y, M));
+    const contains = allMInK && !edg;
+    const within   = allKInM && !edg;
+    const overlaps = intersects && !contains && !within && intA > 2;
+    const kCx = S.K.x + S.K.w / 2, kCy = S.K.y + S.K.h / 2;
+    const equals = Math.abs(kCx - S.M.cx) < 8 && Math.abs(kCy - S.M.cy) < 8 && Math.abs(polyArea(K) - polyArea(M)) < 500;
+    return [
+      { k: 'intersects', lbl: 'K.intersects(M)', desc: 'K and M share at least one point',               v: intersects },
+      { k: 'disjoint',   lbl: 'K.disjoint(M)',   desc: 'K and M have no points in common',               v: !intersects },
+      { k: 'contains',   lbl: 'K.contains(M)',   desc: 'K completely encloses M',                        v: contains },
+      { k: 'within',     lbl: 'M.within(K)',      desc: 'M is completely inside K',                      v: contains },
+      { k: 'overlaps',   lbl: 'K.overlaps(M)',   desc: 'Partial overlap, neither fully inside the other', v: overlaps },
+      { k: 'equals',     lbl: 'K.equals(M)',     desc: 'Represent the exact same geometry',               v: equals },
+    ];
+  }
+
+  if (st.pair === 'kp') {
+    const inside = ptInPoly(P.cx, P.cy, K);
+    const onBdy  = ptOnEdge(P.cx, P.cy, K);
+    const intersects = inside || onBdy;
+    return [
+      { k: 'intersects', lbl: 'K.intersects(P)', desc: 'K and P share at least one point', v: intersects },
+      { k: 'disjoint',   lbl: 'K.disjoint(P)',   desc: 'P is completely outside K',         v: !intersects },
+      { k: 'contains',   lbl: 'K.contains(P)',   desc: 'K contains point P',                v: inside && !onBdy },
+      { k: 'within',     lbl: 'P.within(K)',      desc: 'P is inside K',                    v: inside && !onBdy },
+    ];
+  }
+
+  if (st.pair === 'kl') {
+    const { x1, y1, x2, y2 } = L, K2 = polyK();
+    const ep1In = ptInPoly(x1, y1, K2);
+    const ep2In = ptInPoly(x2, y2, K2);
+    const nc = segPolyCrossings(x1, y1, x2, y2, K2);
+    const intersects = ep1In || ep2In || nc > 0;
+    const within_l   = ep1In && ep2In && nc === 0;
+    const crosses    = nc >= 2 || (nc === 1 && ep1In !== ep2In);
+    return [
+      { k: 'intersects', lbl: 'K.intersects(L)', desc: 'K and L share at least one point',  v: intersects },
+      { k: 'disjoint',   lbl: 'K.disjoint(L)',   desc: 'K and L have no points in common',  v: !intersects },
+      { k: 'contains',   lbl: 'K.contains(L)',   desc: 'K completely contains the line',     v: within_l },
+      { k: 'within',     lbl: 'L.within(K)',      desc: 'L is entirely inside K',            v: within_l },
+      { k: 'crosses',    lbl: 'L.crosses(K)',    desc: 'L enters AND exits K',               v: crosses },
+    ];
+  }
+
+  return [];
+}
+
+//  Code snippets
+const OPS = [
+  { k: 'intersection', lbl: 'K.intersection(M)',         desc: 'Shared area → new geometry',    col: '#fcd34d' },
+  { k: 'union',        lbl: 'K.union(M)',                 desc: 'Combined area → new geometry',  col: '#fcd34d' },
+  { k: 'difference',   lbl: 'K.difference(M)',            desc: 'K minus M → new geometry',      col: '#fcd34d' },
+  { k: 'sym_diff',     lbl: 'K.symmetric_difference(M)',  desc: 'Everything except shared area', col: '#fcd34d' },
+];
+
+function B(p)  { return p === 'kp' ? 'complaint'  : p === 'kl' ? 'highway'        : 'flood_zone'; }
+function AK(p) { return p === 'kp' ? 'census_tract' : p === 'kl' ? 'industrial_zone' : 'neighborhood'; }
+
+const SH = {
+  intersects: (v, p) => `${AK(p)}.intersects(${B(p)})\n# → ${v}\n\n# Exact opposite:\n${AK(p)}.disjoint(${B(p)})\n# → ${!v}`,
+  disjoint:   (v, p) => `${AK(p)}.disjoint(${B(p)})\n# → ${v}\n\n# disjoint == not intersects\n${AK(p)}.intersects(${B(p)})\n# → ${!v}`,
+  contains:   (v, p) => `${AK(p)}.contains(${B(p)})\n# → ${v}`,
+  within:     (v, p) => `${B(p)}.within(${AK(p)})\n# → ${v}`,
+  overlaps:   (v)    => `neighborhood.overlaps(flood_zone)\n# → ${v}\n\n# True only for partial overlap\n# False if one fully contains the other`,
+  crosses:    (v)    => `highway.crosses(industrial_zone)\n# → ${v}\n\n# Highway must enter AND exit the zone\n# crosses=True implies intersects=True`,
+  equals:     (v)    => `geom_a.equals(geom_b)\n# → ${v}\n\n# True only for identical geometries`,
+};
+
+// Variable names per pair scenario
+function LV(p) { return p === 'km' ? 'flood_zone_gdf'   : p === 'kp' ? 'complaint_gdf'  : 'highway_gdf'; }
+function LK(p) { return p === 'km' ? 'neighborhood_gdf' : p === 'kp' ? 'census_tract_gdf' : 'industrial_zone_gdf'; }
+
+const GPD = {
+  intersects: (_, p) => p === 'kl'
+    ? `import geopandas as gpd
+
+# Single-feature view: highway segment vs one industrial zone
+result = gpd.sjoin(
+    highway_gdf,          # line layer (can be one row)
+    industrial_zone_gdf,  # polygon layer (can be one row)
+    how='left',
+    predicate='intersects'
+)`
+    : p === 'kp'
+    ? `import geopandas as gpd
+
+# Single-feature view: complaint point vs one census tract
+result = gpd.sjoin(
+    complaint_gdf,     # point layer
+    census_tract_gdf,  # polygon layer
+    how='left',
+    predicate='intersects'
+)`
+    : `import geopandas as gpd
+
+# Single-feature view: one neighborhood vs one flood zone
+result = gpd.sjoin(
+    neighborhood_gdf,  # left GeoDataFrame
+    flood_zone_gdf,    # right GeoDataFrame
+    how='left',
+    predicate='intersects'
+)`,
+
+  disjoint: (_, p) => `import geopandas as gpd
+
+# No direct disjoint predicate — invert intersects
+joined = gpd.sjoin(
+    ${LK(p)}, ${LV(p)},
+    how='left', predicate='intersects'
+)
+
+# Rows with no match = disjoint
+no_match = ${LK(p)}[
+    ~${LK(p)}.index.isin(joined.index_right)
+]`,
+
+  contains: (_, p) => p === 'kp'
+    ? `import geopandas as gpd
+
+# Does this census tract contain this complaint point?
+result = gpd.sjoin(
+    complaint_gdf,     # left: the thing inside
+    census_tract_gdf,  # right: the container
+    how='left',
+    predicate='within'  # left.within(right)
+)`
+    : p === 'kl'
+    ? `import geopandas as gpd
+
+# Does this industrial zone fully contain this highway segment?
+result = gpd.sjoin(
+    highway_gdf,          # left
+    industrial_zone_gdf,  # right
+    how='inner',
+    predicate='within'  # left.within(right)
+)`
+    : `import geopandas as gpd
+
+# Does this neighborhood fully contain this flood-zone geometry?
+result = gpd.sjoin(
+    flood_zone_gdf,    # left: the thing inside
+    neighborhood_gdf,  # right: the container
+    how='inner',
+    predicate='within'
+)`,
+
+  within: (_, p) => p === 'kp'
+    ? `import geopandas as gpd
+
+# Same result — depends which is left
+result = gpd.sjoin(
+    complaint_gdf,     # left
+    census_tract_gdf,  # right
+    how='left',
+    predicate='within'
+)
+# left.within(right) is the predicate`
+    : p === 'kl'
+    ? `import geopandas as gpd
+
+result = gpd.sjoin(
+    highway_gdf,
+    industrial_zone_gdf,
+    how='left',
+    predicate='within'
+)`
+    : `import geopandas as gpd
+
+result = gpd.sjoin(
+    flood_zone_gdf,
+    neighborhood_gdf,
+    how='left',
+    predicate='within'
+)`,
+
+  overlaps: () => `import geopandas as gpd
+
+# Partial overlap — neither fully inside the other
+result = gpd.sjoin(
+    neighborhood_gdf,
+    flood_zone_gdf,
+    how='inner',
+    predicate='overlaps'
+)`,
+
+  crosses: () => `import geopandas as gpd
+
+# Does this highway cross this industrial zone boundary?
+result = gpd.sjoin(
+    highway_gdf,          # line layer
+    industrial_zone_gdf,  # polygon layer
+    how='left',
+    predicate='crosses'
+)`,
+
+  equals: () => `import geopandas as gpd
+
+result = gpd.sjoin(
+    gdf_a, gdf_b,
+    how='inner',
+    predicate='equals'
+)`,
+};
+
+const SH_OPS = {
+  intersection: () => `# Returns NEW geometry — the shared area\nshared = polygon_k.intersection(polygon_m)\n# → Polygon\n\n# Compare with predicate:\npolygon_k.intersects(polygon_m)    # → True / False\npolygon_k.intersection(polygon_m)  # → Polygon`,
+  union:        () => `polygon_k.union(polygon_m)\n# → new Polygon covering both shapes\n# All of K + all of M, merged`,
+  difference:   () => `# K minus M — order matters!\nk_minus_m = polygon_k.difference(polygon_m)\nm_minus_k = polygon_m.difference(polygon_k)\n# k_minus_m != m_minus_k`,
+  sym_diff:     () => `# Everything EXCEPT the shared area\nresult = polygon_k.symmetric_difference(polygon_m)\n# → union minus intersection`,
+};
+
+const GPD_OPS = {
+  intersection: () => `import geopandas as gpd\n\nresult = gpd.overlay(\n    parks, flood_zones,\n    how='intersection'\n)\n\n# Measure % flooded\nresult['shared_area'] = result.geometry.area\nparks['total_area']   = parks.geometry.area\npct = (\n    result.groupby('park_id')['shared_area'].sum()\n    / parks.set_index('park_id')['total_area']\n)`,
+  union:        () => `import geopandas as gpd\n\nresult = gpd.overlay(\n    gdf_a, gdf_b,\n    how='union'\n)`,
+  difference:   () => `import geopandas as gpd\n\n# Park areas NOT in flood zones\nresult = gpd.overlay(\n    parks,\n    flood_zones,\n    how='difference'\n)`,
+  sym_diff:     () => `import geopandas as gpd\n\n# Everything except the overlapping area\nresult = gpd.overlay(\n    gdf_a, gdf_b,\n    how='symmetric_difference'\n)`,
+};
+
+// ── Render ────────────────────────────────────────────
+function renderShapes() {
+  const { K, M, P, L } = S;
+
+  const rK = document.getElementById('rK');
+  rK.setAttribute('x', K.x);
+  rK.setAttribute('y', K.y);
+  rK.setAttribute('width', K.w);
+  rK.setAttribute('height', K.h);
+
+  const tK = document.getElementById('tK');
+  tK.setAttribute('x', K.x + 8);
+  tK.setAttribute('y', K.y + 18);
+
+  const eM = document.getElementById('eM');
+  eM.setAttribute('cx', M.cx);
+  eM.setAttribute('cy', M.cy);
+  eM.setAttribute('rx', M.r);
+  eM.setAttribute('ry', M.r);
+
+  const tM = document.getElementById('tM');
+  tM.setAttribute('x', M.cx);
+  tM.setAttribute('y', M.cy);
+
+  ['hitP', 'cP'].forEach(id => {
+    document.getElementById(id).setAttribute('cx', P.cx);
+    document.getElementById(id).setAttribute('cy', P.cy);
+  });
+  document.getElementById('tP').setAttribute('x', P.cx);
+  document.getElementById('tP').setAttribute('y', P.cy);
+
+  const ln = document.getElementById('lnL');
+  ln.setAttribute('x1', L.x1);
+  ln.setAttribute('y1', L.y1);
+  ln.setAttribute('x2', L.x2);
+  ln.setAttribute('y2', L.y2);
+
+  const lnHit = document.getElementById('lnL-hit');
+  lnHit.setAttribute('x1', L.x1);
+  lnHit.setAttribute('y1', L.y1);
+  lnHit.setAttribute('x2', L.x2);
+  lnHit.setAttribute('y2', L.y2);
+
+  document.getElementById('ep1').setAttribute('cx', L.x1);
+  document.getElementById('ep1').setAttribute('cy', L.y1);
+  document.getElementById('ep2').setAttribute('cx', L.x2);
+  document.getElementById('ep2').setAttribute('cy', L.y2);
+
+  document.getElementById('tL').setAttribute('x', (L.x1 + L.x2) / 2 + 10);
+  document.getElementById('tL').setAttribute('y', (L.y1 + L.y2) / 2 - 10);
+
+  document.getElementById('gM').style.display = st.pair === 'km' ? '' : 'none';
+  document.getElementById('gP').style.display = st.pair === 'kp' ? '' : 'none';
+  document.getElementById('gL').style.display = st.pair === 'kl' ? '' : 'none';
+
+  document.getElementById('legM').style.display = st.pair === 'km' ? '' : 'none';
+  document.getElementById('legP').style.display = st.pair === 'kp' ? '' : 'none';
+  document.getElementById('legL').style.display = st.pair === 'kl' ? '' : 'none';
+}
+
+function renderOverlays() {
+  const oi = document.getElementById('ov-int');
+  const oo = document.getElementById('ov-op');
+  const ot = document.getElementById('ov-top');
+
+  oi.setAttribute('d', '');
+  oi.setAttribute('fill', 'none');
+  oi.setAttribute('stroke', 'none');
+  oo.innerHTML = '';
+  ot.innerHTML = '';
+
+  // Always restore original shape strokes (union suppresses them)
+  document.getElementById('rK').setAttribute('stroke', '#93c5fd');
+  document.getElementById('eM').setAttribute('stroke', '#6ee7b7');
+
+  if (st.mode !== 'ops') return;
+
+  const op  = st.selOp;
+  const svg = document.getElementById('cvs');
+  const old = svg.querySelector('#dyn-defs');
+  if (old) old.remove();
+
+  if (st.pair !== 'km') return;
+  const { K, M } = S;
+
+  // Ghost shapes — dashed outline, no fill — reused across ops
+  const ghostK = `<rect x="${K.x}" y="${K.y}" width="${K.w}" height="${K.h}" rx="5"
+    fill="none" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>`;
+  const ghostM = `<ellipse cx="${M.cx}" cy="${M.cy}" rx="${M.r}" ry="${M.r}"
+    fill="none" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>`;
+
+  // Dynamic defs helper
+  function addDefs(html) {
+    const d = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    d.id = 'dyn-defs';
+    d.innerHTML = html;
+    svg.insertBefore(d, svg.firstChild);
+  }
+
+  if (op === 'intersection') {
+    // Result: K clipped to M  |  Ghosts: both outlines
+    addDefs(`<clipPath id="clipM">
+      <ellipse cx="${M.cx}" cy="${M.cy}" rx="${M.r}" ry="${M.r}"/>
+    </clipPath>`);
+    oo.innerHTML = ghostK + ghostM;
+    ot.innerHTML = `<rect x="${K.x}" y="${K.y}" width="${K.w}" height="${K.h}" rx="5"
+      fill="#fcd34d" opacity="0.85" clip-path="url(#clipM)"/>`;
+  }
+  else if (op === 'union') {
+    // Suppress original strokes
+    document.getElementById('rK').setAttribute('stroke', 'none');
+    document.getElementById('eM').setAttribute('stroke', 'none');
+    // Render K fully, then M clipped to the area OUTSIDE K — zero overlap, perfect uniform color
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    defs.id = 'dyn-defs';
+    defs.innerHTML = `<clipPath id="clipOutsideK">
+      <rect x="0" y="0" width="600" height="360"/>
+    </clipPath>
+    <mask id="maskOutsideK">
+      <rect width="600" height="360" fill="white"/>
+      <rect x="${K.x}" y="${K.y}" width="${K.w}" height="${K.h}" rx="5" fill="black"/>
+    </mask>`;
+    svg.insertBefore(defs, svg.firstChild);
+    ot.innerHTML = `
+      <rect x="${K.x}" y="${K.y}" width="${K.w}" height="${K.h}" rx="5"
+        fill="#fcd34d" stroke="none" opacity="0.78"/>
+      <ellipse cx="${M.cx}" cy="${M.cy}" rx="${M.r}" ry="${M.r}"
+        fill="#fcd34d" stroke="none" opacity="0.78" mask="url(#maskOutsideK)"/>`;
+  }
+  else if (op === 'difference') {
+    // Result: K with M punched out  |  Ghost: M outline showing what was removed
+    addDefs(`<mask id="maskDiff">
+      <rect width="600" height="360" fill="white"/>
+      <ellipse cx="${M.cx}" cy="${M.cy}" rx="${M.r}" ry="${M.r}" fill="black"/>
+    </mask>`);
+    oo.innerHTML = ghostM;
+    ot.innerHTML = `<rect x="${K.x}" y="${K.y}" width="${K.w}" height="${K.h}" rx="5"
+      fill="#fcd34d" opacity="0.85" mask="url(#maskDiff)"/>`;
+  }
+  else if (op === 'sym_diff') {
+    // Result: union minus intersection = both non-overlapping parts
+    addDefs(`
+      <clipPath id="clipMsym">
+        <ellipse cx="${M.cx}" cy="${M.cy}" rx="${M.r}" ry="${M.r}"/>
+      </clipPath>
+      <mask id="maskSym">
+        <rect width="600" height="360" fill="white"/>
+        <rect x="${K.x}" y="${K.y}" width="${K.w}" height="${K.h}" rx="5" fill="black"
+          clip-path="url(#clipMsym)"/>
+      </mask>`);
+    // Ghost: intersection area outline
+    oo.innerHTML = `<rect x="${K.x}" y="${K.y}" width="${K.w}" height="${K.h}" rx="5"
+      fill="none" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"
+      clip-path="url(#clipMsym)"/>`;
+    ot.innerHTML = `<g style="isolation:isolate">
+      <rect x="${K.x}" y="${K.y}" width="${K.w}" height="${K.h}" rx="5"
+        fill="#fcd34d" stroke="none" opacity="0.75" mask="url(#maskSym)"/>
+      <ellipse cx="${M.cx}" cy="${M.cy}" rx="${M.r}" ry="${M.r}"
+        fill="#fcd34d" stroke="none" opacity="0.75" mask="url(#maskSym)"/>
+    </g>`;
+  }
+}
+
+function renderResults() {
+  const el = document.getElementById('resList');
+  if (st.mode === 'pred') {
+    const preds = computePreds();
+    el.innerHTML = preds.map(p => {
+      const bc   = p.v ? 't' : 'f';
+      const bt   = p.v ? 'True' : 'False';
+      const isSel = p.k === st.selPred;
+      return `<div class="rrow${isSel ? ' sel' : ''}" onclick="selPred('${p.k}')">` +
+        `<div class="rbadge ${bc}">${bt}</div>` +
+        `<div class="rinfo"><div class="rname">${p.lbl}</div><div class="rdesc">${p.desc}</div></div>` +
+        `</div>`;
+    }).join('');
+  } else {
+    el.innerHTML =
+      `<div style="padding:7px 10px 3px;font-size:10px;color:var(--muted);font-family:'Roboto Mono',monospace;text-transform:uppercase;letter-spacing:.07em;">Binary ops — Polygon × Polygon only</div>` +
+      `<div style="padding:2px 10px 8px;font-size:10px;color:var(--muted);border-bottom:1px solid var(--bdr);margin-bottom:4px;">Switch to K+M pair to see visual results. Note: .buffer() is unary (one geometry) — see Proximity tab in slides.</div>` +
+      OPS.map(o =>
+        `<div class="rrow${st.selOp === o.k ? ' sel' : ''}" onclick="selOp('${o.k}')">` +
+        `<div class="rbadge g" style="border-color:${o.col};color:${o.col}">geom</div>` +
+        `<div class="rinfo"><div class="rname" style="color:${o.col}">${o.lbl}</div><div class="rdesc">${o.desc}</div></div>` +
+        `</div>`
+      ).join('');
+  }
+}
+
+function hl(s) {
+  return s
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/(#[^\n]*)/g, '<span class="cm">$1</span>')
+    .replace(/\b(from|import|as|not|if|in|def|return|copy)\b/g, '<span class="kw">$1</span>')
+    .replace(/\b(gpd|sjoin|overlay|intersects|disjoint|contains|within|crosses|touches|equals|overlaps|union|difference|buffer|intersection)(?=\s*[\.(])/g, '<span class="fn">$1</span>')
+    .replace(/'([^']+)'/g, "<span class='str'>'$1'</span>")
+    .replace(/\bTrue\b/g,  '<span class="vt">True</span>')
+    .replace(/\bFalse\b/g, '<span class="vf">False</span>');
+}
+
+function renderCode() {
+  let code = '', title = '';
+  if (st.mode === 'pred') {
+    const preds = computePreds();
+    const pd    = preds.find(p => p.k === st.selPred);
+    const val   = pd ? pd.v : false;
+    const map   = st.lang === 'sh' ? SH : GPD;
+    const fn    = map[st.selPred];
+    code  = fn ? fn(val, st.pair) : '# Select a predicate above';
+    title = st.selPred + '()';
+  } else {
+    const map = st.lang === 'sh' ? SH_OPS : GPD_OPS;
+    code  = (map[st.selOp] || (() => ''))();
+    title = st.selOp + '()';
+  }
+  document.getElementById('code').innerHTML = hl(code);
+  document.getElementById('codeTitle').textContent = title;
+}
+
+function renderAll() { renderShapes(); renderOverlays(); renderResults(); renderCode(); }
+
+// State setters
+const SCENARIOS = {
+  km: {
+    sub:      'Scenario: Neighborhood × Flood Zone',
+    K:        'Polygon K — Neighborhood',
+    M:        'Polygon M — Flood Zone',
+    drag:     'Move K and M to create overlap, containment, touching, or disjoint cases.',
+    descHtml: `Scenario: <span style="color:var(--K);font-weight:600">K</span> = Neighborhood polygon &nbsp;·&nbsp; <span style="color:var(--M);font-weight:600">M</span> = Flood Zone polygon`,
+  },
+  kp: {
+    sub:      'Scenario: Census Tract × 311 Complaint',
+    K:        'Polygon K — Census Tract',
+    P:        'Point P — 311 Complaint',
+    drag:     'Move the point P and polygon K to test inside, outside, and boundary cases.',
+    descHtml: `Scenario: <span style="color:var(--K);font-weight:600">K</span> = Census Tract polygon &nbsp;·&nbsp; <span style="color:var(--P);font-weight:600">P</span> = 311 Complaint point`,
+  },
+  kl: {
+    sub:      'Scenario: Industrial Zone × Highway',
+    K:        'Polygon K — Industrial Zone',
+    L:        'LineString L — Highway',
+    drag:     'Drag the line body to move it, or endpoints to rotate/resize and test crossing.',
+    descHtml: `Scenario: <span style="color:var(--K);font-weight:600">K</span> = Industrial Zone polygon &nbsp;·&nbsp; <span style="color:var(--L);font-weight:600">L</span> = Highway line`,
+  },
+};
+
+function updateGuidance() {
+  const sc       = SCENARIOS[st.pair];
+  const dragText = document.getElementById('guideDrag');
+  const readText = document.getElementById('guideRead');
+  const resHelp  = document.getElementById('resHelp');
+  if (dragText) dragText.innerHTML = `<strong>Move geometry:</strong> ${sc.drag}`;
+  if (st.mode === 'pred') {
+    if (readText) readText.innerHTML = '<strong>Read results:</strong> Click any predicate row — its meaning and code example appear in the panel below.';
+    if (resHelp)  resHelp.textContent = 'Click any row to see its meaning and code example below.';
+  } else {
+    if (readText) readText.innerHTML = '<strong>Inspect operations:</strong> Choose an operation to see the resulting geometry and the code pattern.';
+    if (resHelp)  resHelp.textContent = 'Set operations return new geometries (not just True/False). Click one row to inspect.';
+  }
+}
+
+function setPair(p) {
+  st.pair = p;
+  const pairSelect = document.getElementById('pairSelect');
+  if (pairSelect && pairSelect.value !== p) pairSelect.value = p;
+  ['km', 'kp', 'kl'].forEach(x => {
+    document.getElementById('presets-' + x).style.display = x === p ? '' : 'none';
+  });
+  st.selPred = 'intersects';
+  updateOpsTab();
+  const sc = SCENARIOS[p];
+  document.getElementById('hdrSub').textContent  = sc.sub;
+  document.getElementById('legKlbl').textContent = sc.K;
+  const descEl = document.getElementById('scenarioDesc');
+  if (descEl) descEl.innerHTML = sc.descHtml || '';
+  updateGuidance();
+  renderAll();
+}
+
+function setMode(m) {
+  if (m === 'ops' && st.pair !== 'km') return;
+  st.mode = m;
+  document.getElementById('tabPred').classList.toggle('on', m === 'pred');
+  document.getElementById('tabOps').classList.toggle('on',  m === 'ops');
+  updateGuidance();
+  renderAll();
+}
+
+function updateOpsTab() {
+  const tab      = document.getElementById('tabOps');
+  const disabled = st.pair !== 'km';
+  tab.disabled    = disabled;
+  tab.style.opacity = disabled ? '0.35' : '1';
+  tab.style.cursor  = disabled ? 'not-allowed' : 'pointer';
+  tab.title = disabled ? 'Set operations are only defined for Polygon \xd7 Polygon' : '';
+  if (disabled && st.mode === 'ops') {
+    st.mode = 'pred';
+    document.getElementById('tabPred').classList.add('on');
+    tab.classList.remove('on');
+  }
+}
+
+function setLang(l) {
+  st.lang = l;
+  document.getElementById('btnSh').classList.toggle('on',  l === 'sh');
+  document.getElementById('btnGpd').classList.toggle('on', l === 'gpd');
+  renderCode();
+}
+
+function selPred(k) { st.selPred = k; renderResults(); renderCode(); renderOverlays(); }
+function selOp(k)   { st.selOp   = k; renderResults(); renderCode(); renderOverlays(); }
+
+//  Drag
+function svgPt(e) {
+  const svg = document.getElementById('cvs');
+  const r   = svg.getBoundingClientRect();
+  const cl  = e.touches ? e.touches[0] : e;
+  return { x: (cl.clientX - r.left) * (VW / r.width), y: (cl.clientY - r.top) * (VH / r.height) };
+}
+
+function hitTest(pt) {
+  const { K, M, P, L } = S;
+  if (st.pair === 'kl') {
+    if (Math.hypot(pt.x - L.x1, pt.y - L.y1) < 14) return { who: 'L', ep: 1 };
+    if (Math.hypot(pt.x - L.x2, pt.y - L.y2) < 14) return { who: 'L', ep: 2 };
+    const dx = L.x2 - L.x1, dy = L.y2 - L.y1, len2 = dx * dx + dy * dy;
+    if (len2 > 0) {
+      const t = Math.max(0, Math.min(1, ((pt.x - L.x1) * dx + (pt.y - L.y1) * dy) / len2));
+      if (Math.hypot(pt.x - (L.x1 + t * dx), pt.y - (L.y1 + t * dy)) < 12)
+        return { who: 'L', ep: 0, ox: pt.x - L.x1, oy: pt.y - L.y1 };
+    }
+  }
+  if (st.pair === 'kp' && Math.hypot(pt.x - P.cx, pt.y - P.cy) < 20) return { who: 'P' };
+  if (st.pair === 'km' && Math.hypot(pt.x - M.cx, pt.y - M.cy) < M.r)  return { who: 'M', ox: pt.x - M.cx, oy: pt.y - M.cy };
+  if (pt.x >= K.x && pt.x <= K.x + K.w && pt.y >= K.y && pt.y <= K.y + K.h)
+    return { who: 'K', ox: pt.x - K.x, oy: pt.y - K.y };
+  return null;
+}
+
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+document.getElementById('cvs').addEventListener('mousedown', e => {
+  const pt  = svgPt(e);
+  const hit = hitTest(pt);
+  if (hit) {
+    e.preventDefault();
+    drag = { on: true, ...hit };
+    document.getElementById('cvs').style.cursor = 'grabbing';
+  }
+});
+
+document.getElementById('cvs').addEventListener('touchstart', e => {
+  const pt  = svgPt(e);
+  const hit = hitTest(pt);
+  if (hit) {
+    e.preventDefault();
+    drag = { on: true, ...hit };
+  }
+}, { passive: false });
+
+function onMove(e) {
+  if (!drag.on) return;
+  e.preventDefault();
+  const pt = svgPt(e);
+  if (drag.who === 'K') {
+    S.K.x = clamp(pt.x - drag.ox, 0, VW - S.K.w);
+    S.K.y = clamp(pt.y - drag.oy, 0, VH - S.K.h);
+  } else if (drag.who === 'M') {
+    S.M.cx = clamp(pt.x - drag.ox, S.M.r, VW - S.M.r);
+    S.M.cy = clamp(pt.y - drag.oy, S.M.r, VH - S.M.r);
+  } else if (drag.who === 'P') {
+    S.P.cx = clamp(pt.x, 0, VW);
+    S.P.cy = clamp(pt.y, 0, VH);
+  } else if (drag.who === 'L') {
+    if (drag.ep === 1) {
+      S.L.x1 = clamp(pt.x, 0, VW);
+      S.L.y1 = clamp(pt.y, 0, VH);
+    } else if (drag.ep === 2) {
+      S.L.x2 = clamp(pt.x, 0, VW);
+      S.L.y2 = clamp(pt.y, 0, VH);
+    } else {
+      // ep:0 — drag whole line, preserving length and angle
+      const len1 = S.L.x2 - S.L.x1, len2 = S.L.y2 - S.L.y1;
+      S.L.x1 = clamp(pt.x - drag.ox, 0, VW);
+      S.L.y1 = clamp(pt.y - drag.oy, 0, VH);
+      S.L.x2 = clamp(S.L.x1 + len1, 0, VW);
+      S.L.y2 = clamp(S.L.y1 + len2, 0, VH);
+    }
+  }
+  renderAll();
+}
+
+document.addEventListener('mousemove', onMove);
+document.addEventListener('touchmove', onMove, { passive: false });
+document.addEventListener('mouseup',  () => { drag.on = false; document.getElementById('cvs').style.cursor = 'default'; });
+document.addEventListener('touchend', () => { drag.on = false; });
+
+renderAll();
+updateGuidance();
+const _initDesc = document.getElementById('scenarioDesc');
+if (_initDesc) _initDesc.innerHTML = SCENARIOS[st.pair].descHtml || '';
+</script>
+</body>
+</html>

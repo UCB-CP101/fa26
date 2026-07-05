@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Error Types</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #2c2c2a; padding: 32px 40px; max-width: 860px; margin: 0 auto; }
+  h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; color: #2c2c2a; }
+  .subtitle { font-size: 13px; color: #5f5e5a; margin-bottom: 28px; }
+
+  .spine-labels { display:flex; justify-content:space-between; font-size:13px; font-weight:600; color:#534AB7; margin-left:80px; margin-right:108px; margin-bottom:4px; }
+  .spine { display:flex; align-items:center; margin-left:80px; margin-right:108px; margin-bottom:3px; }
+  .spine-line { flex:1; height:2px; background:#5F5E5A; }
+  .spine-arrow { width:0; height:0; border-top:5px solid transparent; border-bottom:5px solid transparent; border-left:9px solid #5F5E5A; }
+
+  .stage-header { display:flex; margin-left:80px; margin-right:108px; margin-bottom:5px; }
+  .stage-col { flex:1; font-size:11px; color:#888780; text-align:center; }
+
+  .bars-wrap { position:relative; }
+  .dashed-overlay { position:absolute; top:0; bottom:0; left:80px; right:108px; display:flex; pointer-events:none; }
+  .dline { flex:1; border-left:1px dashed #d0cfc9; }
+
+  .bar-row { display:flex; align-items:center; gap:0; margin:9px 0; cursor:pointer; }
+  .row-label { font-size:13px; font-weight:500; color:#5F5E5A; width:80px; text-align:right; padding-right:12px; flex-shrink:0; }
+  .bar-wrap { flex:1; position:relative; height:28px; margin-right:108px; }
+  .bar { height:28px; border-radius:6px; display:flex; align-items:center; transition:opacity .15s; position:relative; }
+  .bar:hover { opacity:.85; }
+  .stop-dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; position:absolute; right:-13px; top:1px; }
+  .right-label { position:absolute; right:-108px; width:100px; font-size:12px; color:#5F5E5A; display:flex; align-items:center; height:28px; padding-left:16px; }
+
+  .panel { border-radius:10px; border:0.5px solid #e0dfd8; background:#f8f7f4; padding:16px 18px; margin-top:4px; display:none; margin-left:80px; margin-right:108px; }
+  .panel.active { display:block; }
+  .panel-title { font-size:13px; font-weight:600; color:#2c2c2a; margin-bottom:10px; }
+  .code-block { background:#fff; border:0.5px solid #e0dfd8; border-radius:6px; padding:10px 14px; font-family:'SF Mono','Fira Mono',monospace; font-size:12px; color:#2c2c2a; white-space:pre; margin-bottom:8px; overflow-x:auto; }
+  .error-block { background:#fff; border:0.5px solid #e0dfd8; border-left-width:3px; border-radius:6px; padding:10px 14px; font-family:'SF Mono','Fira Mono',monospace; font-size:12px; white-space:pre; margin-bottom:10px; overflow-x:auto; }
+  .panel-note { font-size:12px; color:#5f5e5a; line-height:1.6; }
+
+  .hint { font-size:12px; color:#aaa9a2; margin-left:80px; margin-top:14px; }
+  .footer { margin-top:32px; font-size:12px; color:#9b9a94; }
+
+  .tb-wrap { display:flex; align-items:flex-start; gap:24px; padding:8px 0; }
+  .tb-left { display:flex; align-items:stretch; gap:10px; flex-shrink:0; }
+  .tb-arrow-col { display:flex; flex-direction:column; align-items:center; width:18px; }
+  .tb-arrow-line { flex:1; width:2px; background:#534AB7; }
+  .tb-arrow-head { width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-bottom:8px solid #534AB7; }
+  .tb-read { font-size:11px; color:#534AB7; font-weight:600; writing-mode:vertical-lr; transform:rotate(180deg); letter-spacing:1px; margin-top:4px; }
+  .tb-block { background:#1a1a2e; border-radius:10px; border:0.5px solid #2e2e4e; padding:16px 20px; font-family:'SF Mono','Fira Mono','Courier New',monospace; font-size:12px; line-height:1.8; min-width:400px; }
+  .tb-dim { color:#6060a0; }
+  .tb-normal { color:#a0a0c8; }
+  .tb-code { color:#d0d0f0; }
+  .tb-line { color:#EF9F27; font-weight:600; }
+  .tb-fn { color:#5DCAA5; }
+  .tb-crash { color:#ff7070; }
+  .tb-squig { color:#ff5555; letter-spacing:1px; }
+  .tb-err-row { background:#2a1a1a; border-radius:6px; padding:6px 10px; margin-top:4px; border-left:3px solid #ff5555; }
+  .tb-errtype { color:#5ba3d9; font-weight:600; }
+  .tb-errval { color:#e0e0f0; }
+  .tb-divider { border:none; border-top:0.5px dashed #2e2e4e; margin:6px 0; }
+  .ann-wrap { display:flex; flex-direction:column; gap:18px; padding-top:4px; }
+  .ann { display:flex; flex-direction:column; gap:2px; }
+  .ann-label { font-size:12px; font-weight:600; }
+  .ann-sub { font-size:11px; color:#5f5e5a; }
+  .start-note { margin-top:10px; font-size:11px; color:#888780; font-style:italic; }
+</style>
+</head>
+<body>
+
+<h2>Python error types</h2>
+<p class="subtitle">Click any bar to see a code example and what Python does.</p>
+
+<div class="spine-labels"><span>Code</span><span>Output</span></div>
+<div class="spine"><div class="spine-line"></div><div class="spine-arrow"></div></div>
+<div class="stage-header">
+  <div class="stage-col">Scanning</div>
+  <div class="stage-col">Syntax check</div>
+  <div class="stage-col">Translating</div>
+  <div class="stage-col">Running</div>
+</div>
+
+<div class="bars-wrap">
+  <div class="dashed-overlay">
+    <div class="dline"></div>
+    <div class="dline"></div>
+    <div class="dline"></div>
+    <div class="dline"></div>
+  </div>
+
+  <div class="bar-row" onclick="toggle('syntax')">
+    <div class="row-label">syntax</div>
+    <div class="bar-wrap">
+      <div class="bar" style="width:50%;background:#534AB7;">
+        <div class="stop-dot" style="background:#EF9F27;">
+          <svg width="12" height="12" viewBox="0 0 12 12"><line x1="3" y1="3" x2="9" y2="9" stroke="white" stroke-width="1.8" stroke-linecap="round"/><line x1="9" y1="3" x2="3" y2="9" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="right-label">SyntaxError</div>
+    </div>
+  </div>
+
+  <div class="bar-row" onclick="toggle('runtime')">
+    <div class="row-label">runtime</div>
+    <div class="bar-wrap">
+      <div class="bar" style="width:87%;background:#1D9E75;">
+        <div class="stop-dot" style="background:#888780;">
+          <svg width="12" height="12" viewBox="0 0 12 12"><line x1="3" y1="3" x2="9" y2="9" stroke="white" stroke-width="1.8" stroke-linecap="round"/><line x1="9" y1="3" x2="3" y2="9" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="right-label">traceback</div>
+    </div>
+  </div>
+
+  <div class="bar-row" onclick="toggle('semantic')">
+    <div class="row-label">semantic</div>
+    <div class="bar-wrap">
+      <div class="bar" style="width:98%;background:#ff9b0b;">
+        <div class="stop-dot" style="background:#534AB7;">
+          <svg width="12" height="12" viewBox="0 0 12 12"><text x="6" y="9.5" text-anchor="middle" font-size="11" fill="white" font-weight="bold">≠</text></svg>
+        </div>
+      </div>
+      <div class="right-label">no message</div>
+    </div>
+  </div>
+</div>
+
+<p class="hint">Click a bar to expand</p>
+
+<div class="panel" id="panel-syntax">
+  <div class="panel-title">Syntax error — Python can't even read this</div>
+  <div class="code-block">def get_density(city_data)
+    return city_data["pop"] / city_data["area"]</div>
+  <div class="error-block" style="border-left-color:#534AB7;color:#534AB7;">  File "example.py", line 1
+    def get_density(city_data)
+                              ^
+SyntaxError: expected ':'</div>
+  <p class="panel-note">The missing colon stops Python during the syntax check. Nothing in the file runs, not even earlier lines that were perfectly fine.</p>
+</div>
+
+<div class="panel" id="panel-runtime">
+  <div class="panel-title">Runtime error. Python understood the code, but something broke while running</div>
+  <div class="code-block">population = 120000
+area_km2 = 78.6
+
+density = population / area_km
+print(f"Density: {density:.1f}")</div>
+  <div class="error-block" style="border-left-color:#1D9E75;color:#0F6E56;">Traceback (most recent call last):
+  File "example.py", line 4, in &lt;module&gt;
+    density = population / area_km
+NameError: name 'area_km' is not defined</div>
+  <p class="panel-note">Lines 1 and 2 ran fine. The crash happened at line 4: a typo in the variable name. Python tells you exactly where it stopped.</p>
+  <p class="panel-note" style="margin-top:8px;">Common types: <code style="font-size:11px;">NameError</code>, <code style="font-size:11px;">TypeError</code>, <code style="font-size:11px;">KeyError</code>, <code style="font-size:11px;">IndexError</code>, <code style="font-size:11px;">AttributeError</code></p>
+</div>
+
+<div class="panel" id="panel-semantic">
+  <div class="panel-title">Semantic error — Python did exactly what you said, not what you meant</div>
+  <div class="code-block">temps_f = [32, 68, 104]
+
+temps_c = [(t - 32) / 1.8 for t in temps_f]
+
+print(temps_c)</div>
+  <div class="error-block" style="border-left-color:#ff9b0b;color:#854F0B;">[0.0, 20.0, 40.0]
+
+No error. But the formula should be (t - 32) * 5/9
+The result looks plausible, that's what makes this the hardest to catch.</div>
+  <p class="panel-note">The code runs from start to finish. No traceback, no warning. You only know something is wrong if you check the output carefully.</p>
+</div>
+
+<hr style="margin:36px 0 28px;border:none;border-top:1px solid #e0dfd8;">
+
+<h2 style="margin-bottom:6px;">Reading a traceback</h2>
+<p class="subtitle">A traceback is read bottom to top — start at the error, then follow the call chain upward.</p>
+
+<div class="tb-wrap">
+  <div class="tb-left">
+    <div class="tb-arrow-col">
+      <div class="tb-arrow-head"></div>
+      <div class="tb-arrow-line"></div>
+      <div class="tb-read">read</div>
+    </div>
+    <div class="tb-block">
+      <span class="tb-dim">Traceback (most recent call last):</span>
+
+      <hr class="tb-divider">
+      <div><span class="tb-normal">  File "example.py", </span><span class="tb-line">line 9</span><span class="tb-normal">, in </span><span class="tb-fn">&lt;module&gt;</span></div>
+      <div><span class="tb-code">    summarize(berkeley)</span></div>
+
+      <hr class="tb-divider">
+      <div><span class="tb-normal">  File "example.py", </span><span class="tb-line">line 5</span><span class="tb-normal">, in </span><span class="tb-fn">summarize</span></div>
+      <div><span class="tb-code">    density = get_density(city_data)</span></div>
+
+      <hr class="tb-divider">
+      <div><span class="tb-normal">  File "example.py", </span><span class="tb-line">line 2</span><span class="tb-normal">, in </span><span class="tb-fn">get_density</span></div>
+      <div><span class="tb-code">    return city_data[</span><span class="tb-crash">"area"</span><span class="tb-code">]</span></div>
+      <div><span class="tb-squig">                    ~~~~~~</span></div>
+
+      <div class="tb-err-row">
+        <span class="tb-errtype">KeyError:</span> <span class="tb-errval">'area'</span>
+      </div>
+      <div class="start-note">^ start here</div>
+    </div>
+  </div>
+
+  <div class="ann-wrap">
+    <div class="ann" style="margin-top:52px;">
+      <span class="ann-label" style="color:#5DCAA5;">function name</span>
+      <span class="ann-sub">which function was running</span>
+    </div>
+    <div class="ann" style="margin-top:8px;">
+      <span class="ann-label" style="color:#EF9F27;">line number</span>
+      <span class="ann-sub">where in the file</span>
+    </div>
+    <div class="ann" style="margin-top:44px;">
+      <span class="ann-label" style="color:#5DCAA5;">function name</span>
+      <span class="ann-sub">called by &lt;module&gt;</span>
+    </div>
+    <div class="ann" style="margin-top:44px;">
+      <span class="ann-label" style="color:#5ba3d9;">error type</span>
+      <span class="ann-sub">'area' key doesn't exist</span>
+    </div>
+  </div>
+</div>
+
+<p class="footer">&copy; 2026 Maryam Hosseini</p>
+
+<script>
+function toggle(id) {
+  ['syntax','runtime','semantic'].forEach(function(p) {
+    var el = document.getElementById('panel-'+p);
+    if (p === id) { el.classList.toggle('active'); }
+    else { el.classList.remove('active'); }
+  });
+  document.querySelector('.hint').style.display = 'none';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 260" font-family="ui-monospace, 'Cascadia Code', 'Fira Mono', monospace">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- White background -->
+  <rect width="700" height="260" fill="#ffffff"/>
+
+  <!-- Center divider -->
+  <line x1="350" y1="10" x2="350" y2="250" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- ===== LEFT: No venv ===== -->
+
+  <!-- Title -->
+  <text x="175" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#374151">No virtual environment</text>
+
+  <!-- Project A -->
+  <rect x="18" y="40" width="130" height="52" rx="4" fill="#fafafa" stroke="#9ca3af" stroke-width="1"/>
+  <text x="83" y="58" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#111827">Project A</text>
+  <text x="83" y="74" text-anchor="middle" font-size="9.5" fill="#6b7280">needs pandas 1.5</text>
+  <text x="83" y="87" text-anchor="middle" font-size="9.5" fill="#6b7280">needs Python 3.9</text>
+
+  <!-- Project B -->
+  <rect x="202" y="40" width="130" height="52" rx="4" fill="#fafafa" stroke="#9ca3af" stroke-width="1"/>
+  <text x="267" y="58" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#111827">Project B</text>
+  <text x="267" y="74" text-anchor="middle" font-size="9.5" fill="#6b7280">needs pandas 2.0</text>
+  <text x="267" y="87" text-anchor="middle" font-size="9.5" fill="#6b7280">needs Python 3.12</text>
+
+  <!-- Arrows to Global Python -->
+  <line x1="90" y1="92" x2="144" y2="140" stroke="#9ca3af" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="258" y1="92" x2="208" y2="140" stroke="#9ca3af" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Global Python box -->
+  <rect x="86" y="142" width="160" height="46" rx="4" fill="#fafafa" stroke="#6b7280" stroke-width="1"/>
+  <text x="166" y="161" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#111827">Global Python</text>
+  <text x="166" y="179" text-anchor="middle" font-size="9.5" fill="#6b7280">pandas ???  ·  Python ???</text>
+
+  <!-- Conflict line and text -->
+  <line x1="166" y1="188" x2="166" y2="204" stroke="#9ca3af" stroke-width="1"/>
+  <text x="166" y="218" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#dc2626">✕  version conflict</text>
+  <text x="166" y="233" text-anchor="middle" font-size="9" fill="#9ca3af">only one can be installed</text>
+
+  <!-- ===== RIGHT: With venv ===== -->
+
+  <!-- Title -->
+  <text x="524" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#374151">With virtual environments</text>
+
+  <!-- Env A dashed container -->
+  <rect x="364" y="38" width="150" height="122" rx="5" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="378" y="52" font-size="8.5" fill="#9ca3af">env_a/</text>
+
+  <!-- Project A isolated -->
+  <rect x="372" y="56" width="134" height="96" rx="4" fill="#fafafa" stroke="#9ca3af" stroke-width="1"/>
+  <text x="439" y="74" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#111827">Project A</text>
+  <text x="439" y="90" text-anchor="middle" font-size="9.5" fill="#6b7280">Python 3.9</text>
+  <text x="439" y="106" text-anchor="middle" font-size="9.5" fill="#16a34a">pandas 1.5  ✓</text>
+  <text x="439" y="120" text-anchor="middle" font-size="9.5" fill="#16a34a">geopandas 0.12  ✓</text>
+  <text x="439" y="144" text-anchor="middle" font-size="9" fill="#9ca3af">isolated</text>
+
+  <!-- Env B dashed container -->
+  <rect x="526" y="38" width="150" height="122" rx="5" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="540" y="52" font-size="8.5" fill="#9ca3af">env_b/</text>
+
+  <!-- Project B isolated -->
+  <rect x="534" y="56" width="134" height="96" rx="4" fill="#fafafa" stroke="#9ca3af" stroke-width="1"/>
+  <text x="601" y="74" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#111827">Project B</text>
+  <text x="601" y="90" text-anchor="middle" font-size="9.5" fill="#6b7280">Python 3.12</text>
+  <text x="601" y="106" text-anchor="middle" font-size="9.5" fill="#16a34a">pandas 2.0  ✓</text>
+  <text x="601" y="120" text-anchor="middle" font-size="9.5" fill="#16a34a">scikit-learn 1.4  ✓</text>
+  <text x="601" y="144" text-anchor="middle" font-size="9" fill="#9ca3af">isolated</text>
+
+  <!-- Success text -->
+  <text x="524" y="188" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#16a34a">✓  each project gets exactly what it needs</text>
+  <text x="524" y="204" text-anchor="middle" font-size="9" fill="#9ca3af">no conflicts, no surprises</text>
+</svg>

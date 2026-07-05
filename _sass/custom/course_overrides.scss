@@ -1,0 +1,450 @@
+// Put your custom CSS here!
+// You an reference all variables in the Berkeley files
+.staffer-badge.label-Pedagogy {
+  background-color: #9C3848 !important;
+  color: white !important;
+}
+
+// This affects the size of the course logo/name on the top left. We recommend commenting out/removing
+// this styling if you are using just your course name rather than a course logo image
+div.site-header {
+  height: 100%;
+  max-height: 150px;
+}
+
+// This affects the positioning of the course logo image (if it exists) on the top left
+.site-logo {
+  background-position: center;
+}
+
+
+// ============================================================
+// Course schedule week tables, resource link chips, and the
+// custom "finalproj" callout.
+// ============================================================
+
+table.week {
+    table-layout: fixed; /* Ensures columns are evenly spaced */
+    width: 100%; /* Ensure full width for the table */
+}
+
+
+table.week tr th:first-child,
+table.week tr td:first-child {
+    width: 22% !important; /* Narrower lecture/lab column */
+}
+
+table.week tr th:nth-child(2),
+table.week tr td:nth-child(2) {
+    width: 50% !important; /* Wider topics column */
+}
+
+table.week tr th:nth-child(3),
+table.week tr td:nth-child(3) {
+    width: 28% !important; /* Slightly narrower resources */
+}
+
+table.week tr td:nth-child(2) > p:first-of-type {
+    margin: 0; /* Remove unnecessary margins for the first paragraph in the second column */
+}
+
+table.week td.resources ul {
+    font-size: 0.9em; /* Slightly smaller font for list items */
+    margin: 0 0 0 1rem; /* Indent list items */
+}
+
+table.week .label {
+    font-size: 0.75em !important; /* Override global font size */
+    margin: 0 0.25rem 0 0; /* Adjust spacing around labels */
+}
+
+table.week .label.label-red,
+table.week .label.label-homework {
+  font-size: 1.02em !important; /* Slightly larger for due items */
+}
+
+table.week .label.label-assignment,
+table.week .label.label-orange,
+table.week .label.label-homework-released {
+  font-size: 0.98em !important; /* Slightly larger for release items */
+}
+
+table.week .label.label-project {
+  font-size: 0.98em !important;
+}
+
+table.week .resources-title {
+  margin: 0 0 0.25rem 0;
+  font-weight: 600;
+  font-size: 0.75em;
+  color: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+table.week ul.resources li {
+    margin: 0 0 0.35rem 0;
+    line-height: 1.35;
+}
+
+table.week ul.resources li:last-child {
+    margin-bottom: 0;
+}
+
+table.week ul.resources a {
+    display: inline-block;
+}
+
+
+table.week .title,
+table.week .schedule-topic-title {
+    font-weight: 500; /* Moderate font weight for titles */
+}
+
+.schedule-session-topics {
+  margin: 0;
+}
+
+.schedule-topic-detail {
+  color: #646464;
+  font-size: 0.92em;
+  line-height: 1.4;
+  margin: 0.25rem 0 0;
+}
+
+.schedule-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.schedule-flags .label {
+  margin: 0;
+}
+
+table.week.recess,
+table.week.recess td,
+table.week.recess th {
+    background-color: #f4f4f4;
+    color: #646464;
+}
+
+table.week.recess a,
+table.week.recess .title,
+table.week.recess li,
+table.week.recess p,
+table.week.recess time {
+    color: #646464 !important;
+}
+
+table.week.recess .lecture.content-type,
+table.week.recess .lab.content-type,
+table.week.recess .holiday.content-type,
+tr.holiday.recess .holiday.content-type {
+    background: rgba(0, 0, 0, 0.04);
+    border-left: 4px solid #bdbdbd;
+    color: #646464;
+    box-shadow: none;
+}
+
+table.week.recess .lecture.content-type::before,
+table.week.recess .lab.content-type::before,
+table.week.recess .holiday.content-type::before,
+tr.holiday.recess .holiday.content-type::before {
+    color: #646464;
+}
+
+p.lecture.content-type {
+    background: rgba(0, 114, 195, 0.08);
+    border-left: 4px solid #0072c3;
+    border-radius: 6px;
+    box-shadow: none;
+    padding: 0.65rem 0.8rem;
+    margin: 0;
+}
+
+p.lecture.content-type::before {
+    color: #0072c3;
+    content: "Lecture";
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    padding-bottom: 0.125rem;
+}
+
+p.holiday.content-type {
+    background: rgba(0, 0, 0, 0.04);
+    border-left: 4px solid #bdbdbd;
+    border-radius: 6px;
+    box-shadow: none;
+    color: #646464;
+    padding: 0.65rem 0.8rem;
+    margin: 0;
+}
+
+p.holiday.content-type::before {
+    color: #646464;
+    content: "No class";
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    padding-bottom: 0.125rem;
+}
+
+tr.holiday td,
+tr.holiday .schedule-topic-title {
+    color: #646464;
+}
+
+.label-gray {
+    background-color: #d6d6d6;
+    color: #6f6f6f;
+}
+
+blockquote.lecture {
+    display: block;
+    width: calc(100% - 4rem); /* Add padding but keep within container */
+    margin: 1.5rem auto; /* Center blockquotes with consistent spacing */
+    padding: 1.5rem; /* Add internal spacing */
+    background: rgba(0, 123, 255, 0.1); /* Light blue background */
+    border-left: 4px solid #007bff; /* Blue border */
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+p.lab.content-type,
+blockquote.lab.content-type {
+    background: rgba(255, 193, 7, 0.2);
+    border-left: 4px solid #f0c84b;
+    border-radius: 6px;
+    box-shadow: none;
+    padding: 0.65rem 0.8rem;
+    margin: 0;
+}
+
+p.lab.content-type::before,
+blockquote.lab.content-type::before {
+    color: #b8860b;
+    content: "Lab";
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    padding-bottom: 0.125rem;
+}
+
+.course-schedule .table-wrapper {
+    width: 100%;
+    margin: 0 0 1.25rem 0;
+    padding: 0;
+}
+
+.course-schedule .schedule-meta {
+    margin-bottom: 1rem;
+}
+
+.course-schedule .schedule-meta .btn {
+    margin-top: 0.5rem;
+}
+
+.course-schedule .schedule-week-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 1.75rem;
+    margin-bottom: 0.65rem;
+}
+
+.course-schedule .schedule-week-heading .schedule-week-title {
+    margin: 0;
+}
+
+.course-schedule .schedule-week-heading .schedule-week-module {
+    font-size: 0.75em !important;
+    margin: 0;
+}
+
+.course-schedule table.week {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.course-schedule blockquote.lecture {
+    margin: 2rem 0;
+    padding: 1.5rem;
+}
+
+.lecture .ul {
+    list-style-type: none; /* Remove bullet dots from list items */
+}
+
+.lecture .li {
+    list-style: none; /* Remove bullet dots from list items */
+    margin-left: 1.5rem; /* Indent list items */
+    font-size: 1em; /* Ensure consistent font size */
+}
+
+.lecture .slides {
+    background-color: rgba(31, 128, 238, 0.269);
+    border: rgb(57, 141, 237, 0.301);
+    color: black;
+}
+
+.lecture .slides:hover {
+    background-color: rgba(122, 73, 237, 0.26);
+}
+
+.lecture .ref {
+    background-color: #865aff30;
+    border: rgb(85, 0, 254);
+    color: black;
+}
+
+.lecture .ref:hover {
+    background-color: #d2a21e; 
+}
+
+.lecture .assignment {
+    background-color: #548985;
+    border: rgb(255, 255, 255);
+    color: black;
+}
+
+.lecture .assignment:hover {
+    background-color:#3e6663;
+}
+
+.lecture .solutions {
+    background-color:  rgba(255, 199, 199, .5);
+    border: rgba(255, 199, 199, 1);
+    color: black;
+}
+
+.lecture .solutions:hover {
+    background-color: rgba(255, 199, 199, 1);
+}
+
+.lecture .video,
+.lab .video {
+    background-color: rgba(252, 208, 29, 0.231);
+    border: rgba(238, 221, 31, 0.203);
+    color: black;
+}
+
+.lecture .video:hover,
+.lab .video:hover {
+    background-color: rgba(186, 140, 255, 0.306);
+}
+
+.lecture .ext_ref,
+.lab .ext_ref {
+    background-color: #cee3b5;
+    border: #cee3b5;
+    color: black;
+}
+.lecture .ext_ref:hover,
+.lab .ext_ref:hover {
+    background-color: #cee3b5;
+}
+
+
+// Module label color used on the course schedule (ported from cp255_web)
+.label-module4 {
+  background-color: #A5B18A;
+}
+
+// Exact colors for the custom "finalproj" callout (ported from cp255_web)
+.finalproj h3 {
+  font-size: 1.35rem;
+}
+
+p.finalproj,
+blockquote.finalproj {
+  background: rgba(255, 208, 128, 0.2);
+  border-left: 4px solid #ffb433;
+}
+
+p.finalproj::before,
+blockquote.finalproj::before {
+  color: #ffb433;
+}
+
+p.finalproj > .finalproj-title,
+blockquote.finalproj > .finalproj-title {
+  color: #ffb433;
+}
+
+
+@media (max-width: 640px) {
+  .course-schedule table.week,
+  .course-schedule table.week thead,
+  .course-schedule table.week tbody,
+  .course-schedule table.week tr,
+  .course-schedule table.week th,
+  .course-schedule table.week td {
+    display: block;
+    width: 100% !important;
+  }
+
+  .course-schedule table.week thead tr {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .course-schedule table.week td {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .course-schedule table.week td:first-child {
+    border-top: none;
+    padding-bottom: 0.25rem;
+  }
+}
+
+// The original CP255 site was light-mode only; its hard-coded chip and caption
+// colors need dark-scheme equivalents to stay readable (WCAG AA).
+@if $color-scheme == dark {
+  .lecture .slides,
+  .lecture .ref,
+  .lecture .solutions,
+  .lecture .video,
+  .lab .video {
+    color: #ffffff;
+  }
+
+  p.lecture.content-type {
+    background: rgba(0, 114, 195, 0.18);
+    color: #e8eef5;
+  }
+
+  p.lecture.content-type::before {
+    color: #7cb8e8;
+  }
+
+  p.lab.content-type,
+  blockquote.lab.content-type {
+    color: #f5f0e0;
+  }
+
+  p.holiday.content-type,
+  tr.holiday td,
+  tr.holiday .schedule-topic-title {
+    color: #b0b0b0;
+  }
+
+  .schedule-topic-detail {
+    color: #a3adc2;
+  }
+
+  // Inline-styled muted captions/footers (e.g. "© 2026 ...") from the source pages.
+  [style*="#6b7280"] {
+    color: #a3adc2 !important;
+  }
+}

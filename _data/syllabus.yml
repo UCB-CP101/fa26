@@ -1,0 +1,14 @@
+# Berkeley holidays referenced by spec/schedule_dates_spec.rb
+extra_days_col2:
+  - date: 2026-09-07
+    title: "Labor Day: no class"
+  - date: 2026-11-11
+    title: "Veterans Day: no class"
+  - date: 2026-11-25
+    title: "Thanksgiving recess begins"
+  - date: 2026-11-26
+    title: "Thanksgiving: no class"
+  - date: 2026-11-27
+    title: "Thanksgiving: no class"
+  - date: 2026-12-14
+    title: "Final Project Exhibition"

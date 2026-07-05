@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Functions Lab — CP 101</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #0d1117;
+  --surface1:   #161b22;
+  --surface2:   #21262d;
+  --border:     #30363d;
+  --text:       #e6edf3;
+  --muted:      #7d8590;
+  --accent: #f6bf5a;
+  --accent-bg:  rgba(232,160,66,.10);
+  --accent-br:  rgba(232,160,66,.28);
+  --blue:       #58a6ff;
+  --blue-bg:    rgba(88,166,255,.12);
+  --blue-br:    rgba(88,166,255,.30);
+  --brown:      #c97050;
+  --brown-bg:   rgba(201,112,80,.14);
+  --brown-br:   rgba(201,112,80,.32);
+  --green:      #3fb950;
+  --sans:       'Sora', sans-serif;
+  --mono:       'JetBrains Mono', monospace;
+  --radius:     8px;
+  --indent-unit: 18px;
+}
+
+/* ── LIGHT MODE ── */
+body.light {
+  --bg:         #f6f8fa;
+  --surface1:   #ffffff;
+  --surface2:   #eaeef2;
+  --border:     #d0d7de;
+  --text:       #1f2328;
+  --muted:      #57606a;
+  --accent:     #c97a1a;
+  --accent-bg:  rgba(201,122,26,.10);
+  --accent-br:  rgba(201,122,26,.30);
+  --blue:       #0969da;
+  --blue-bg:    rgba(9,105,218,.10);
+  --blue-br:    rgba(9,105,218,.28);
+  --brown:      #cf222e;
+  --brown-bg:   rgba(207,34,46,.10);
+  --brown-br:   rgba(207,34,46,.28);
+  --green:      #1a7f37;
+}
+
+body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── HEADER ── */
+.page-header {
+  background: var(--surface1); border-bottom: 1px solid var(--border);
+  padding: 13px 40px; display: flex; align-items: center; gap: 14px;
+  position: sticky; top: 0; z-index: 100;
+}
+.header-logo {
+  background: var(--accent); color: #0d1117;
+  font-family: var(--mono); font-weight: 600; font-size: 11px;
+  padding: 5px 10px; border-radius: 6px; letter-spacing: -.3px;
+}
+.header-info { flex: 1; }
+.header-title    { font-size: 14px; font-weight: 700; letter-spacing: -.3px; }
+.header-subtitle { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.progress-dots { display: flex; gap: 8px; align-items: center; }
+
+/* ── THEME TOGGLE ── */
+.theme-toggle {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 12px;
+  color: var(--muted); font-family: var(--sans); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 6px;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.progress-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--border); transition: background .3s, transform .2s; cursor: pointer;
+}
+.progress-dot:hover { transform: scale(1.3); }
+.progress-dot.is-done   { background: var(--green); }
+.progress-dot.is-active { background: var(--accent); transform: scale(1.25); }
+
+main { flex: 1; width: min(1280px, 92vw); margin: 0 auto; padding: 32px 20px 48px; display: flex; flex-direction: column; }
+
+/* ── TABS ── */
+.tab-nav {
+  display: flex; gap: 2px;
+  background: var(--surface1); border: 1px solid var(--border);
+  border-radius: 11px; padding: 4px; margin-bottom: 26px;
+}
+.tab-button {
+  flex: 1; padding: 9px 4px;
+  background: transparent; border: none; border-radius: 8px;
+  color: var(--muted); font-family: var(--sans);
+  cursor: pointer; transition: all .2s;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.tab-type  { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; opacity: .55; }
+.tab-label { font-family: var(--mono); font-size: 13px; font-weight: 600; }
+.tab-button:hover { color: var(--text); background: rgba(255,255,255,.04); }
+.tab-button.is-active { background: var(--surface2); color: var(--text); }
+.tab-button.is-active .tab-type { opacity: .8; color: var(--accent); }
+
+/* ── PANELS ── */
+.exercise-panel { display: none; }
+.exercise-panel.is-visible { display: flex; flex-direction: column; flex: 1; }
+
+/* ── CARD ── */
+.exercise-card {
+  background: var(--surface1); border: 1px solid var(--border);
+  border-radius: 12px; overflow: visible; margin-bottom: 16px;
+  display: flex; flex-direction: column; flex: 1;
+}
+.card-header { padding: 18px 22px 0; border-radius: 12px 12px 0 0; }
+.card-body   { padding: 18px 22px; flex: 1; display: flex; flex-direction: column; }
+.card-footer {
+  padding: 14px 22px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  border-radius: 0 0 12px 12px;
+}
+.exercise-badge {
+  display: inline-block; font-size: 13px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .7px;
+  padding: 4px 13px; border-radius: 20px; margin-bottom: 10px;
+}
+.badge-dnd   { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-br); }
+.badge-fill  { background: var(--blue-bg);   color: var(--blue);   border: 1px solid var(--blue-br); }
+.badge-match { background: rgba(63,185,80,.12); color: var(--green); border: 1px solid rgba(63,185,80,.30); }
+.exercise-prompt { font-size: 15.5px; line-height: 1.65; color: var(--muted); padding-bottom: 4px; }
+.exercise-prompt code {
+  font-family: var(--mono); font-size: 12px;
+  background: var(--surface2); padding: 1px 6px; border-radius: 4px; color: var(--text);
+}
+.btn-check {
+  background: var(--accent); color: #0d1117; border: none; border-radius: 7px;
+  padding: 8px 20px; font-family: var(--sans); font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: opacity .15s;
+}
+.btn-check:hover { opacity: .88; }
+.btn-reset {
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 7px;
+  padding: 8px 16px; font-family: var(--sans); font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all .15s;
+}
+.btn-reset:hover { border-color: var(--text); color: var(--text); }
+.feedback-message { font-size: 15px; font-weight: 600; }
+.feedback-message.is-correct { color: var(--green); }
+.feedback-message.is-wrong   { color: var(--brown); }
+
+/* ── PROMPT TABLE (for clean_column_name) ── */
+.prompt-table-label {
+  display: block; font-size: 14px; font-weight: 700;
+  color: var(--muted); margin-top: 10px; margin-bottom: 6px;
+}
+.prompt-table {
+  border-collapse: collapse; font-size: 14px;
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+  margin-top: 4px;
+}
+.prompt-table th, .prompt-table td {
+  padding: 8px 16px; border-bottom: 1px solid var(--border); text-align: left;
+}
+.prompt-table th { background: var(--surface2); color: var(--muted); font-weight: 700; font-size: 12px; text-transform: uppercase; }
+.prompt-table tr:last-child td { border-bottom: none; }
+.prompt-table td:last-child code { color: var(--green); }
+
+/* ── DRAG & DROP ── */
+.dnd-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+.column-heading {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px;
+  color: var(--muted); margin-bottom: 10px;
+}
+.code-bank { min-height: 60px; }
+
+/* Drop zone with indent guide lines */
+.drop-zone {
+  min-height: 90px; border: 1.5px dashed var(--border); border-radius: var(--radius);
+  padding: 6px; transition: border-color .2s, background .2s;
+  position: relative; flex: 1;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0px, transparent calc(var(--indent-unit) - 1px),
+    rgba(255,255,255,0.035) calc(var(--indent-unit) - 1px), rgba(255,255,255,0.035) var(--indent-unit)
+  );
+}
+.drop-zone.drag-over { border-color: var(--accent); background-color: var(--accent-bg); }
+.drop-zone-empty {
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  text-align: center; padding: 22px 0; line-height: 1.7; pointer-events: none;
+}
+
+/* Code line in bank */
+.bank-line {
+  display: flex; align-items: center;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 7px 12px; margin-bottom: 5px;
+  cursor: grab; user-select: none; transition: opacity .15s, border-color .2s;
+  font-family: var(--mono); font-size: 14.5px; gap: 8px;
+}
+.bank-line span { white-space: pre; }
+.bank-line:active { cursor: grabbing; opacity: .7; }
+.bank-line.is-dragging { opacity: .3; }
+
+/* Zone line — handle | indent bars | code | controls */
+.zone-line {
+  display: flex; align-items: start;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 8px 5px 4px; margin-bottom: 5px;
+  user-select: none; transition: border-color .2s, opacity .15s;
+  font-family: var(--mono); font-size: 14.5px; gap: 0;
+}
+.zone-line.is-correct { border-color: var(--blue);  background: var(--blue-bg); }
+.zone-line.is-wrong   { border-color: var(--brown); background: var(--brown-bg); }
+.zone-line.is-reorder-dragging { opacity: .3; }
+
+/* Drag handle */
+.drag-handle {
+  display: flex; align-items: center; justify-content: center;
+  width: 20px; flex-shrink: 0;
+  color: var(--border); cursor: grab; font-size: 14px;
+  padding: 0 2px; transition: color .15s; align-self: stretch;
+}
+.drag-handle:hover { color: var(--muted); }
+.drag-handle:active { cursor: grabbing; }
+
+/* Drop indicator between zone lines */
+.zone-drop-indicator {
+  height: 2px; border-radius: 2px;
+  background: var(--accent); margin: -2px 0 3px;
+  pointer-events: none; box-shadow: 0 0 6px var(--accent);
+}
+
+/* Indent bar column — left side */
+.indent-bar-rail {
+  display: flex; gap: 3px; align-items: stretch;
+  padding-right: 8px; flex-shrink: 0;
+  height: 24px;
+}
+.indent-bar-segment {
+  width: 4px; border-radius: 2px;
+  transition: background .15s;
+}
+.indent-bar-segment.is-active { }
+.indent-bar-segment.level-1.is-active { background: #58a6ff; }
+.indent-bar-segment.level-2.is-active { background: #e8a042; }
+.indent-bar-segment.level-3.is-active { background: #3fb950; }
+.indent-bar-segment.level-4.is-active { background: #d2a8ff; }
+.indent-bar-segment.is-empty { background: var(--border); opacity: .4; }
+
+/* Code text in zone line — left-padded by indent */
+.zone-line-text { flex: 1; white-space: pre; transition: padding-left .12s; }
+
+/* Controls — right side */
+.line-controls {
+  display: flex; align-items: center; gap: 3px; flex-shrink: 0; margin-left: 8px;
+}
+.indent-btn {
+  background: var(--surface1); border: 1px solid var(--border);
+  color: var(--muted); font-family: var(--mono); font-size: 11px;
+  border-radius: 4px; padding: 2px 7px; cursor: pointer; transition: all .15s; line-height: 1.5;
+}
+.indent-btn:hover { border-color: var(--accent); color: var(--accent); }
+.indent-level-badge {
+  font-family: var(--mono); font-size: 10px; color: var(--muted);
+  min-width: 14px; text-align: center;
+}
+.remove-line-btn {
+  background: none; border: none; color: var(--muted);
+  font-size: 13px; cursor: pointer; padding: 1px 4px;
+  transition: color .15s; line-height: 1; margin-left: 2px;
+}
+.remove-line-btn:hover { color: var(--brown); }
+
+/* Inline blank inside zone line */
+.inline-blank-input {
+  background: var(--surface1); border: none;
+  border-bottom: 2px solid var(--accent);
+  color: var(--text); font-family: var(--mono); font-size: 14.5px;
+  padding: 0 5px; outline: none; border-radius: 3px 3px 0 0;
+  min-width: 50px; vertical-align: baseline;
+}
+.inline-blank-input.is-correct { border-bottom-color: var(--blue);  color: var(--blue); }
+.inline-blank-input.is-wrong   { border-bottom-color: var(--brown); color: var(--brown); }
+
+/* ── FILL ── */
+.fill-code-block { font-family: var(--mono); font-size: 15px; flex: 1; }
+.fill-code-row   { display: block; white-space: pre; line-height: 2.2; }
+.blank-input {
+  display: inline-block;
+  background: var(--surface2); border: none;
+  border-bottom: 2px solid var(--accent);
+  color: var(--text); font-family: var(--mono); font-size: 15px;
+  padding: 0 6px; outline: none; transition: all .2s;
+  vertical-align: baseline; border-radius: 3px 3px 0 0;
+  text-align: center; white-space: normal; min-width: 36px;
+}
+.blank-input:focus { background: var(--accent-bg); }
+.blank-input.is-correct { border-bottom-color: var(--blue);  color: var(--blue);  background: var(--blue-bg); }
+.blank-input.is-wrong   { border-bottom-color: var(--brown); color: var(--brown); background: var(--brown-bg); }
+
+/* ── MATCH ── */
+.match-context {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 18px;
+  font-family: var(--mono); font-size: 14.5px; margin-bottom: 20px; line-height: 1.9;
+  overflow-x: auto;
+}
+.match-context-line { white-space: pre; }
+.match-layout { display: grid; grid-template-columns: 1fr minmax(180px, 220px); gap: 16px; flex: 1; align-content: start; }
+.match-snippets { display: flex; flex-direction: column; gap: 8px; }
+.snippet-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.snippet-code {
+  font-family: var(--mono); font-size: 14px; padding: 8px 12px;
+  border-bottom: 1px solid var(--border); white-space: pre;
+}
+.snippet-hint {
+  font-size: 14px; color: var(--muted); padding: 8px 12px;
+  border-bottom: 1px solid var(--border); line-height: 1.6;
+}
+.snippet-drop-zone {
+  padding: 6px 10px; min-height: 34px;
+  display: flex; align-items: center;
+  transition: background .15s;
+}
+.snippet-drop-zone.drag-over  { background: var(--accent-bg); }
+.snippet-drop-zone.is-correct { background: rgba(63,185,80,.10); }
+.snippet-drop-zone.is-wrong   { background: var(--brown-bg); }
+.placed-term {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600;
+  background: var(--surface1); border: 1px solid var(--border);
+  border-radius: 5px; padding: 3px 10px;
+  cursor: grab; user-select: none;
+}
+.placed-term.is-correct { color: var(--green); border-color: rgba(63,185,80,.40); background: rgba(63,185,80,.10); }
+.placed-term.is-wrong   { color: var(--brown); border-color: var(--brown-br); background: var(--brown-bg); }
+.drop-hint { font-size: 14px; color: var(--muted); font-style: italic; pointer-events: none; }
+.term-bank-column { display: flex; flex-direction: column; position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 90px); overflow-y: auto; }
+.term-bank-heading {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .8px; color: var(--muted); margin-bottom: 10px;
+}
+.term-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 7px 11px; margin-bottom: 6px;
+  font-size: 14px; font-weight: 600;
+  cursor: grab; user-select: none; transition: all .15s;
+}
+.term-card:hover { border-color: var(--accent); color: var(--accent); }
+.term-card:active { cursor: grabbing; opacity: .6; }
+.term-card.is-placed {
+  opacity: 0; pointer-events: none;
+  height: 0; margin: 0; padding: 0; border: none; overflow: hidden;
+}
+
+/* ── SYNTAX HIGHLIGHT ── */
+.kw  { color: #ff7b72; }
+.str { color: #a5d6ff; }
+.num { color: #79c0ff; }
+body.light .kw  { color: #cf222e; }
+body.light .str { color: #0550ae; }
+body.light .num { color: #0550ae; }
+body.light .example-call .ex-fn  { color: #6639ba; }
+body.light .example-call .ex-str { color: #0550ae; }
+body.light .example-call .ex-num { color: #0550ae; }
+body.light .repl-fn-name          { color: #6639ba; }
+body.light .indent-bar-segment.level-4.is-active { background: #6639ba; }
+
+/* ── TRY IT ── */
+.try-it-widget {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.try-it-header {
+  background: var(--surface2); border-bottom: 1px solid var(--border);
+  padding: 7px 16px; display: flex; align-items: center; gap: 10px;
+}
+.try-it-label {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .7px; color: var(--muted);
+}
+.try-it-note { font-size: 11px; color: var(--muted); opacity: .55; }
+.try-it-examples { padding: 10px 16px 4px; display: flex; flex-direction: column; gap: 3px; }
+.example-row {
+  font-family: var(--mono); font-size: 12px;
+  display: flex; align-items: center; gap: 0; opacity: .65;
+}
+.example-call .ex-fn  { color: #d2a8ff; }
+.example-call .ex-str { color: #a5d6ff; }
+.example-call .ex-num { color: #79c0ff; }
+.example-arrow  { color: var(--muted); margin: 0 8px; }
+.example-output { color: var(--green); }
+.try-it-repl {
+  padding: 10px 16px 14px;
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+}
+.repl-prompt  { font-family: var(--mono); font-size: 15px; color: var(--accent); margin-right: 4px; }
+.repl-call    { display: flex; align-items: center; font-family: var(--mono); font-size: 15px; }
+.repl-fn-name { color: #d2a8ff; }
+.repl-paren   { color: var(--text); }
+.repl-input {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 4px;
+  padding: 2px 8px; font-family: var(--mono); font-size: 15px; color: var(--text);
+  min-width: 70px; max-width: 200px; outline: none; transition: border-color .15s;
+}
+.repl-input:focus { border-color: var(--accent); }
+.repl-run-btn {
+  background: var(--accent); color: #0d1117; border: none; border-radius: 5px;
+  padding: 4px 14px; font-family: var(--sans); font-size: 12px; font-weight: 700;
+  cursor: pointer; margin-left: 8px; transition: opacity .15s;
+}
+.repl-run-btn:hover    { opacity: .85; }
+.repl-run-btn:disabled { opacity: .45; cursor: not-allowed; }
+.repl-result {
+  font-family: var(--mono); font-size: 15px;
+  margin-top: 6px; width: 100%; padding-left: 22px; min-height: 20px;
+}
+.result-arrow   { color: var(--muted); margin-right: 6px; }
+.result-value   { color: var(--green); }
+.result-error   { color: var(--brown); white-space: pre-wrap; word-break: break-word; }
+
+/* ── HELP PANEL ── */
+.help-panel { display: none; }
+.help-panel.is-visible { display: flex; flex-direction: column; flex: 1; }
+
+.help-section {
+  background: var(--surface1); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin-bottom: 20px;
+}
+.help-section-header {
+  padding: 14px 20px 0;
+  display: flex; align-items: center; gap: 10px;
+}
+.help-section-badge {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px;
+  padding: 3px 10px; border-radius: 20px;
+}
+.help-section-title {
+  font-size: 14px; font-weight: 700; letter-spacing: -.2px;
+}
+.help-section-body {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  padding: 16px 20px 20px; align-items: start;
+}
+.help-text { padding-right: 20px; }
+.help-text p { font-size: 15px; line-height: 1.65; color: var(--muted); margin-bottom: 10px; }
+.help-text p:last-child { margin-bottom: 0; }
+.help-text code {
+  font-family: var(--mono); font-size: 11.5px;
+  background: var(--surface2); padding: 1px 5px; border-radius: 4px; color: var(--text);
+}
+.help-text strong { color: var(--text); font-weight: 700; }
+.help-demo {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; background: var(--bg);
+  position: relative;
+}
+.help-demo-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px;
+  color: var(--muted); padding: 6px 12px; background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── DEMO ANIMATIONS ── */
+
+/* Assemble demo */
+.demo-assemble { padding: 12px; font-family: var(--mono); font-size: 11.5px; }
+.demo-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.demo-col-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 6px; }
+.demo-block {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 5px;
+  padding: 5px 8px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;
+  font-size: 11px; white-space: nowrap; overflow: hidden;
+}
+.demo-block .demo-grip { color: var(--border); font-size: 12px; flex-shrink: 0; }
+.demo-drop-zone {
+  border: 1.5px dashed var(--border); border-radius: 6px;
+  padding: 6px; min-height: 60px;
+}
+.demo-indicator { height: 2px; background: var(--accent); border-radius: 2px; margin: 2px 0; box-shadow: 0 0 5px var(--accent); }
+
+/* Flying block animation */
+.demo-flying {
+  position: absolute; background: var(--surface2); border: 1px solid var(--accent);
+  border-radius: 5px; padding: 5px 8px; font-family: var(--mono); font-size: 11px;
+  white-space: nowrap; pointer-events: none; opacity: 0;
+  animation: fly-block 3.2s ease-in-out infinite;
+  box-shadow: 0 4px 12px rgba(0,0,0,.4);
+  transform-origin: left center;
+}
+@keyframes fly-block {
+  0%   { opacity: 0;   transform: translate(0px, 0px)    scale(.95); }
+  12%  { opacity: 1;   transform: translate(0px, 0px)    scale(1); }
+  35%  { opacity: 1;   transform: translate(78px, 18px)  scale(1); }
+  55%  { opacity: 1;   transform: translate(78px, 18px)  scale(1); }
+  68%  { opacity: 0;   transform: translate(78px, 18px)  scale(.9); }
+  100% { opacity: 0;   transform: translate(0px, 0px)    scale(.95); }
+}
+
+/* Indent demo */
+.demo-indent { padding: 12px; }
+.demo-zone-line {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 5px; padding: 5px 8px; margin-bottom: 5px;
+  font-family: var(--mono); font-size: 11px;
+}
+.demo-bars { display: flex; gap: 3px; flex-shrink: 0; }
+.demo-bar { width: 4px; height: 18px; border-radius: 2px; background: var(--border); opacity: .4; }
+.demo-bar.b1 { animation: bar-on 3s ease infinite; animation-delay: .0s; }
+.demo-bar.b2 { animation: bar-on 3s ease infinite; animation-delay: .2s; }
+.demo-bar.b3 { animation: bar-on 3s ease infinite; animation-delay: .4s; }
+@keyframes bar-on {
+  0%,15%  { background: var(--border); opacity: .4; }
+  30%,55% { background: #58a6ff; opacity: 1; }
+  70%,100%{ background: var(--border); opacity: .4; }
+}
+.demo-code-text {
+  font-family: var(--mono); font-size: 11px;
+  animation: indent-shift 3s ease infinite;
+}
+@keyframes indent-shift {
+  0%,15%  { padding-left: 0px; }
+  30%,55% { padding-left: 36px; }
+  70%,100%{ padding-left: 0px; }
+}
+.demo-arrow-btns { display: flex; align-items: center; gap: 3px; margin-left: auto; }
+.demo-arrow-btn {
+  background: var(--surface1); border: 1px solid var(--border);
+  color: var(--muted); font-family: var(--mono); font-size: 10px;
+  border-radius: 3px; padding: 1px 5px;
+}
+.demo-arrow-btn.is-pressing { animation: btn-press 3s ease infinite; }
+@keyframes btn-press {
+  0%,20%  { border-color: var(--border); color: var(--muted); background: var(--surface1); }
+  28%,45% { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+  60%,100%{ border-color: var(--border); color: var(--muted); background: var(--surface1); }
+}
+.demo-level-badge { font-family: var(--mono); font-size: 10px; color: var(--muted); min-width: 14px; text-align: center; animation: level-count 3s ease infinite; }
+@keyframes level-count {
+  0%,20%  { content: '0'; color: var(--border); }
+  30%,55% { color: var(--accent); }
+  70%,100%{ color: var(--border); }
+}
+
+/* Fill demo */
+.demo-fill { padding: 12px; font-family: var(--mono); font-size: 12px; }
+.demo-fill-row { line-height: 2.2; white-space: pre; }
+.demo-blank-animated {
+  display: inline-block;
+  border-bottom: 2px solid var(--accent);
+  background: var(--surface2); border-radius: 3px 3px 0 0;
+  padding: 0 6px; min-width: 40px; text-align: center;
+  vertical-align: baseline; font-family: var(--mono); font-size: 12px;
+  overflow: hidden; white-space: nowrap;
+}
+.demo-blank-animated .demo-typed { animation: type-in 3.5s ease infinite; }
+@keyframes type-in {
+  0%,10%  { width: 0;    opacity: 0; }
+  20%     { width: 0;    opacity: 1; }
+  50%,75% { width: 32px; opacity: 1; }
+  88%     { width: 32px; opacity: 0; }
+  100%    { width: 0;    opacity: 0; }
+}
+.demo-blank-correct { border-bottom-color: var(--blue); background: var(--blue-bg); color: var(--blue); animation: blank-confirm 3.5s ease infinite; }
+@keyframes blank-confirm {
+  0%,60% { border-bottom-color: var(--accent); background: var(--surface2); color: var(--text); }
+  75%,90%{ border-bottom-color: var(--blue);   background: var(--blue-bg);  color: var(--blue); }
+  100%   { border-bottom-color: var(--accent); background: var(--surface2); color: var(--text); }
+}
+
+/* Match demo */
+.demo-match { padding: 12px; display: grid; grid-template-columns: 1fr 90px; gap: 10px; }
+.demo-snippet {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden; margin-bottom: 6px;
+}
+.demo-snippet-code { font-family: var(--mono); font-size: 10.5px; padding: 5px 8px; border-bottom: 1px solid var(--border); }
+.demo-snippet-drop { padding: 4px 8px; min-height: 26px; font-size: 11px; font-style: italic; color: var(--muted); }
+.demo-term-bank-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 6px; }
+.demo-term {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 5px; padding: 5px 8px; margin-bottom: 5px;
+  font-size: 11px; font-weight: 600;
+}
+.demo-term.is-flying-match {
+  animation: match-fly 4s ease infinite;
+  position: relative;
+}
+@keyframes match-fly {
+  0%,10%  { transform: translate(0,0);        border-color: var(--border); opacity: 1; }
+  30%     { transform: translate(-62px, 8px); border-color: var(--accent); opacity: 1; }
+  50%,65% { transform: translate(-62px, 8px); border-color: var(--accent); opacity: 0; }
+  70%     { transform: translate(0,0);        border-color: var(--border); opacity: 0; }
+  80%,100%{ transform: translate(0,0);        border-color: var(--border); opacity: 1; }
+}
+.demo-snippet-drop.is-receiving {
+  animation: receive-term 4s ease infinite;
+}
+@keyframes receive-term {
+  0%,28%  { background: transparent; color: var(--muted); font-style: italic; font-weight: 400; }
+  42%,65% { background: var(--accent-bg); color: var(--accent); font-style: normal; font-weight: 600; }
+  78%,100%{ background: transparent; color: var(--muted); font-style: italic; font-weight: 400; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .page-header { padding: 10px 14px; gap: 10px; }
+  .header-subtitle { display: none; }
+  .progress-dots { gap: 6px; }
+
+  main { padding: 20px 12px 80px; }
+
+  .tab-button { padding: 8px 2px; }
+  .tab-type   { font-size: 10px; }
+  .tab-label  { font-size: 11px; }
+
+  .card-header { padding: 14px 14px 0; }
+  .card-body   { padding: 14px 14px; }
+  .card-footer { padding: 10px 14px; gap: 8px; }
+
+  .dnd-columns { grid-template-columns: 1fr; }
+  .drop-zone   { overflow-x: auto; }
+  .zone-line-text { white-space: pre-wrap; word-break: break-all; }
+
+  .match-layout { grid-template-columns: 1fr; }
+  .term-bank-column { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+  .term-card { margin-bottom: 0; }
+
+  .help-section-body { grid-template-columns: 1fr; }
+  .help-text { padding-right: 0; margin-bottom: 16px; }
+  .help-demo { display: none; }
+
+  /* Scale font sizes back down on small screens */
+  .exercise-prompt    { font-size: 13.5px; }
+  .fill-code-block    { font-size: 13px; }
+  .blank-input        { font-size: 13px; }
+  .match-context      { font-size: 12.5px; }
+  .bank-line          { font-size: 12.5px; }
+  .zone-line          { font-size: 12.5px; }
+  .inline-blank-input { font-size: 12.5px; }
+  .snippet-code       { font-size: 12px; }
+  .term-card          { font-size: 12px; }
+  .placed-term        { font-size: 12px; }
+  .repl-prompt, .repl-call, .repl-input, .repl-result { font-size: 13px; }
+  .feedback-message   { font-size: 13px; }
+  .btn-check, .btn-reset { font-size: 13px; }
+  .help-text p        { font-size: 13px; }
+}
+
+@media (max-width: 400px) {
+  .tab-nav { flex-wrap: wrap; }
+  .tab-button { flex: 0 0 calc(50% - 2px); }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-logo">def</div>
+  <div class="header-info">
+    <div class="header-title">Python Functions Lab</div>
+    <div class="header-subtitle">CP 101 · Interactive Exercises</div>
+  </div>
+  <div class="progress-dots" id="progress-dots"></div>
+  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">☀️ Light</button>
+</div>
+
+<main>
+  <div class="tab-nav" id="tab-nav"></div>
+  <div id="exercise-panels"></div>
+</main>
+
+<script>
+'use strict';
+
+// ════════════════════════════════════════════════════════════════
+// EXERCISE DATA
+// ════════════════════════════════════════════════════════════════
+
+const EXERCISES = [
+  {
+    id: 1,
+    type: 'dnd',
+    functionName: 'greet',
+    tabType: 'Assemble',
+    title: 'greet()',
+    prompt: `A web app needs to welcome each user by name. Complete <code>greet(name: str)</code> — it receives one argument called <code>name</code>, a <code>str</code>, and returns a greeting string. For example, <code>greet("Alice")</code> should return <code>'Hello, Alice!'</code>.<br>Drag the three lines into the correct order, then set each indentation level.`,
+    lines: [
+      { lineId: 'signature', text: 'def greet(name: str) -> str:',       correctIndent: 0 },
+      { lineId: 'body',      text: 'message = "Hello, " + name + "!"',   correctIndent: 1 },
+      { lineId: 'retval',    text: 'return message',                       correctIndent: 1 },
+    ],
+    tryIt: {
+      params: ['name'], defaults: ['"Alice"'],
+      examples: [
+        { callHtml: '<span class="ex-fn">greet</span>(<span class="ex-str">"Alice"</span>)',   output: "'Hello, Alice!'" },
+        { callHtml: '<span class="ex-fn">greet</span>(<span class="ex-str">"CP 101"</span>)',  output: "'Hello, CP 101!'" },
+      ]
+    }
+  },
+  {
+    id: 2,
+    type: 'match',
+    functionName: null,
+    tabType: 'Matching',
+    title: 'greet()',
+    prompt: `Every Python function shares the same anatomy. Study <code>greet()</code> below, then match each highlighted snippet to its correct technical name. Drag a term from the bank onto the card it describes.`,
+    contextLines: [
+      'def greet(name: str) -> str:',
+      '    message = "Hello, " + name + "!"',
+      '    return message',
+    ],
+    pairs: [
+      {
+        snippetId: 'function-signature',
+        displayCode: 'def greet(name: str) -> str:',
+        hint: 'The entire opening line. Names the function, lists its inputs with types, and declares what type it will return.',
+        term: 'function signature'
+      },
+      {
+        snippetId: 'parameter',
+        displayCode: 'name',
+        hint: 'A local variable created at call time. The caller passes a value for it; inside the function you use it like any variable.',
+        term: 'parameter'
+      },
+      {
+        snippetId: 'type-hint',
+        displayCode: ': str  ← annotation on the parameter',
+        hint: 'Documents the expected type for a parameter. Python does not enforce it at runtime, but editors and linters use it.',
+        term: 'type hint'
+      },
+      {
+        snippetId: 'return-type',
+        displayCode: '-> str',
+        hint: 'Appears after the closing parenthesis, before the colon. Declares the type of value the function promises to return.',
+        term: 'return type'
+      },
+      {
+        snippetId: 'function-body',
+        displayCode: 'message = "Hello, " + name + "!"',
+        hint: 'One or more indented statements that execute when the function is called. This is where the work happens.',
+        term: 'function body'
+      },
+      {
+        snippetId: 'return-statement',
+        displayCode: 'return message',
+        hint: 'Immediately ends the function and hands a value back to the caller. Execution resumes at the call site.',
+        term: 'return statement'
+      },
+      {
+        snippetId: 'return-value',
+        displayCode: 'message  ← the expression after return',
+        hint: 'The actual value sent back. Here it is the variable message, which contains the completed greeting string.',
+        term: 'return value'
+      },
+    ]
+  },
+  {
+    id: 3,
+    type: 'dnd',
+    functionName: 'clean_column_names',
+    tabType: 'Assemble',
+    title: 'clean_column_names()',
+    prompt: `City permit datasets often arrive with messy column headers — capital letters, spaces between words, and extra whitespace at the edges. Complete <code>clean_column_names(df)</code> — it takes a DataFrame and uses the pandas <code>.str</code> accessor to clean every column name in one vectorized expression: strip whitespace, lowercase, replace spaces with underscores. Returns the updated DataFrame.<br><br><span class="prompt-table-label">Five columns from a NYC permits dataset, before and after:</span><table class="prompt-table"><thead><tr><th>Raw column name</th><th>Cleaned</th></tr></thead><tbody><tr><td><code>" Street Name "</code></td><td><code>street_name</code></td></tr><tr><td><code>"Zip Code"</code></td><td><code>zip_code</code></td></tr><tr><td><code>"Permit Type"</code></td><td><code>permit_type</code></td></tr><tr><td><code>" Issue Date"</code></td><td><code>issue_date</code></td></tr><tr><td><code>"Owner Name "</code></td><td><code>owner_name</code></td></tr></tbody></table>`,
+    lines: [
+      { lineId: 'signature', text: 'def clean_column_names(df: pd.DataFrame) -> pd.DataFrame:',                              correctIndent: 0 },
+      { lineId: 'assign',    text: 'df.columns = (df.columns\n    .str.strip()\n    .str.lower()\n    .str.replace(" ", "_"))', correctIndent: 1 },
+      { lineId: 'retval',    text: 'return df',                                                                               correctIndent: 1 },
+    ],
+    tryIt: {
+      staticOnly: true,
+      examples: [
+        { callHtml: '<span class="ex-fn">clean_column_names</span>(df) <span style="color:var(--muted)">— df.columns before:</span> <span class="ex-str">[" Street Name ", "Zip Code", "Permit Type"]</span>', output: '["street_name", "zip_code", "permit_type"]' },
+        { callHtml: '<span class="ex-fn">clean_column_names</span>(df) <span style="color:var(--muted)">— df.columns before:</span> <span class="ex-str">[" Issue Date", "Owner Name "]</span>',              output: '["issue_date", "owner_name"]' },
+      ]
+    }
+  },
+  {
+    id: 4,
+    type: 'dnd',
+    functionName: 'celsius_to_f',
+    tabType: 'Assemble',
+    title: 'celsius_to_f()',
+    prompt: `Sensor readings from weather stations arrive in Celsius, but your analysis pipeline expects Fahrenheit. Complete <code>celsius_to_f(c: float)</code> — it takes a temperature <code>c</code> as a <code>float</code> and returns the converted value using F = C × 9/5 + 32. For example, <code>celsius_to_f(100)</code> should return <code>212.0</code>.`,
+    lines: [
+      { lineId: 'signature', text: 'def celsius_to_f(c: float) -> float:', correctIndent: 0 },
+      { lineId: 'body',      text: 'result = c * 9/5 + 32',                correctIndent: 1 },
+      { lineId: 'retval',    text: 'return result',                          correctIndent: 1 },
+    ],
+    tryIt: {
+      params: ['c'], defaults: ['100'],
+      examples: [
+        { callHtml: '<span class="ex-fn">celsius_to_f</span>(<span class="ex-num">0</span>)',   output: '32.0' },
+        { callHtml: '<span class="ex-fn">celsius_to_f</span>(<span class="ex-num">100</span>)', output: '212.0' },
+        { callHtml: '<span class="ex-fn">celsius_to_f</span>(<span class="ex-num">-40</span>)', output: '-40.0' },
+      ]
+    }
+  },
+  {
+    id: 5,
+    type: 'fill',
+    functionName: 'absolute_value',
+    tabType: 'Fill the Gaps',
+    title: 'absolute_value()',
+    prompt: `Elevation readings in a coastal flooding dataset can be negative (below sea level). Complete <code>absolute_value(n: float)</code> — it takes a number <code>n</code> and returns its magnitude: if <code>n</code> is negative, return its negation; otherwise return <code>n</code> unchanged. For example, <code>absolute_value(-7)</code> → <code>7</code> and <code>absolute_value(3)</code> → <code>3</code>.`,
+    rows: [
+      { indent: 0, template: 'def [absolute_value](n: float) -> float:' },
+      { indent: 1, template: 'if n < [0]:' },
+      { indent: 2, template: 'return -n' },
+      { indent: 1, template: 'return [n]' },
+    ],
+    tryIt: {
+      params: ['n'], defaults: ['-7'],
+      examples: [
+        { callHtml: '<span class="ex-fn">absolute_value</span>(<span class="ex-num">-7</span>)', output: '7' },
+        { callHtml: '<span class="ex-fn">absolute_value</span>(<span class="ex-num">3</span>)',  output: '3' },
+        { callHtml: '<span class="ex-fn">absolute_value</span>(<span class="ex-num">0</span>)',  output: '0' },
+      ]
+    }
+  },
+  {
+    id: 6,
+    type: 'fill',
+    functionName: 'classify_grade',
+    tabType: 'Fill the Gaps',
+    title: 'classify_grade()',
+    prompt: `An automated grading script converts numeric scores to letter grades. Complete <code>classify_grade(score: int)</code> — it takes a whole-number <code>score</code> (0–100) and returns a letter grade string: <code>"A"</code> for 90 and above, <code>"B"</code> for 80 and above, and <code>"C"</code> for everything else.`,
+    rows: [
+      { indent: 0, template: 'def classify_grade([score: int]) -> str:' },
+      { indent: 1, template: 'if score >= [90]:' },
+      { indent: 2, template: 'return "A"' },
+      { indent: 1, template: 'elif score >= [80]:' },
+      { indent: 2, template: 'return "B"' },
+      { indent: 1, template: 'else:' },
+      { indent: 2, template: 'return ["C"]' },
+    ],
+    tryIt: {
+      params: ['score'], defaults: ['85'],
+      examples: [
+        { callHtml: '<span class="ex-fn">classify_grade</span>(<span class="ex-num">95</span>)', output: '"A"' },
+        { callHtml: '<span class="ex-fn">classify_grade</span>(<span class="ex-num">82</span>)', output: '"B"' },
+        { callHtml: '<span class="ex-fn">classify_grade</span>(<span class="ex-num">74</span>)', output: '"C"' },
+      ]
+    }
+  },
+  {
+    id: 7,
+    type: 'match',
+    functionName: null,
+    tabType: 'Matching',
+    title: 'classify_grade()',
+    prompt: `Functions can branch: they take different paths through the code depending on the input. Study <code>classify_grade()</code> below — it uses an if / elif / else chain. Match each highlighted snippet to its correct name.`,
+    contextLines: [
+      'def classify_grade(score: int) -> str:',
+      '    if score >= 90:',
+      '        return "A"',
+      '    elif score >= 80:',
+      '        return "B"',
+      '    else:',
+      '        return "C"',
+    ],
+    pairs: [
+      {
+        snippetId: 'if-statement',
+        displayCode: 'if score >= 90:',
+        hint: 'Tests a condition. If true, the indented block below it runs; otherwise Python moves to the next branch.',
+        term: 'if statement'
+      },
+      {
+        snippetId: 'condition',
+        displayCode: 'score >= 90',
+        hint: 'The expression evaluated to True or False. Here it asks whether the score meets the threshold.',
+        term: 'condition'
+      },
+      {
+        snippetId: 'comparison-operator',
+        displayCode: '>=',
+        hint: 'Compares two values. Returns True when the left side is greater than or equal to the right.',
+        term: 'comparison operator'
+      },
+      {
+        snippetId: 'elif-clause',
+        displayCode: 'elif score >= 80:',
+        hint: 'Short for "else if". Only reached when all previous conditions were False. Lets you add more branches without nesting.',
+        term: 'elif clause'
+      },
+      {
+        snippetId: 'else-clause',
+        displayCode: 'else:',
+        hint: 'The catch-all branch. Runs when every if and elif above it evaluated to False. No condition needed.',
+        term: 'else clause'
+      },
+      {
+        snippetId: 'branch',
+        displayCode: '    return "A"  ← indented block under if',
+        hint: 'A block of code that only runs when its controlling condition is True. Each if / elif / else has its own branch.',
+        term: 'branch'
+      },
+      {
+        snippetId: 'early-return',
+        displayCode: 'return "C"  ← exits immediately in else',
+        hint: 'A return inside a conditional. The moment Python hits it the function is done — it never reaches any later code.',
+        term: 'early return'
+      },
+    ]
+  },
+];
+
+// ════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════
+
+const dndState           = {};  // exerciseId -> { bank, zone, blankValues }
+const matchState         = {};  // exerciseId -> { placements }
+const completedExercises = new Set();
+let activeTabId          = 1;
+
+let currentDrag      = { active: false, exerciseId: null, fromZone: null, lineId: null, zoneIndex: null };
+let currentMatchDrag = { active: false, exerciseId: null, fromSnippetId: null, term: null };
+
+// ════════════════════════════════════════════════════════════════
+// PYTHON RUNNER — transpiles the exercise subset to JS, no CDN
+// Supports: def, return, if/elif/else, for-in, assignment, str ops
+// ════════════════════════════════════════════════════════════════
+
+function runStudentPython(pythonSource, callExpression) {
+  const jsSource = transpilePythonSubset(pythonSource);
+  // eslint-disable-next-line no-new-func
+  const sandbox  = new Function(
+    'let __result__;\n' + jsSource + '\n__result__ = JSON.stringify(' + callExpression + ');\nreturn __result__;'
+  );
+  return pythonRepr(JSON.parse(sandbox()));
+}
+
+function pythonRepr(value) {
+  if (value === null || value === undefined) return 'None';
+  if (value === true)  return 'True';
+  if (value === false) return 'False';
+  if (typeof value === 'string')
+    return "'" + value.replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'";
+  return String(value);
+}
+
+function transpilePythonSubset(source) {
+  const rawLines   = source.split('\n');
+  const output     = [];
+  // blockStack entries: { openedAtLevel, jsDepth }
+  // openedAtLevel = Python indent level of the line that opened this block
+  // jsDepth       = JS indent depth of that opener
+  // A block is closed when we see a line at pythonLevel <= openedAtLevel
+  const blockStack = [];
+
+  const indentLevelOf = (line) => {
+    let count = 0;
+    for (const ch of line) { if (ch === ' ') count++; else break; }
+    return Math.floor(count / 4);
+  };
+
+  const ji = (depth) => '  '.repeat(depth);
+
+  const xpExpr = (expr) => expr.trim()
+    .replace(/\bTrue\b/g,  'true')
+    .replace(/\bFalse\b/g, 'false')
+    .replace(/\bNone\b/g,  'null')
+    .replace(/\.lower\(\)/g,  '.toLowerCase()')
+    .replace(/\.upper\(\)/g,  '.toUpperCase()')
+    .replace(/\.strip\(\)/g,  '.trim()')
+    .replace(/\.replace\(([^,]+),\s*([^)]+)\)/g, '.replaceAll($1, $2)')
+    // `char in "aeiou"` → `"aeiou".includes(char)`
+    .replace(/(\w+)\s+in\s+("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, '$2.includes($1)');
+
+  for (const rawLine of rawLines) {
+    const stripped = rawLine.trim();
+    if (!stripped || stripped.startsWith('#')) continue;
+
+    const pythonLevel  = indentLevelOf(rawLine);
+    const isElifOrElse = /^(elif\b|else\s*:)/.test(stripped);
+
+    if (isElifOrElse) {
+      // Pop the preceding if/elif block at this same level — no standalone '}'
+      // because the elif/else line itself begins with '} else'
+      while (blockStack.length > 0 &&
+             blockStack[blockStack.length - 1].openedAtLevel >= pythonLevel) {
+        blockStack.pop();
+      }
+    } else {
+      // Close any blocks whose opener is at or deeper than the current line
+      while (blockStack.length > 0 &&
+             blockStack[blockStack.length - 1].openedAtLevel >= pythonLevel) {
+        const closedBlock = blockStack.pop();
+        output.push(ji(closedBlock.jsDepth) + '}');
+      }
+    }
+
+    const jsDepth = blockStack.length;   // depth = number of currently open blocks
+
+    // ── def ──
+    const defMatch = stripped.match(/^def\s+(\w+)\s*\(([^)]*)\)\s*(?:->[^:]+)?:/);
+    if (defMatch) {
+      const paramNames = defMatch[2].split(',')
+        .map(p => p.trim().split(':')[0].trim().split('=')[0].trim())
+        .filter(Boolean);
+      output.push(`${ji(jsDepth)}function ${defMatch[1]}(${paramNames.join(', ')}) {`);
+      blockStack.push({ openedAtLevel: pythonLevel, jsDepth });
+      continue;
+    }
+
+    // ── return ──
+    const returnMatch = stripped.match(/^return(?:\s+(.+))?$/);
+    if (returnMatch) {
+      output.push(`${ji(jsDepth)}return ${returnMatch[1] ? xpExpr(returnMatch[1]) : 'undefined'};`);
+      continue;
+    }
+
+    // ── elif ──
+    const elifMatch = stripped.match(/^elif\s+(.+):/);
+    if (elifMatch) {
+      const parentJsDepth = blockStack.length > 0 ? blockStack[blockStack.length - 1].jsDepth : 0;
+      output.push(`${ji(parentJsDepth)}} else if (${xpExpr(elifMatch[1])}) {`);
+      blockStack.push({ openedAtLevel: pythonLevel, jsDepth: parentJsDepth });
+      continue;
+    }
+
+    // ── else ──
+    if (/^else\s*:/.test(stripped)) {
+      const parentJsDepth = blockStack.length > 0 ? blockStack[blockStack.length - 1].jsDepth : 0;
+      output.push(`${ji(parentJsDepth)}} else {`);
+      blockStack.push({ openedAtLevel: pythonLevel, jsDepth: parentJsDepth });
+      continue;
+    }
+
+    // ── if ──
+    const ifMatch = stripped.match(/^if\s+(.+):/);
+    if (ifMatch) {
+      output.push(`${ji(jsDepth)}if (${xpExpr(ifMatch[1])}) {`);
+      blockStack.push({ openedAtLevel: pythonLevel, jsDepth });
+      continue;
+    }
+
+    // ── for x in iterable ──
+    const forMatch = stripped.match(/^for\s+(\w+)\s+in\s+(.+):/);
+    if (forMatch) {
+      output.push(`${ji(jsDepth)}for (const ${forMatch[1]} of ${xpExpr(forMatch[2])}) {`);
+      blockStack.push({ openedAtLevel: pythonLevel, jsDepth });
+      continue;
+    }
+
+    // ── assignment ──
+    const assignMatch = stripped.match(/^(\w+)\s*=\s*(.+)$/);
+    if (assignMatch) {
+      output.push(`${ji(jsDepth)}let ${assignMatch[1]} = ${xpExpr(assignMatch[2])};`);
+      continue;
+    }
+
+    if (stripped === 'pass') { output.push(`${ji(jsDepth)}// pass`); continue; }
+
+    throw new Error(`Unrecognised statement: "${stripped}"`);
+  }
+
+  // Close any remaining open blocks (end of source)
+  while (blockStack.length > 0) {
+    const closedBlock = blockStack.pop();
+    output.push(ji(closedBlock.jsDepth) + '}');
+  }
+
+  return output.join('\n');
+}
+
+// ════════════════════════════════════════════════════════════════
+// SHUFFLE — Fisher-Yates, guarantees def is not always first
+// ════════════════════════════════════════════════════════════════
+
+function shuffleArray(inputArray) {
+  const shuffled = [...inputArray];
+  for (let tailIndex = shuffled.length - 1; tailIndex > 0; tailIndex--) {
+    const swapIndex = Math.floor(Math.random() * (tailIndex + 1));
+    [shuffled[tailIndex], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[tailIndex]];
+  }
+  return shuffled;
+}
+
+// ════════════════════════════════════════════════════════════════
+// HELP PANEL
+// ════════════════════════════════════════════════════════════════
+
+function buildHelpPanel() {
+  return `
+<!-- ── ASSEMBLE ── -->
+<div class="help-section">
+  <div class="help-section-header">
+    <span class="exercise-badge badge-dnd help-section-badge">Assemble</span>
+    <span class="help-section-title">Drag &amp; Drop — putting lines in order</span>
+  </div>
+  <div class="help-section-body">
+    <div class="help-text">
+      <p>The <strong>Code Bank</strong> on the left holds all the lines of a function, shuffled. Your job is to drag each line into the <strong>Build Here</strong> zone on the right, in the correct order from top to bottom.</p>
+      <p>Grab any line from either side using the <strong>⋮ handle</strong> at its left edge. Drop it onto the zone to place it, or drop it between two lines already in the zone to insert it at that position.</p>
+      <p>Once a line is in the zone you can <strong>reorder it</strong> by dragging it up or down with the same handle. Use <strong>✕</strong> to send a line back to the bank.</p>
+      <p><strong>Indentation matters.</strong> Python uses indentation to define which lines belong inside a function, loop, or conditional. Use the <strong>← →</strong> arrows on the right of each zone line to set the correct indent level. The coloured bars on the left show the current depth — blue for level 1, amber for 2, green for 3.</p>
+    </div>
+    <div class="help-demo">
+      <div class="help-demo-label">Drag a line from bank → zone</div>
+      <div class="demo-assemble" style="position:relative;">
+        <div class="demo-cols">
+          <div>
+            <div class="demo-col-label">Code Bank</div>
+            <div class="demo-block" id="demo-bank-block"><span class="demo-grip">⋮</span><span class="kw">return</span> result</div>
+            <div class="demo-block"><span class="demo-grip">⋮</span>result = c * 9/5 + 32</div>
+          </div>
+          <div>
+            <div class="demo-col-label">Build Here</div>
+            <div class="demo-drop-zone">
+              <div class="demo-block"><span class="demo-grip">⋮</span><span class="kw">def</span> f(c):</div>
+              <div class="demo-indicator"></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-flying"><span class="kw">return</span> result</div>
+      </div>
+      <div class="help-demo-label" style="margin-top:0; border-top:1px solid var(--border);">Set indentation with ← →</div>
+      <div class="demo-indent">
+        <div class="demo-zone-line">
+          <div class="demo-bars">
+            <div class="demo-bar b1"></div>
+            <div class="demo-bar b2"></div>
+            <div class="demo-bar b3"></div>
+          </div>
+          <span class="demo-code-text"><span class="kw">return</span> result</span>
+          <div class="demo-arrow-btns">
+            <button class="demo-arrow-btn">←</button>
+            <span class="demo-level-badge">→</span>
+            <button class="demo-arrow-btn is-pressing">→</button>
+          </div>
+        </div>
+        <p style="font-size:11px; color:var(--muted); margin-top:6px; line-height:1.5;">
+          The coloured bars and the code shift right as you increase the indent level. Level 0 = top-level (function signature), level 1 = inside the function body, level 2 = inside an <code>if</code>, and so on.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FILL THE GAPS ── -->
+<div class="help-section">
+  <div class="help-section-header">
+    <span class="exercise-badge badge-fill help-section-badge">Fill the Gaps</span>
+    <span class="help-section-title">Fill in Blanks — complete the missing pieces</span>
+  </div>
+  <div class="help-section-body">
+    <div class="help-text">
+      <p>The function is mostly written for you. Each <strong>underlined blank</strong> is a word or value that's been removed. Click a blank and type what belongs there.</p>
+      <p>Press <strong>Enter</strong> or click <strong>Check Answer</strong> to check. Correct blanks turn <span style="color:var(--blue)">blue</span>; wrong ones turn <span style="color:var(--brown)">brown</span>. Fix the brown ones and check again.</p>
+      <p>The blank's width is a hint — a wide blank expects a longer answer like a function name, a narrow one expects a number or a short keyword.</p>
+    </div>
+    <div class="help-demo">
+      <div class="help-demo-label">Type into the blank, then check</div>
+      <div class="demo-fill">
+        <div class="demo-fill-row"><span class="kw">def</span> <span class="demo-blank-animated" style="width:90px;"><span class="demo-typed" style="color:var(--accent);">abs_val</span></span>(n):</div>
+        <div class="demo-fill-row">    <span class="kw">if</span> n &lt; <span class="demo-blank-correct" style="width:24px;">0</span>:</div>
+        <div class="demo-fill-row">        <span class="kw">return</span> -n</div>
+        <div class="demo-fill-row">    <span class="kw">return</span> <span class="demo-blank-animated" style="width:20px;"><span class="demo-typed" style="color:var(--accent);">n</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MATCHING ── -->
+<div class="help-section">
+  <div class="help-section-header">
+    <span class="exercise-badge badge-match help-section-badge">Matching</span>
+    <span class="help-section-title">Anatomy — name each part of the function</span>
+  </div>
+  <div class="help-section-body">
+    <div class="help-text">
+      <p>Each card on the left shows a snippet from the function and a short description of what it does. The <strong>Term Bank</strong> on the right lists the correct technical names.</p>
+      <p>Drag a term from the bank and <strong>drop it onto the card</strong> it describes. You can drag a placed term back off a card and swap it with another.</p>
+      <p>Once you've placed all seven terms, click <strong>Check Answer</strong>. Correct matches turn <span style="color:var(--green)">green</span>; wrong ones turn <span style="color:var(--brown)">brown</span>.</p>
+    </div>
+    <div class="help-demo">
+      <div class="help-demo-label">Drag a term onto the matching card</div>
+      <div class="demo-match">
+        <div>
+          <div class="demo-snippet">
+            <div class="demo-snippet-code"><span class="kw">def</span> greet(name: str) -&gt; str:</div>
+            <div class="demo-snippet-drop is-receiving">function signature</div>
+          </div>
+          <div class="demo-snippet">
+            <div class="demo-snippet-code">name</div>
+            <div class="demo-snippet-drop">Drop term here</div>
+          </div>
+        </div>
+        <div>
+          <div class="demo-term-bank-label">Term Bank</div>
+          <div class="demo-term">parameter</div>
+          <div class="demo-term is-flying-match">function signature</div>
+          <div class="demo-term">return type</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`;
+}
+
+// ════════════════════════════════════════════════════════════════
+// BOOT
+// ════════════════════════════════════════════════════════════════
+
+function boot() {
+  const tabNavElement   = document.getElementById('tab-nav');
+  const panelsContainer = document.getElementById('exercise-panels');
+  const dotsContainer   = document.getElementById('progress-dots');
+
+  EXERCISES.forEach(exercise => {
+    const tabButton      = document.createElement('button');
+    tabButton.className  = 'tab-button';
+    tabButton.dataset.id = exercise.id;
+    tabButton.innerHTML  = `
+      <span class="tab-type">${escapeHtml(exercise.tabType)}</span>
+      <span class="tab-label" id="tab-label-${exercise.id}">${escapeHtml(exercise.title)}</span>`;
+    tabButton.onclick    = () => switchTab(exercise.id);
+    tabNavElement.appendChild(tabButton);
+
+    const badgeClass = { dnd: 'badge-dnd', fill: 'badge-fill', match: 'badge-match' }[exercise.type];
+    const badgeText  = { dnd: 'Assemble', fill: 'Fill the Gaps', match: 'Matching' }[exercise.type];
+
+    const panelElement      = document.createElement('div');
+    panelElement.className  = 'exercise-panel';
+    panelElement.id         = `panel-${exercise.id}`;
+    panelElement.innerHTML  = `
+      <div class="exercise-card">
+        <div class="card-header">
+          <span class="exercise-badge ${badgeClass}">${badgeText}</span>
+          <p class="exercise-prompt">${exercise.prompt}</p>
+        </div>
+        <div class="card-body" id="exercise-body-${exercise.id}"></div>
+        <div class="card-footer">
+          <button class="btn-check" onclick="checkAnswer(${exercise.id})">Check Answer</button>
+          <button class="btn-reset" onclick="resetExercise(${exercise.id})">Reset</button>
+          <span class="feedback-message" id="feedback-${exercise.id}"></span>
+        </div>
+      </div>
+      ${exercise.tryIt ? buildTryItWidget(exercise) : ''}`;
+    panelsContainer.appendChild(panelElement);
+
+    const progressDot     = document.createElement('div');
+    progressDot.className = 'progress-dot';
+    progressDot.id        = `progress-dot-${exercise.id}`;
+    progressDot.title     = `${exercise.tabType}: ${exercise.title}`;
+    progressDot.onclick   = () => switchTab(exercise.id);
+    dotsContainer.appendChild(progressDot);
+  });
+
+  EXERCISES.forEach(exercise => {
+    if (exercise.type === 'dnd')   initDragDrop(exercise);
+    if (exercise.type === 'fill')  initFill(exercise);
+    if (exercise.type === 'match') initMatch(exercise);
+  });
+
+  // ── Help tab ──
+  const helpTabButton       = document.createElement('button');
+  helpTabButton.className   = 'tab-button';
+  helpTabButton.dataset.id  = 'help';
+  helpTabButton.innerHTML   = `<span class="tab-type">?</span><span class="tab-label" id="tab-label-help">Help</span>`;
+  helpTabButton.onclick     = () => switchTab('help');
+  tabNavElement.appendChild(helpTabButton);
+
+  const helpPanel      = document.createElement('div');
+  helpPanel.id         = 'panel-help';
+  helpPanel.className  = 'help-panel';
+  helpPanel.innerHTML  = buildHelpPanel();
+  panelsContainer.appendChild(helpPanel);
+
+  switchTab(1);
+}
+
+// ════════════════════════════════════════════════════════════════
+// TABS & PROGRESS
+// ════════════════════════════════════════════════════════════════
+
+function switchTab(tabId) {
+  activeTabId = tabId;
+  document.querySelectorAll('.tab-button').forEach(button =>
+    button.classList.toggle('is-active', button.dataset.id === String(tabId)));
+  document.querySelectorAll('.exercise-panel').forEach(panel =>
+    panel.classList.toggle('is-visible', panel.id === `panel-${tabId}`));
+  const helpPanel = document.getElementById('panel-help');
+  if (helpPanel) helpPanel.classList.toggle('is-visible', tabId === 'help');
+  refreshProgressDots();
+}
+
+function refreshProgressDots() {
+  EXERCISES.forEach(exercise => {
+    const dot = document.getElementById(`progress-dot-${exercise.id}`);
+    if (!dot) return;
+    dot.className = 'progress-dot' +
+      (completedExercises.has(exercise.id) ? ' is-done'   :
+       exercise.id === activeTabId         ? ' is-active' : '');
+  });
+}
+
+function markExerciseComplete(exerciseId) {
+  completedExercises.add(exerciseId);
+  const labelSpan = document.getElementById(`tab-label-${exerciseId}`);
+  if (labelSpan) labelSpan.textContent = EXERCISES.find(e => e.id === exerciseId).title + ' ✓';
+  refreshProgressDots();
+}
+
+function unmarkExerciseComplete(exerciseId) {
+  completedExercises.delete(exerciseId);
+  const labelSpan = document.getElementById(`tab-label-${exerciseId}`);
+  if (labelSpan) labelSpan.textContent = EXERCISES.find(e => e.id === exerciseId).title;
+  refreshProgressDots();
+}
+
+// ════════════════════════════════════════════════════════════════
+// DRAG & DROP — INIT & RENDER
+// ════════════════════════════════════════════════════════════════
+
+function initDragDrop(exercise) {
+  const shuffledLines = shuffleArray(exercise.lines);
+  dndState[exercise.id] = {
+    bank:        shuffledLines.map(line => ({ ...line, currentIndent: 0 })),
+    zone:        [],
+    blankValues: {}
+  };
+  renderDragDrop(exercise.id);
+}
+
+function renderDragDrop(exerciseId) {
+  const exerciseState = dndState[exerciseId];
+  const bodyElement   = document.getElementById(`exercise-body-${exerciseId}`);
+
+  bodyElement.innerHTML = `
+    <div class="dnd-columns">
+      <div>
+        <div class="column-heading">Code Bank</div>
+        <div class="code-bank" id="bank-${exerciseId}"></div>
+      </div>
+      <div>
+        <div class="column-heading">Build Here — drag lines in, set indent with arrows on the right</div>
+        <div class="drop-zone" id="zone-${exerciseId}">
+          ${exerciseState.zone.length === 0
+            ? '<div class="drop-zone-empty">Drag lines here<br>Indent guides are shown as vertical lines</div>'
+            : ''}
+        </div>
+      </div>
+    </div>`;
+
+  const bankElement = document.getElementById(`bank-${exerciseId}`);
+  exerciseState.bank.forEach(lineData =>
+    bankElement.appendChild(makeBankLineElement(exerciseId, lineData)));
+
+  const zoneElement = document.getElementById(`zone-${exerciseId}`);
+  exerciseState.zone.forEach((lineData, position) =>
+    zoneElement.appendChild(makeZoneLineElement(exerciseId, lineData, position)));
+
+  attachDropZoneEvents(exerciseId);
+}
+
+function makeBankLineElement(exerciseId, lineData) {
+  const lineElement          = document.createElement('div');
+  lineElement.className      = 'bank-line';
+  lineElement.draggable      = true;
+  lineElement.dataset.lineId = lineData.lineId;
+
+  const textSpan             = document.createElement('span');
+  textSpan.innerHTML         = applySyntaxHighlight(escapeHtml(lineData.text));
+  lineElement.appendChild(textSpan);
+
+  lineElement.addEventListener('dragstart', event => {
+    currentDrag = { active: true, exerciseId, fromZone: 'bank', lineId: lineData.lineId };
+    event.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => lineElement.classList.add('is-dragging'), 0);
+  });
+  lineElement.addEventListener('dragend', () => lineElement.classList.remove('is-dragging'));
+  return lineElement;
+}
+
+function makeZoneLineElement(exerciseId, lineData, position) {
+  const exerciseState   = dndState[exerciseId];
+  const lineElement     = document.createElement('div');
+  lineElement.className = 'zone-line';
+  lineElement.dataset.zoneIndex = position;
+
+  // ── GRIP HANDLE (leftmost) ──
+  const gripHandle       = document.createElement('div');
+  gripHandle.className   = 'drag-handle';
+  gripHandle.title       = 'Drag to reorder';
+  gripHandle.innerHTML   = '&#8942;';   // ⋮ vertical dots
+  lineElement.appendChild(gripHandle);
+
+  // ── LEFT: indent bar rail ──
+  const indentBarRail   = document.createElement('div');
+  indentBarRail.className = 'indent-bar-rail';
+  for (let levelIndex = 1; levelIndex <= 4; levelIndex++) {
+    const barSegment       = document.createElement('div');
+    const isActiveLevel    = levelIndex <= lineData.currentIndent;
+    barSegment.className   =
+      `indent-bar-segment level-${levelIndex} ${isActiveLevel ? 'is-active' : 'is-empty'}`;
+    indentBarRail.appendChild(barSegment);
+  }
+  lineElement.appendChild(indentBarRail);
+
+  // ── MIDDLE: code text (left-padded by indent level) ──
+  const indentPaddingPx = lineData.currentIndent * 18;
+
+  if (lineData.blank) {
+    const storedBlankValue       = exerciseState.blankValues[lineData.lineId] || '';
+    const [textBefore, textAfter] = lineData.text.split('___');
+
+    const textBeforeSpan         = document.createElement('span');
+    textBeforeSpan.className     = 'zone-line-text';
+    textBeforeSpan.style.paddingLeft = `${indentPaddingPx}px`;
+    textBeforeSpan.innerHTML     = applySyntaxHighlight(escapeHtml(textBefore));
+
+    const blankInputField        = document.createElement('input');
+    blankInputField.className    = 'inline-blank-input';
+    blankInputField.placeholder  = lineData.blank.placeholder;
+    blankInputField.value        = storedBlankValue;
+    blankInputField.id           = `inline-blank-${exerciseId}-${lineData.lineId}`;
+    blankInputField.size         = Math.max(6, lineData.blank.placeholder.length);
+    blankInputField.oninput      = event => {
+      exerciseState.blankValues[lineData.lineId] = event.target.value;
+    };
+
+    const textAfterSpan          = document.createElement('span');
+    textAfterSpan.className      = 'zone-line-text';
+    textAfterSpan.innerHTML      = applySyntaxHighlight(escapeHtml(textAfter || ''));
+
+    lineElement.append(textBeforeSpan, blankInputField, textAfterSpan);
+  } else {
+    const textSpan               = document.createElement('span');
+    textSpan.className           = 'zone-line-text';
+    textSpan.style.paddingLeft   = `${indentPaddingPx}px`;
+    textSpan.innerHTML           = applySyntaxHighlight(escapeHtml(lineData.text));
+    lineElement.appendChild(textSpan);
+  }
+
+  // ── RIGHT: indent controls + remove ──
+  const lineControls     = document.createElement('div');
+  lineControls.className = 'line-controls';
+
+  const indentDecrBtn    = document.createElement('button');
+  indentDecrBtn.className  = 'indent-btn';
+  indentDecrBtn.textContent = '←';
+  indentDecrBtn.onclick    = () => {
+    if (lineData.currentIndent > 0) {
+      lineData.currentIndent--;
+      renderDragDrop(exerciseId);
+      clearFeedback(exerciseId);
+    }
+  };
+
+  const indentLevelBadge       = document.createElement('span');
+  indentLevelBadge.className   = 'indent-level-badge';
+  indentLevelBadge.textContent = lineData.currentIndent;
+
+  const indentIncrBtn    = document.createElement('button');
+  indentIncrBtn.className  = 'indent-btn';
+  indentIncrBtn.textContent = '→';
+  indentIncrBtn.onclick    = () => {
+    if (lineData.currentIndent < 4) {
+      lineData.currentIndent++;
+      renderDragDrop(exerciseId);
+      clearFeedback(exerciseId);
+    }
+  };
+
+  const removeButton     = document.createElement('button');
+  removeButton.className = 'remove-line-btn';
+  removeButton.textContent = '✕';
+  removeButton.title     = 'Return to bank';
+  removeButton.onclick   = () => {
+    exerciseState.bank.push(exerciseState.zone.splice(position, 1)[0]);
+    renderDragDrop(exerciseId);
+    clearFeedback(exerciseId);
+  };
+
+  lineControls.append(indentDecrBtn, indentLevelBadge, indentIncrBtn, removeButton);
+  lineElement.appendChild(lineControls);
+
+  // Make line draggable only when grabbed via the handle
+  gripHandle.addEventListener('mousedown', () => { lineElement.draggable = true; });
+  document.addEventListener('mouseup', () => { lineElement.draggable = false; }, { once: true });
+
+  lineElement.addEventListener('dragstart', event => {
+    if (!lineElement.draggable) { event.preventDefault(); return; }
+    currentDrag = { active: true, exerciseId, fromZone: 'zone', lineId: lineData.lineId, zoneIndex: position };
+    event.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => lineElement.classList.add('is-reorder-dragging'), 0);
+  });
+  lineElement.addEventListener('dragend', () => {
+    lineElement.classList.remove('is-reorder-dragging');
+    lineElement.draggable = false;
+  });
+
+  return lineElement;
+}
+
+function attachDropZoneEvents(exerciseId) {
+  const zoneElement = document.getElementById(`zone-${exerciseId}`);
+  if (!zoneElement) return;
+
+  // Remove any stale indicator
+  function clearDropIndicator() {
+    zoneElement.querySelectorAll('.zone-drop-indicator').forEach(el => el.remove());
+  }
+
+  // Compute the insert index (0-based, between zone lines) from mouse Y
+  function computeInsertIndex(mouseY) {
+    const zoneLines = [...zoneElement.querySelectorAll('.zone-line')];
+    for (let lineIndex = 0; lineIndex < zoneLines.length; lineIndex++) {
+      const lineRect   = zoneLines[lineIndex].getBoundingClientRect();
+      const lineMidY   = lineRect.top + lineRect.height / 2;
+      if (mouseY < lineMidY) return lineIndex;        // insert before this line
+    }
+    return zoneLines.length;                           // insert after all lines
+  }
+
+  function showDropIndicator(insertIndex) {
+    clearDropIndicator();
+    const indicator       = document.createElement('div');
+    indicator.className   = 'zone-drop-indicator';
+    const zoneLines       = [...zoneElement.querySelectorAll('.zone-line')];
+    if (insertIndex >= zoneLines.length) {
+      zoneElement.appendChild(indicator);
+    } else {
+      zoneElement.insertBefore(indicator, zoneLines[insertIndex]);
+    }
+  }
+
+  zoneElement.addEventListener('dragover', event => {
+    event.preventDefault();
+    if (!currentDrag.active || currentDrag.exerciseId !== exerciseId) return;
+    event.dataTransfer.dropEffect = 'move';
+    const insertIndex = computeInsertIndex(event.clientY);
+    showDropIndicator(insertIndex);
+  });
+
+  zoneElement.addEventListener('dragleave', event => {
+    // Only clear if leaving the zone entirely (not entering a child)
+    if (!zoneElement.contains(event.relatedTarget)) {
+      clearDropIndicator();
+      zoneElement.classList.remove('drag-over');
+    }
+  });
+
+  zoneElement.addEventListener('drop', event => {
+    event.preventDefault();
+    clearDropIndicator();
+    zoneElement.classList.remove('drag-over');
+    if (!currentDrag.active || currentDrag.exerciseId !== exerciseId) return;
+
+    const exerciseState = dndState[exerciseId];
+    let insertIndex     = computeInsertIndex(event.clientY);
+
+    if (currentDrag.fromZone === 'bank') {
+      const bankIndex = exerciseState.bank.findIndex(line => line.lineId === currentDrag.lineId);
+      if (bankIndex === -1) return;
+      const [movedLine] = exerciseState.bank.splice(bankIndex, 1);
+      exerciseState.zone.splice(insertIndex, 0, movedLine);
+
+    } else if (currentDrag.fromZone === 'zone') {
+      const sourceIndex = currentDrag.zoneIndex;
+      if (sourceIndex === null || sourceIndex === insertIndex) { currentDrag.active = false; return; }
+      // Adjust insert index if source was before it
+      const adjustedIndex = insertIndex > sourceIndex ? insertIndex - 1 : insertIndex;
+      const [movedLine]   = exerciseState.zone.splice(sourceIndex, 1);
+      exerciseState.zone.splice(adjustedIndex, 0, movedLine);
+    }
+
+    currentDrag.active = false;
+    renderDragDrop(exerciseId);
+    clearFeedback(exerciseId);
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+// FILL — INIT & RENDER
+// ════════════════════════════════════════════════════════════════
+
+function initFill(exercise) {
+  const bodyElement    = document.getElementById(`exercise-body-${exercise.id}`);
+  const codeBlock      = document.createElement('div');
+  codeBlock.className  = 'fill-code-block';
+
+  exercise.rows.forEach(row => {
+    const rowElement         = document.createElement('div');
+    rowElement.className     = 'fill-code-row';
+    const indentWhitespace   = '    '.repeat(row.indent);
+    const templateParts      = parseTemplate(row.template);
+    let blankCountInRow      = 0;
+
+    templateParts.forEach(part => {
+      if (part.type === 'text') {
+        const textSpan       = document.createElement('span');
+        textSpan.innerHTML   = applySyntaxHighlight(
+          escapeHtml(blankCountInRow === 0 ? indentWhitespace + part.value : part.value));
+        rowElement.appendChild(textSpan);
+      } else {
+        if (blankCountInRow === 0) {
+          const indentSpan       = document.createElement('span');
+          indentSpan.textContent = indentWhitespace;
+          rowElement.appendChild(indentSpan);
+        }
+        const blankInput           = document.createElement('input');
+        blankInput.className       = 'blank-input';
+        blankInput.dataset.answer  = part.value;
+        blankInput.style.width     = `${Math.max(36, part.value.length * 10 + 14)}px`;
+        blankInput.addEventListener('keydown', event => {
+          if (event.key === 'Enter') checkAnswer(exercise.id);
+        });
+        rowElement.appendChild(blankInput);
+        blankCountInRow++;
+      }
+    });
+
+    codeBlock.appendChild(rowElement);
+  });
+
+  bodyElement.appendChild(codeBlock);
+}
+
+// ════════════════════════════════════════════════════════════════
+// MATCH — INIT & RENDER
+// ════════════════════════════════════════════════════════════════
+
+function initMatch(exercise) {
+  matchState[exercise.id] = {
+    placements: Object.fromEntries(exercise.pairs.map(pair => [pair.snippetId, null]))
+  };
+  renderMatch(exercise.id);
+}
+
+function renderMatch(exerciseId) {
+  const exercise      = EXERCISES.find(e => e.id === exerciseId);
+  const state         = matchState[exerciseId];
+  const bodyElement   = document.getElementById(`exercise-body-${exerciseId}`);
+  bodyElement.innerHTML = '';
+
+  // Context block
+  const contextBlock      = document.createElement('div');
+  contextBlock.className  = 'match-context';
+  exercise.contextLines.forEach(codeLine => {
+    const lineEl      = document.createElement('div');
+    lineEl.className  = 'match-context-line';
+    lineEl.innerHTML  = applySyntaxHighlight(escapeHtml(codeLine));
+    contextBlock.appendChild(lineEl);
+  });
+  bodyElement.appendChild(contextBlock);
+
+  const layoutContainer      = document.createElement('div');
+  layoutContainer.className  = 'match-layout';
+
+  // Left: snippet cards
+  const snippetsColumn       = document.createElement('div');
+  snippetsColumn.className   = 'match-snippets';
+
+  exercise.pairs.forEach(pair => {
+    const snippetCard        = document.createElement('div');
+    snippetCard.className    = 'snippet-card';
+
+    const codeDisplayDiv     = document.createElement('div');
+    codeDisplayDiv.className = 'snippet-code';
+    codeDisplayDiv.innerHTML = applySyntaxHighlight(escapeHtml(pair.displayCode));
+
+    const hintDiv            = document.createElement('div');
+    hintDiv.className        = 'snippet-hint';
+    hintDiv.textContent      = pair.hint;
+
+    const dropZoneDiv        = document.createElement('div');
+    dropZoneDiv.className    = 'snippet-drop-zone';
+    dropZoneDiv.id           = `snippet-dropzone-${exerciseId}-${pair.snippetId}`;
+
+    const placedTermText     = state.placements[pair.snippetId];
+    if (placedTermText) {
+      dropZoneDiv.appendChild(makePlacedTermElement(exerciseId, pair.snippetId, placedTermText));
+    } else {
+      const hintSpan         = document.createElement('span');
+      hintSpan.className     = 'drop-hint';
+      hintSpan.textContent   = 'Drop term here';
+      dropZoneDiv.appendChild(hintSpan);
+    }
+
+    dropZoneDiv.addEventListener('dragover', event => {
+      event.preventDefault();
+      if (!currentMatchDrag.active || currentMatchDrag.exerciseId !== exerciseId) return;
+      dropZoneDiv.classList.add('drag-over');
+    });
+    dropZoneDiv.addEventListener('dragleave', () => dropZoneDiv.classList.remove('drag-over'));
+    dropZoneDiv.addEventListener('drop', event => {
+      event.preventDefault();
+      dropZoneDiv.classList.remove('drag-over');
+      if (!currentMatchDrag.active || currentMatchDrag.exerciseId !== exerciseId) return;
+      placeTermOnSnippet(exerciseId, pair.snippetId, currentMatchDrag.term, currentMatchDrag.fromSnippetId);
+      currentMatchDrag.active = false;
+    });
+
+    snippetCard.append(codeDisplayDiv, hintDiv, dropZoneDiv);
+    snippetsColumn.appendChild(snippetCard);
+  });
+
+  // Right: term bank (shuffled)
+  const bankColumn           = document.createElement('div');
+  bankColumn.className       = 'term-bank-column';
+  const bankHeading          = document.createElement('div');
+  bankHeading.className      = 'term-bank-heading';
+  bankHeading.textContent    = 'Term Bank';
+  bankColumn.appendChild(bankHeading);
+
+  const alreadyPlacedTerms   = new Set(Object.values(state.placements).filter(Boolean));
+  const shuffledPairs        = shuffleArray(exercise.pairs);
+
+  shuffledPairs.forEach(pair => {
+    const termCard            = document.createElement('div');
+    termCard.className        = 'term-card' + (alreadyPlacedTerms.has(pair.term) ? ' is-placed' : '');
+    termCard.id               = `term-card-${exerciseId}-${pair.snippetId}`;
+    termCard.draggable        = true;
+    termCard.textContent      = pair.term;
+
+    termCard.addEventListener('dragstart', event => {
+      currentMatchDrag = { active: true, exerciseId, fromSnippetId: null, term: pair.term };
+      event.dataTransfer.effectAllowed = 'move';
+    });
+    bankColumn.appendChild(termCard);
+  });
+
+  layoutContainer.append(snippetsColumn, bankColumn);
+  bodyElement.appendChild(layoutContainer);
+}
+
+function makePlacedTermElement(exerciseId, snippetId, termText) {
+  const termElement       = document.createElement('div');
+  termElement.className   = 'placed-term';
+  termElement.draggable   = true;
+  termElement.textContent = termText;
+
+  termElement.addEventListener('dragstart', event => {
+    currentMatchDrag = { active: true, exerciseId, fromSnippetId: snippetId, term: termText };
+    event.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => termElement.style.opacity = '0.4', 0);
+  });
+  termElement.addEventListener('dragend', () => termElement.style.opacity = '');
+  return termElement;
+}
+
+function placeTermOnSnippet(exerciseId, targetSnippetId, termText, sourceSnippetId) {
+  const state = matchState[exerciseId];
+  if (sourceSnippetId) state.placements[sourceSnippetId] = null;
+  state.placements[targetSnippetId] = termText;
+  unmarkExerciseComplete(exerciseId);
+  clearFeedback(exerciseId);
+  renderMatch(exerciseId);
+}
+
+// ════════════════════════════════════════════════════════════════
+// CHECK ANSWER
+// ════════════════════════════════════════════════════════════════
+
+function checkAnswer(exerciseId) {
+  const exercise = EXERCISES.find(e => e.id === exerciseId);
+
+  if (exercise.type === 'fill') {
+    const allBlankInputs = [...document.querySelectorAll(`#exercise-body-${exerciseId} .blank-input`)];
+    let allCorrect       = true;
+    allBlankInputs.forEach(blankInput => {
+      const isCorrect = blankInput.value.trim().replace(/\s+/g, ' ') ===
+                        blankInput.dataset.answer.replace(/\s+/g, ' ');
+      blankInput.classList.toggle('is-correct', isCorrect);
+      blankInput.classList.toggle('is-wrong',  !isCorrect);
+      if (!isCorrect) allCorrect = false;
+    });
+    setFeedback(exerciseId, allCorrect ? '✓ Perfect!' : 'Some blanks are wrong — shown in brown.', allCorrect);
+    if (allCorrect) markExerciseComplete(exerciseId); else unmarkExerciseComplete(exerciseId);
+    return;
+  }
+
+  if (exercise.type === 'match') {
+    const state     = matchState[exerciseId];
+    const allPlaced = exercise.pairs.every(pair => state.placements[pair.snippetId]);
+    if (!allPlaced) {
+      setFeedback(exerciseId, 'Place a term on every snippet first.', false);
+      shakeElement(exerciseId); return;
+    }
+    let allCorrect  = true;
+    exercise.pairs.forEach(pair => {
+      const dropZone      = document.getElementById(`snippet-dropzone-${exerciseId}-${pair.snippetId}`);
+      const isCorrect     = state.placements[pair.snippetId] === pair.term;
+      if (!isCorrect) allCorrect = false;
+      if (dropZone) {
+        dropZone.classList.toggle('is-correct', isCorrect);
+        dropZone.classList.toggle('is-wrong',  !isCorrect);
+        const termEl = dropZone.querySelector('.placed-term');
+        if (termEl) { termEl.classList.toggle('is-correct', isCorrect); termEl.classList.toggle('is-wrong', !isCorrect); }
+      }
+    });
+    setFeedback(exerciseId, allCorrect ? '✓ All matched!' : 'Some matches are wrong — shown in brown.', allCorrect);
+    if (allCorrect) markExerciseComplete(exerciseId); else unmarkExerciseComplete(exerciseId);
+    return;
+  }
+
+  // DnD
+  const exerciseState = dndState[exerciseId];
+  if (exerciseState.zone.length !== exercise.lines.length) {
+    setFeedback(exerciseId, `Place all ${exercise.lines.length} lines in the build zone first.`, false);
+    shakeElement(exerciseId); return;
+  }
+
+  let allCorrect    = true;
+  const zoneLineEls = [...document.querySelectorAll(`#zone-${exerciseId} .zone-line`)];
+
+  exerciseState.zone.forEach((zoneLine, position) => {
+    const expectedLine  = exercise.lines[position];
+    let lineIsCorrect   = zoneLine.lineId === expectedLine.lineId &&
+                          zoneLine.currentIndent === expectedLine.correctIndent;
+
+    if (lineIsCorrect && zoneLine.blank) {
+      const typedValue  = exerciseState.blankValues[zoneLine.lineId] || '';
+      lineIsCorrect     = typedValue.trim() === zoneLine.blank.answer;
+      const inlineInput = document.getElementById(`inline-blank-${exerciseId}-${zoneLine.lineId}`);
+      if (inlineInput) {
+        inlineInput.classList.toggle('is-correct', lineIsCorrect);
+        inlineInput.classList.toggle('is-wrong',  !lineIsCorrect);
+      }
+    }
+
+    const lineEl = zoneLineEls[position];
+    if (lineEl) {
+      lineEl.classList.toggle('is-correct', lineIsCorrect);
+      lineEl.classList.toggle('is-wrong',  !lineIsCorrect);
+    }
+    if (!lineIsCorrect) allCorrect = false;
+  });
+
+  setFeedback(exerciseId, allCorrect ? '✓ Perfect!' : 'Check order, indentation, and any typed blanks.', allCorrect);
+  if (allCorrect) markExerciseComplete(exerciseId); else unmarkExerciseComplete(exerciseId);
+}
+
+// ════════════════════════════════════════════════════════════════
+// RESET
+// ════════════════════════════════════════════════════════════════
+
+function resetExercise(exerciseId) {
+  const exercise = EXERCISES.find(e => e.id === exerciseId);
+  unmarkExerciseComplete(exerciseId);
+  clearFeedback(exerciseId);
+  if (exercise.type === 'fill') {
+    document.querySelectorAll(`#exercise-body-${exerciseId} .blank-input`).forEach(blankInput => {
+      blankInput.value = '';
+      blankInput.classList.remove('is-correct', 'is-wrong');
+    });
+    const tryOutEl = document.getElementById(`try-output-${exerciseId}`);
+    if (tryOutEl) tryOutEl.innerHTML = '';
+  } else if (exercise.type === 'dnd') {
+    initDragDrop(exercise);
+    const tryOutEl = document.getElementById(`try-output-${exerciseId}`);
+    if (tryOutEl) tryOutEl.innerHTML = '';
+  } else if (exercise.type === 'match') {
+    initMatch(exercise);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// EXTRACT STUDENT CODE (reconstructs Python from current state)
+// ════════════════════════════════════════════════════════════════
+
+function extractStudentCode(exerciseId) {
+  const exercise = EXERCISES.find(e => e.id === exerciseId);
+
+  if (exercise.type === 'dnd') {
+    const exerciseState = dndState[exerciseId];
+    if (!exerciseState || exerciseState.zone.length === 0) return null;
+    return exerciseState.zone.map(zoneLine => {
+      const indentation = '    '.repeat(zoneLine.currentIndent);
+      if (zoneLine.blank) {
+        const typedValue = exerciseState.blankValues[zoneLine.lineId] || '';
+        return indentation + zoneLine.text.replace('___', typedValue || '???');
+      }
+      return indentation + zoneLine.text;
+    }).join('\n');
+  }
+
+  if (exercise.type === 'fill') {
+    const allBlankInputs = [...document.querySelectorAll(`#exercise-body-${exerciseId} .blank-input`)];
+    let blankCursor      = 0;
+    return exercise.rows.map(row => {
+      const indentation = '    '.repeat(row.indent);
+      const parts       = parseTemplate(row.template);
+      let lineText      = '';
+      parts.forEach(part => {
+        if (part.type === 'text') {
+          lineText += part.value;
+        } else {
+          const inputEl = allBlankInputs[blankCursor++];
+          lineText     += (inputEl && inputEl.value.trim()) || '???';
+        }
+      });
+      return indentation + lineText;
+    }).join('\n');
+  }
+
+  return null;
+}
+
+// ════════════════════════════════════════════════════════════════
+// TRY IT WIDGET
+// ════════════════════════════════════════════════════════════════
+
+function buildTryItWidget(exercise) {
+  const tryItConfig     = exercise.tryIt;
+  const exampleRowsHtml = tryItConfig.examples.map(example => `
+    <div class="example-row">
+      <span class="example-call">${example.callHtml}</span>
+      <span class="example-arrow">→</span>
+      <span class="example-output">${escapeHtml(example.output)}</span>
+    </div>`).join('');
+
+  const paramInputsHtml = (tryItConfig.params || []).map((paramName, paramIndex) => {
+    const defaultValue = tryItConfig.defaults[paramIndex] || '';
+    return `<input
+      class="repl-input"
+      id="try-input-${exercise.id}-${paramIndex}"
+      value="${escapeHtml(defaultValue)}"
+      placeholder="${escapeHtml(paramName)}"
+      style="width: ${Math.max(70, defaultValue.length * 9 + 24)}px"
+      onkeydown="if(event.key==='Enter') runTryIt(${exercise.id})"
+    />`;
+  }).join('<span class="repl-paren">, </span>');
+
+  const replHtml = tryItConfig.staticOnly ? '' : `
+      <div class="try-it-repl">
+        <span class="repl-prompt">&gt;&gt;&gt;</span>
+        <div class="repl-call">
+          <span class="repl-fn-name">${escapeHtml(exercise.functionName)}</span>
+          <span class="repl-paren">(</span>${paramInputsHtml}<span class="repl-paren">)</span>
+        </div>
+        <button class="repl-run-btn"
+                id="try-run-btn-${exercise.id}"
+                onclick="runTryIt(${exercise.id})">Run</button>
+        <div class="repl-result" id="try-output-${exercise.id}"></div>
+      </div>`;
+
+  return `
+    <div class="try-it-widget">
+      <div class="try-it-header">
+        <span class="try-it-label">Try It</span>
+        <span class="try-it-note">${tryItConfig.staticOnly ? 'expected outputs for reference' : 'runs your assembled function — check answer first'}</span>
+      </div>
+      <div class="try-it-examples">${exampleRowsHtml}</div>
+      ${replHtml}
+    </div>`;
+}
+
+function runTryIt(exerciseId) {
+  const exercise      = EXERCISES.find(e => e.id === exerciseId);
+  const tryItConfig   = exercise.tryIt;
+  const outputElement = document.getElementById(`try-output-${exerciseId}`);
+
+  // Guard: must be marked correct before running
+  if (!completedExercises.has(exerciseId)) {
+    const studentCode = extractStudentCode(exerciseId);
+    outputElement.innerHTML = studentCode
+      ? `<span class="result-error">Check your answer first — the function must be correct before running.</span>`
+      : `<span class="result-error">Assemble or fill the function first.</span>`;
+    return;
+  }
+
+  const argValues = (tryItConfig.params || []).map((_, paramIndex) => {
+    const inputEl = document.getElementById(`try-input-${exerciseId}-${paramIndex}`);
+    return inputEl ? inputEl.value.trim() : '';
+  });
+
+  const studentCode    = extractStudentCode(exerciseId);
+  const callExpression = `${exercise.functionName}(${argValues.join(', ')})`;
+
+  try {
+    const returnedValue = runStudentPython(studentCode, callExpression);
+    outputElement.innerHTML =
+      `<span class="result-arrow">→</span><span class="result-value">${escapeHtml(String(returnedValue))}</span>`;
+  } catch (runtimeError) {
+    const message = runtimeError.message || String(runtimeError);
+    outputElement.innerHTML =
+      `<span class="result-error">${escapeHtml(message)}</span>`;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// FEEDBACK & UI
+// ════════════════════════════════════════════════════════════════
+
+function setFeedback(exerciseId, message, isCorrect) {
+  const feedbackEl       = document.getElementById(`feedback-${exerciseId}`);
+  feedbackEl.textContent = message;
+  feedbackEl.className   = `feedback-message ${isCorrect ? 'is-correct' : 'is-wrong'}`;
+}
+
+function clearFeedback(exerciseId) {
+  const feedbackEl = document.getElementById(`feedback-${exerciseId}`);
+  if (feedbackEl) { feedbackEl.className = 'feedback-message'; feedbackEl.textContent = ''; }
+  document.querySelectorAll(`#zone-${exerciseId} .zone-line`).forEach(lineEl =>
+    lineEl.classList.remove('is-correct', 'is-wrong'));
+  document.querySelectorAll(`#exercise-body-${exerciseId} .snippet-drop-zone`).forEach(zone =>
+    zone.classList.remove('is-correct', 'is-wrong'));
+}
+
+function shakeElement(exerciseId) {
+  const footerEl = document.querySelector(`#panel-${exerciseId} .card-footer`);
+  if (!footerEl) return;
+  footerEl.classList.remove('do-shake');
+  void footerEl.offsetWidth;
+  footerEl.classList.add('do-shake');
+  footerEl.addEventListener('animationend', () => footerEl.classList.remove('do-shake'), { once: true });
+}
+
+// ════════════════════════════════════════════════════════════════
+// UTILITIES
+// ════════════════════════════════════════════════════════════════
+
+function parseTemplate(templateString) {
+  const parts        = [];
+  const blankPattern = /\[([^\]]+)\]/g;
+  let lastIndex      = 0;
+  let blankMatch;
+  while ((blankMatch = blankPattern.exec(templateString)) !== null) {
+    if (blankMatch.index > lastIndex)
+      parts.push({ type: 'text',  value: templateString.slice(lastIndex, blankMatch.index) });
+    parts.push({ type: 'blank', value: blankMatch[1] });
+    lastIndex = blankPattern.lastIndex;
+  }
+  if (lastIndex < templateString.length)
+    parts.push({ type: 'text', value: templateString.slice(lastIndex) });
+  return parts;
+}
+
+function applySyntaxHighlight(escapedHtml) {
+  return escapedHtml
+    .replace(/\b(def|return|if|elif|else|for|in|and|or|not|True|False|None|while|pass)\b/g,
+             '<span class="kw">$1</span>')
+    .replace(/(&quot;)((?:(?!&quot;).)*?)(&quot;)/g,
+             '<span class="str">$1$2$3</span>')
+    .replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="num">$1</span>');
+}
+
+function escapeHtml(rawString) {
+  return String(rawString)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ── THEME TOGGLE ──
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  document.getElementById('theme-toggle').textContent = isLight ? '🌙 Dark' : '☀️ Light';
+}
+(function initTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') {
+    document.body.classList.add('light');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '🌙 Dark';
+  }
+})();
+
+boot();
+</script>
+</body>
+</html>
