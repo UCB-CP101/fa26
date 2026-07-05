@@ -32,24 +32,35 @@ EXCLUDED_ELEMENTS = [
 ].freeze
 
 # Add pages here that do not need to have a11y tests run.
-# Full paths as output by the tests should be used.
+# Paths are suffixes relative to site baseurl; full paths are built after Jekyll config loads.
 # It should be rare to add to this array. One acceptable
 # use is to add redirect pages because they can introduce
 # race conditions and make the a11y tests fail inconsistently.
 # The pages below are standalone interactive lab/checklist apps copied
 # verbatim from the original CP255 site; they do not use the site layout.
-SKIPPED_PAGES = [
-  '/cp255-example/docs/deliverables/final_project/final-project-guide.html',
-  '/cp255-example/docs/tutorials/Sandbox/error_types_lab_app.html',
-  '/cp255-example/docs/tutorials/Sandbox/predicates_lab_git.html',
-  '/cp255-example/docs/tutorials/Sandbox/python_functions_lab.html'
+SKIPPED_PATH_SUFFIXES = [
+  '/docs/deliverables/final_project/final-project-guide.html',
+  '/docs/tutorials/Sandbox/error_types_lab_app.html',
+  '/docs/tutorials/Sandbox/predicates_lab_git.html',
+  '/docs/tutorials/Sandbox/python_functions_lab.html'
 ].freeze
+
+def skipped_pages
+  SKIPPED_PATH_SUFFIXES.map { |suffix| "#{site_config['baseurl']}#{suffix}" }
+end
+
+def set_page_theme(theme)
+  expect(page).to have_css('script[src*="just-the-docs"]', visible: :all, wait: 10)
+  expect(page.evaluate_script('typeof jtd !== "undefined" && typeof jtd.setTheme === "function"')).to be(true)
+  page.execute_script("jtd.setTheme(#{theme.to_json})")
+  expect(page.evaluate_script('jtd.getTheme()')).to eq(theme)
+end
 
 # We must call this to ensure the build it up-to-date.
 build_jekyll_site!
 ALL_PAGES = load_sitemap
 
-PAGES_TO_TEST = ALL_PAGES - SKIPPED_PAGES
+PAGES_TO_TEST = ALL_PAGES - skipped_pages
 
 RSpec.shared_examples 'a11y tests' do
   it 'meets WCAG 2.1' do
@@ -72,7 +83,7 @@ PAGES_TO_TEST.each do |path|
     context 'when light mode' do
       before do
         visit(path)
-        page.execute_script('jtd.setTheme("light")')
+        set_page_theme('light')
       end
 
       include_context 'a11y tests'
@@ -80,8 +91,9 @@ PAGES_TO_TEST.each do |path|
 
     context 'when dark mode' do
       before do
+        Capybara.reset_sessions!
         visit(path)
-        page.execute_script('jtd.setTheme("dark")')
+        set_page_theme('dark')
       end
 
       include_context 'a11y tests'

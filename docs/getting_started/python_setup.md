@@ -41,7 +41,7 @@ If both point to the same global Python, installing `pandas 2.0` will break the 
 
 Think of each virtual environment as a fresh, self-contained container. You can have as many as you need, and deleting one doesn’t affect anything else on your system.
 
-[Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents){: .back-to-top }
 
 ---
 
@@ -49,7 +49,7 @@ Think of each virtual environment as a fresh, self-contained container. You can 
 
 Two tools are commonly used to manage Python environments. Here’s how they compare:
 
-|  | **uv** | **conda (Miniforge)** |
+| Feature | **uv** | **conda (Miniforge)** |
 | --- | --- | --- |
 | **Best for** | Everything, including geospatial | Alternative when conda-only packages are needed |
 | **Speed** | Very fast | Slower to resolve |
@@ -61,7 +61,7 @@ Two tools are commonly used to manage Python environments. Here’s how they com
 {: .note }
 > Both tools are covered in the [Creating Environments](#creating-and-using-environments) section. You only need one.
 
-[Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents){: .back-to-top }
 
 ---
 
@@ -145,7 +145,7 @@ Verify:
 conda --version
 ```
 
-[Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents){: .back-to-top }
 
 ---
 
@@ -194,7 +194,7 @@ Close and reopen Terminal, then verify:
 conda --version
 ```
 
-[Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents){: .back-to-top }
 
 ---
 
@@ -314,7 +314,7 @@ conda env list
 conda remove -n cp101 --all
 ```
 
-[Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents){: .back-to-top }
 
 ---
 
@@ -358,7 +358,7 @@ python test_setup.py
 
 If you see a version printout and `test_plot.png` is created, your environment is working.
 
-[Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents){: .back-to-top }
 
 ---
 
@@ -446,7 +446,7 @@ PyCharm is a full-featured Python IDE. UC Berkeley students can get the **Profes
 {: .note }
 > **Screenshot:** PyCharm interpreter settings showing `.venv` environment selected
 
-[Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents){: .back-to-top }
 
 ---
 
@@ -518,4 +518,4 @@ python --version
 
 If it shows `Python 2.x`, your PATH isn’t set correctly. Using conda or uv and activating your environment will fix this - they put the right `python` first in your PATH.
 
-[Back to Top](#table-of-contents)
+[Back to Top](#table-of-contents){: .back-to-top }
