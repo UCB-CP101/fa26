@@ -68,4 +68,6 @@ $base-button-color: $grey-dk-200;
 }
 
 // Custom colors
-$hw-rel: #00EBC4;
+// "Released" indicator (outline chip: transparent bg, this as text/border color).
+// #34D399 on the dark body background (#141414) = >10:1 contrast, passes WCAG AAA.
+$hw-rel: #34D399;

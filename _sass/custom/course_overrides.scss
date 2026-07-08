@@ -26,6 +26,10 @@ div.site-header {
 table.week {
     table-layout: fixed; /* Ensures columns are evenly spaced */
     width: 100%; /* Ensure full width for the table */
+    // The site-wide 16px accessibility bump (custom.scss) only targets
+    // .spanned-table, which table.week isn't, so this table was silently
+    // inheriting the theme's smaller default body size. Set explicitly.
+    font-size: 16px;
 }
 
 
@@ -49,34 +53,43 @@ table.week tr td:nth-child(2) > p:first-of-type {
 }
 
 table.week td.resources ul {
-    font-size: 0.9em; /* Slightly smaller font for list items */
+    font-size: 14.4px;
     margin: 0 0 0 1rem; /* Indent list items */
 }
 
-table.week .label {
-    font-size: 0.75em !important; /* Override global font size */
-    margin: 0 0.25rem 0 0; /* Adjust spacing around labels */
+// One consistent SHAPE for every label in the schedule (module badges and
+// flags alike) so only color varies between categories. Overrides the gem's
+// 12px pill radius. Size is split below: the module bar badge sits next to
+// a big <h2>-scale heading and needs to be larger to not look tiny there;
+// flag pills sit inline with small body/table text and look oversized at
+// that same size, so they get their own (smaller) font-size.
+.course-schedule .label {
+    font-weight: 600;
+    padding: 0.3em 0.7em;
+    border-radius: 999px;
+    margin: 0 0.25rem 0.25rem 0;
+    text-transform: none; /* just-the-docs default is all-caps; data is already Title Case */
 }
 
-table.week .label.label-red,
-table.week .label.label-homework {
-  font-size: 1.02em !important; /* Slightly larger for due items */
+// Compound selector (.label.module-bar-badge, not bare .module-bar-badge):
+// the theme's base ".label:not(g)" rule sets its own font-size with
+// !important at specificity (0,1,1), which beats a single-class selector
+// even with !important - the badge was silently rendering at the theme's
+// small default size instead of this one.
+.label.module-bar-badge {
+    font-size: 16px !important;
 }
 
-table.week .label.label-assignment,
-table.week .label.label-orange,
-table.week .label.label-homework-released {
-  font-size: 0.98em !important; /* Slightly larger for release items */
-}
-
-table.week .label.label-project {
-  font-size: 0.98em !important;
+table.week .label,
+.schedule-flags .label {
+    font-size: 12px !important;
+    padding: 0.25em 0.6em;
 }
 
 table.week .resources-title {
   margin: 0 0 0.25rem 0;
   font-weight: 600;
-  font-size: 0.75em;
+  font-size: 12px; /* small on purpose: bold+uppercase+letter-spacing already gives it plenty of visual weight as a section eyebrow ("Required"/"Optional"), the +2px pass made it too loud */
   color: inherit;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -107,7 +120,7 @@ table.week .schedule-topic-title {
 
 .schedule-topic-detail {
   color: #646464;
-  font-size: 0.92em;
+  font-size: 14.7px;
   line-height: 1.4;
   margin: 0.25rem 0 0;
 }
@@ -199,9 +212,18 @@ tr.holiday .schedule-topic-title {
     color: #646464;
 }
 
-.label-gray {
+// Chained .label.label-gray (not bare .label-gray): the just-the-docs base
+// rule is ".label:not(g)", which carries specificity (0,1,1) and beats a
+// single-class override, so a bare .label-gray silently loses and falls
+// back to the theme's default blue. Chaining two classes gives (0,2,0).
+.label.label-gray {
     background-color: #d6d6d6;
-    color: #6f6f6f;
+    color: #404040; // darker than the original #6f6f6f to clear WCAG AA (was 3.5:1, now 7:1)
+}
+
+.label.label-orange {
+    background-color: #b5540f; // same orange used for "due" homework/project labels
+    color: white;
 }
 
 blockquote.lecture {
@@ -264,9 +286,113 @@ blockquote.lab.content-type::before {
     margin: 0;
 }
 
-.course-schedule .schedule-week-heading .schedule-week-module {
-    font-size: 0.75em !important;
+// Quiet per-week module tag (e.g. "Module 1") next to "Week 3" - the full
+// name + color already live once in the module-bar above, so this is plain
+// small text, not another colored badge.
+.course-schedule .schedule-week-heading .schedule-week-module-tag {
+    font-size: 14px;
+    font-weight: 500;
+    color: #8a8a8a;
+}
+
+// One collapsible <details> per module (grouped by module.text in the
+// template), wrapping all its weeks. Native <details>/<summary>: keyboard
+// operable and announces expanded/collapsed state with no extra ARIA needed.
+.module-section {
+    border: 1px solid #e2e0d9;
+    border-radius: 10px;
+    margin: 1.75rem 0;
+    overflow: hidden;
+}
+
+.module-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.85rem 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    // "Apple gloss" (Aqua-era glossy button): a bright highlight band across
+    // the top half fading to the base tone, plus an inset top edge for a
+    // convex, lit-from-above look.
+    background-color: rgba(0, 0, 0, 0.02);
+    background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.75) 0%,
+        rgba(255, 255, 255, 0.25) 45%,
+        rgba(255, 255, 255, 0) 55%
+    );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+}
+
+.module-bar:hover {
+    background-color: rgba(0, 0, 0, 0.045);
+}
+
+.module-bar:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+}
+
+.module-bar-badge {
     margin: 0;
+}
+
+.module-bar-dates {
+    flex: 1;
+    color: #646464;
+    font-size: 14px;
+}
+
+.module-bar-chevron {
+    font-size: 22px;
+    line-height: 1;
+    color: #646464;
+    transition: transform 0.15s ease;
+}
+
+// The browser flips this automatically on toggle; no JS needed.
+details[open] > .module-bar .module-bar-chevron {
+    transform: rotate(180deg);
+}
+
+// Inline sub-module divider (e.g. "Module 3a" within the "Module 3" fold) -
+// a quiet section eyebrow, not another colored badge/bar.
+.submodule-label {
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #646464;
+    padding: 1.2rem 0 0.3rem;
+    border-bottom: 1px solid #e2e0d9;
+    margin-bottom: 0.3rem;
+}
+
+.module-section-body {
+    padding: 0 1.1rem 1.1rem;
+}
+
+.module-section-body .schedule-week-heading:first-child {
+    margin-top: 0.5rem;
+}
+
+// Module badge colors: muted versions of the just-the-docs .label-purple /
+// .label-blue defaults (which are too saturated at this size), scoped to
+// the schedule so we don't touch .label-purple/.label-blue elsewhere.
+.module-bar-badge.label-purple {
+    background-color: #6b5fb3;
+    color: white;
+}
+
+.module-bar-badge.label-blue {
+    background-color: #3f6f98;
+    color: white;
 }
 
 .course-schedule table.week {
@@ -353,9 +479,14 @@ blockquote.lab.content-type::before {
 }
 
 
-// Module label color used on the course schedule (ported from cp255_web)
-.label-module4 {
-  background-color: #A5B18A;
+// Module 3 badge color used on the course schedule.
+// Chained .label.label-module4, same specificity fix as .label-gray above.
+// Light: #ffc845 bg / #1d4289 text (~5.4:1, AA). Dark mode variant is below,
+// in the color-scheme conditional block, since it needs the opposite
+// light-bg/dark-text relationship to fit a dark page.
+.label.label-module4 {
+  background-color: #ffc845;
+  color: #1d4289;
 }
 
 // Exact colors for the custom "finalproj" callout (ported from cp255_web)
@@ -411,6 +542,52 @@ blockquote.finalproj > .finalproj-title {
 // The original CP255 site was light-mode only; its hard-coded chip and caption
 // colors need dark-scheme equivalents to stay readable (WCAG AA).
 @if $color-scheme == dark {
+  .module-section {
+    border-color: #3d3d3d;
+  }
+
+  .module-bar {
+    background-color: rgba(255, 255, 255, 0.03);
+    // Subtler gloss for dark mode: a faint light band rather than a bright
+    // white sheen, which would look wrong on a dark surface.
+    background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.09) 0%,
+        rgba(255, 255, 255, 0.03) 45%,
+        rgba(255, 255, 255, 0) 55%
+    );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .module-bar:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .module-bar-dates,
+  .module-bar-chevron {
+    color: #a3adc2;
+  }
+
+  .schedule-week-module-tag {
+    color: #8a93a8;
+  }
+
+  .submodule-label {
+    color: #a3adc2;
+    border-bottom-color: #3d3d3d;
+  }
+
+  // Module 3 badge, dark-mode variant: reversed from the light pairing
+  // (dark navy bg / sage text, not light bg / dark text) so it reads as a
+  // dark-theme surface instead of a bright chip glowing against the page.
+  // #94a596 on #003b49 = ~4.7:1, passes WCAG AA.
+  .label.label-module4 {
+    background-color: #003b49;
+    color: #94a596;
+  }
+
   .lecture .slides,
   .lecture .ref,
   .lecture .solutions,

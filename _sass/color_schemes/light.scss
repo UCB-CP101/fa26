@@ -26,7 +26,9 @@ $search-result-preview-color: $grey-dk-000 !default;
 $body-lighter-color: $grey-dk-100;
 
 // Custom colors
-$hw-rel: #005d5d;
+// "Released" indicator (outline chip: transparent bg, this as text/border color).
+// #1a7a3d on white = ~5.4:1 contrast, passes WCAG AA for normal text.
+$hw-rel: #1a7a3d;
 
 .btn-outline-primary {
   &:hover {

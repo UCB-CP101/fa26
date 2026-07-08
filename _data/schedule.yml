@@ -18,7 +18,6 @@ weeks:
     topics:
     - title: Cities as complex systems
       subtopics:
-      - 'Emergence, feedback loops, nonlinearity: why urban questions are harder than they look'
       - Course logistics and tool setup
     resources:
     - title: Required
@@ -33,7 +32,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-08-26'
-      text: Wed, Aug 26
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Jupyter + GitHub environment setup
     resources:
@@ -59,7 +58,7 @@ weeks:
       subtopics:
       - Decomposition · Abstraction · Pattern recognition
     flags:
-    - text: 'A0: in-class activity · Mon Aug 31 · ungraded diagnostic'
+    - text: A0 in-class
       label_class: label-homework-released
     resources:
     - title: Required
@@ -89,7 +88,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-09-02'
-      text: Wed, Sep 2
+      text: 'Lab: Thu, Fri'
     topics:
     - title: 'Bad Choices Ch.1: paired discussion'
     resources:
@@ -121,9 +120,9 @@ weeks:
       subtopics:
       - Variables · Types · Collections
     flags:
-    - text: 'A1 released: Building "My Places" Dataset (due Thu Sep 17)'
+    - text: A1 release
       label_class: label-homework-released
-    - text: 'A3 released: Variables, Data Types & Basic Operations (due Mon Sep 28)'
+    - text: A3 release
       label_class: label-homework-released
     resources:
     - title: Required
@@ -152,7 +151,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-09-09'
-      text: Wed, Sep 9
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Module 1 review
     resources:
@@ -186,7 +185,7 @@ weeks:
       subtopics:
       - Common patterns · How to read a traceback
     flags:
-    - text: 'A4 released: Loops, Conditionals & Booleans (due Mon Oct 5)'
+    - text: A4 release
       label_class: label-homework-released
     - text: Team formation due this week
       label_class: label-gray
@@ -206,7 +205,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-09-16'
-      text: Wed, Sep 16
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Python basics practice
     resources:
@@ -232,8 +231,16 @@ weeks:
       subtopics:
       - Data types & sources · What isn't measured and why
     flags:
-    - text: A3 due Mon Sep 28
-      label_class: label-homework
+    - text: FP proposal due
+      label_class: label-project
+    resources:
+    - title: Final Project
+      class: project
+      items:
+      - class: ref
+        text: 'Proposal requirements: 1 slide, research question, dataset idea, team names'
+        url: "/docs/final_project/"
+        internal: true
   - type: lecture
     dates:
     - date: '2026-09-23'
@@ -258,7 +265,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-09-23'
-      text: Wed, Sep 23
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Python error types
     resources:
@@ -285,7 +292,7 @@ weeks:
       subtopics:
       - groupby · merge · sanity checks
     flags:
-    - text: A4 due Mon Oct 5
+    - text: A3 due
       label_class: label-homework
   - type: lecture
     dates:
@@ -295,11 +302,6 @@ weeks:
     - title: GeoPandas I
       subtopics:
       - GeoDataFrame · CRS management · Reading & writing spatial data
-    flags:
-    - text: 'A2 released after Wed Oct 7: Add Coordinates & New Categories (due Sat Oct 10)'
-      label_class: label-homework-released
-    - text: 'FP proposal due: 1 slide: research question, dataset idea, team names'
-      label_class: label-project
     resources:
     - title: Watch before class
       class: optional
@@ -310,7 +312,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-09-30'
-      text: Wed, Sep 30
+      text: 'Lab: Thu, Fri'
     topics:
     - title: A3 walkthrough & review
     resources:
@@ -335,6 +337,9 @@ weeks:
     - title: GeoPandas II
       subtopics:
       - Spatial predicates · Spatial join
+    flags:
+    - text: A4 due
+      label_class: label-homework
   - type: lecture
     dates:
     - date: '2026-10-07'
@@ -344,7 +349,7 @@ weeks:
       subtopics:
       - Overlay · Missing data · Workshop
     flags:
-    - text: A5 released Wed Oct 14
+    - text: A2 release
       label_class: label-homework-released
     resources:
     - title: Required
@@ -360,7 +365,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-10-07'
-      text: Wed, Oct 7
+      text: 'Lab: Thu, Fri'
     topics:
     - title: GeoPandas prep
     resources:
@@ -385,9 +390,6 @@ weeks:
     - title: Visualization principles
       subtopics:
       - Graphical marks · Encoding channels · Expressiveness & effectiveness
-    flags:
-    - text: A5 due Mon Oct 19
-      label_class: label-homework
   - type: lecture
     dates:
     - date: '2026-10-14'
@@ -397,7 +399,7 @@ weeks:
       subtopics:
       - 'Live vis critique workshop: bring one map you love and one you think is bad'
     flags:
-    - text: 'A6 released Wed Oct 21: Functions, Debugging & Data Visualization (due Mon Nov 2)'
+    - text: A5 release
       label_class: label-homework-released
     resources:
     - title: Required
@@ -415,7 +417,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-10-14'
-      text: Wed, Oct 14
+      text: 'Lab: Thu, Fri'
     topics:
     - title: A4 walkthrough & review
     resources:
@@ -440,12 +442,18 @@ weeks:
     - title: Thematic mapping
       subtopics:
       - Choropleth · Classification schemes · Normalization
+    flags:
+    - text: A5 due
+      label_class: label-homework
   - type: lecture
     dates:
     - date: '2026-10-21'
       text: Wed, Oct 21
     topics:
     - title: Visualization, interactivity & co-design in urban data
+    flags:
+    - text: A6 release
+      label_class: label-homework-released
     resources:
     - title: Required
       class: required
@@ -456,7 +464,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-10-21'
-      text: Wed, Oct 21
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Visualization practice
     resources:
@@ -482,9 +490,6 @@ weeks:
       subtopics:
       - Teams present one map + one chart + one paragraph of interpretation to a practitioner partner
       - Peer review packets distributed the week before
-    flags:
-    - text: A6 due Mon Nov 2
-      label_class: label-homework
   - type: lecture
     dates:
     - date: '2026-10-28'
@@ -503,7 +508,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-10-28'
-      text: Wed, Oct 28
+      text: 'Lab: Thu, Fri'
     topics:
     - title: A5 walkthrough & review
       subtopics:
@@ -518,6 +523,7 @@ weeks:
 - week: 11
   module:
     label_class: label-module4
+    group: 'Module 3: Urban Systems'
     text: 'Module 3a: Transportation & Access'
   start: '2026-11-02'
   end: '2026-11-08'
@@ -530,6 +536,9 @@ weeks:
     - title: Network analysis in planning
       subtopics:
       - OSMnx · Isochrones · Accessibility indices
+    flags:
+    - text: A6 due
+      label_class: label-homework
   - type: lecture
     dates:
     - date: '2026-11-04'
@@ -548,7 +557,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-11-04'
-      text: Wed, Nov 4
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Module 2 review
     resources:
@@ -561,6 +570,7 @@ weeks:
 - week: 12
   module:
     label_class: label-module4
+    group: 'Module 3: Urban Systems'
     text: 'Module 3a: Transportation & Access'
   start: '2026-11-09'
   end: '2026-11-15'
@@ -576,7 +586,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-11-09'
-      text: Mon, Nov 9
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Module 3a review
     resources:
@@ -595,6 +605,7 @@ weeks:
 - week: 13
   module:
     label_class: label-module4
+    group: 'Module 3: Urban Systems'
     text: 'Module 3b: Built Environment & Land Use'
   start: '2026-11-16'
   end: '2026-11-22'
@@ -618,7 +629,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-11-18'
-      text: Wed, Nov 18
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Built environment
     resources:
@@ -631,6 +642,7 @@ weeks:
 - week: 14
   module:
     label_class: label-module4
+    group: 'Module 3: Urban Systems'
     text: 'Module 3b: Built Environment & Land Use'
   start: '2026-11-23'
   end: '2026-11-29'
@@ -644,9 +656,16 @@ weeks:
       subtopics:
       - Cumulative exposure · CalEnviroScreen · Demographics overlay
     flags:
-    - text: 'FP midterm check-in due: preliminary findings slide'
+    - text: FP midterm check-in due
       label_class: label-project
     resources:
+    - title: Final Project
+      class: project
+      items:
+      - class: ref
+        text: 'Midterm check-in requirements: preliminary findings slide'
+        url: "/docs/final_project/"
+        internal: true
     - title: Required
       class: required
       items:
@@ -656,7 +675,7 @@ weeks:
   - type: lab
     dates:
     - date: '2026-11-23'
-      text: Mon, Nov 23
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Module 3b review
     resources:
@@ -678,6 +697,7 @@ weeks:
 - week: 15
   module:
     label_class: label-module4
+    group: 'Module 3: Urban Systems'
     text: 'Module 3c: Environment & Climate'
   start: '2026-11-30'
   end: '2026-12-06'
@@ -710,12 +730,12 @@ weeks:
       subtopics:
       - 3 min per team · Structured peer feedback before the exhibition
     flags:
-    - text: Formal classes ended Fri Dec 4.
+    - text: Formal classes end Fri Dec 4.
       label_class: label-gray
   - type: lab
     dates:
     - date: '2026-12-02'
-      text: Wed, Dec 2
+      text: 'Lab: Thu, Fri'
     topics:
     - title: Final project prep
     resources:

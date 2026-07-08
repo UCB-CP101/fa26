@@ -1,17 +1,40 @@
 {%- comment -%}
   Course schedule, rendered from _data/schedule.yml.
   Edit that file to update weeks, sessions, topics, and resource links.
+  Weeks are grouped into one collapsible <details> per module, grouped by
+  module.label_class (in original document order, since modules are
+  contiguous runs of weeks). Weeks sharing a label_class but with a more
+  specific module.text (e.g. "Module 3a/3b/3c" all sharing label-module4)
+  fold into one bar, titled by the first week's module.group (falling back
+  to module.text if group isn't set); the more specific text is then shown
+  as a small inline divider only where it changes within the group.
 {%- endcomment -%}
 <div class="course-schedule">
 <div class="schedule-meta">
 <p><a class="btn btn-outline" href="#" onclick="jumpToCurrentWeek(); return false;">Jump to Current Week</a></p>
 </div>
-{%- for week in site.data.schedule.weeks -%}
+{%- assign module_groups = site.data.schedule.weeks | group_by: "module.label_class" -%}
+{%- for module_group in module_groups -%}
+{%- assign first_week = module_group.items.first -%}
+{%- assign last_week = module_group.items.last -%}
+{%- assign group_display_name = first_week.module.group | default: first_week.module.text -%}
+{%- assign prev_submod = "" -%}
+<details class="module-section" open>
+<summary class="module-bar">
+<span class="label {{ first_week.module.label_class }} module-bar-badge">{{ group_display_name | escape }}</span>
+<span class="module-bar-dates">{{ first_week.start | date: "%b %-d" }} &ndash; {{ last_week.end | date: "%b %-d" }}</span>
+<span class="module-bar-chevron" aria-hidden="true">&#9662;</span>
+</summary>
+<div class="module-section-body">
+{%- for week in module_group.items -%}
+{%- if week.module.text != group_display_name and week.module.text != prev_submod -%}
+<div class="submodule-label">{{ week.module.text | escape }}</div>
+{%- assign prev_submod = week.module.text -%}
+{%- endif -%}
 <h2 id="week-{{ week.week }}" class="schedule-week-heading">
   <span class="schedule-week-title">Week {{ week.week }}</span>
-  {%- if week.module -%}
-  <span class="label {{ week.module.label_class }} schedule-week-module">{{ week.module.text | escape }}</span>
-  {%- endif -%}
+  {%- assign module_short_name = week.module.text | split: ": " | first -%}
+  <span class="schedule-week-module-tag">{{ module_short_name | escape }}</span>
 </h2>
 <table class="week{% if week.recess %} recess{% endif %}" data-start="{{ week.start }}" data-end="{{ week.end }}">
 <thead>
@@ -69,6 +92,9 @@
 </table>
 {%- endfor -%}
 </div>
+</details>
+{%- endfor -%}
+</div>
 <script>
 function getPacificDateString() {
     const parts = new Intl.DateTimeFormat("en-US", {
@@ -105,6 +131,13 @@ function jumpToCurrentWeek() {
     }
 
     if (targetWeek) {
+        // The target week may be inside a collapsed module <details>; open
+        // it first or scrollIntoView would land on a hidden (0-height) element.
+        const section = targetWeek.closest('details.module-section');
+        if (section) {
+            section.open = true;
+        }
+
         let weekHeader = targetWeek.previousElementSibling;
         while (weekHeader && weekHeader.tagName !== 'H2') {
             weekHeader = weekHeader.previousElementSibling;

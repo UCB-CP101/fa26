@@ -62,17 +62,22 @@ p.note::before {
       background-color: #FFC31B;
       color: black;
     }
-    &.label-homework {
-      background-color: #005d5d;
+    // Three distinct, accessible solid-fill hues, one per category: released
+    // = green, due = orange, FP/final-project = red. Matched on saturation
+    // (65-85%) and lightness (~30-40%), not just hue, so none reads as a
+    // washed-out/gray version of another. All >=4.9:1 with white text (AA).
+    // Deliberately not theme-dependent — solid chips carry their own
+    // bg/text contrast regardless of page theme.
+    &.label-homework-released {
+      background-color: #1a7a3d; // green, S 65% L 29%
       color: white;
     }
-    &.label-homework-released {
-      background-color: transparent;
-      color: $hw-rel;
-      box-shadow: inset 0 0 0 2px #005d5d;
+    &.label-homework {
+      background-color: #b5540f; // orange, S 85% L 38%
+      color: white;
     }
     &.label-project {
-      background-color: #198038;
+      background-color: #C1121F; // red, S 83% L 41% (was #A13D3D at S 45% — too muted, read as gray)
       color: white;
     }
     &.label-exam {
