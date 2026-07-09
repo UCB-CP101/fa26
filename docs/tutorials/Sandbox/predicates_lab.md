@@ -11,7 +11,7 @@ permalink: /docs/tutorials/sandbox/predicates_lab/
 
 This lab helps you practice core spatial predicates by moving simple geometries and seeing live predicate outcomes and matching code examples.
 
-**Concept:** Spatial predicates (e.g. `intersects`, `contains`, `within`, `crosses`) are boolean tests between geometries — the foundation of spatial queries in GeoPandas. You can also read more about this concept in [Spatial queries using GeoPandas](https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html) (up to the “Spatial Queries Using GeoPandas” section).
+**Concept:** Spatial predicates (e.g. `intersects`, `contains`, `within`, `crosses`) are boolean tests between geometries: the foundation of spatial queries in GeoPandas. You can also read more about this concept in [Spatial queries using GeoPandas](https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html) (up to the “Spatial Queries Using GeoPandas” section).
 
 Open the lab in a new tab:
 

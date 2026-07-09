@@ -23,7 +23,7 @@ This lab builds your mental model from the ground up: what a function is made of
 - Naming each structural element of a function using precise vocabulary
 - Calling a function with your own inputs and seeing the real output
 
-The lab has **seven activities** across four modes — *Assemble*, *Fill the Gaps*, *Matching*, and a *Try It* REPL at the bottom of every coding exercise that runs your assembled function directly in the browser. No install required.
+The lab has **seven activities** across four modes: *Assemble*, *Fill the Gaps*, *Matching*, and a *Try It* REPL at the bottom of every coding exercise that runs your assembled function directly in the browser. No install required.
 
 ---
 
@@ -50,7 +50,7 @@ Preview:
 <div style="position:relative;border:1px solid #d0d7de;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);">
 <iframe aria-hidden="true" loading="lazy" src="{{ site.baseurl }}/docs/tutorials/Sandbox/python_functions_lab.html" style="width:100%;height:600px;border:0;pointer-events:none;" tabindex="-1" title="Python Functions Lab Preview"></iframe>
 <div style="position:absolute;inset:auto 0 0 0;padding:14px 16px;background:linear-gradient(to top,rgba(9,10,18,.90) 60%,rgba(9,10,18,0));color:#f8f9ff;font-size:13px;display:flex;align-items:center;justify-content:space-between;">
-<span>Preview only — interactions are disabled.</span>
+<span>Preview only; interactions are disabled.</span>
 <a href="{{ site.baseurl }}/docs/tutorials/Sandbox/python_functions_lab.html" rel="noopener noreferrer" style="color:#e8a042;text-decoration:none;font-weight:600;font-size:13px;" target="_blank">Open full lab →</a>
 </div>
 </div>

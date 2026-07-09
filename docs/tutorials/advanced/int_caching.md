@@ -116,7 +116,6 @@ test_scope()
 
 Python’s Global Interpreter Lock (GIL) ensures thread safety for operations involving small integers. However, for non-cached integers, repeated creation of objects in multi-threaded environments can increase memory fragmentation and overhead.
 This behavior is changed in Python 3.13, as this version introduces a significant change by making the Global Interpreter Lock (GIL) optional.
-—
 
 ### **7. Scenarios Where Caching Matters**
 
@@ -140,4 +139,4 @@ This behavior is changed in Python 3.13, as this version introduces a significan
 2. Be cautious of integer caching in Python when comparing objects outside the `-5 to 256` range.
 3. Relying on `id()` or `is` for object identity can lead to unexpected behaviors, especially when working across scopes or with non-cached integers.
 4. Small integer caching optimizes common operations and reduces memory usage, but for large numbers, Python dynamically creates objects.
-5. Avoid coding assumptions based on caching behavior for integers outside `-5 to 256`—this is an implementation detail specific to CPython.
+5. Avoid coding assumptions based on caching behavior for integers outside `-5 to 256`: this is an implementation detail specific to CPython.

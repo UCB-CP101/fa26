@@ -29,7 +29,7 @@ Work through function structure, parameters, return values, and simple control f
 
 ### [Python Error Types Lab]({{ site.baseurl }}/docs/tutorials/Sandbox/error_types_lab_app.html)
 
-Explore the three categories of Python errors — syntax, runtime, and semantic — through an interactive diagram and code examples.
+Explore the three categories of Python errors (syntax, runtime, and semantic) through an interactive diagram and code examples.
 
 ## How To Use This Section
 

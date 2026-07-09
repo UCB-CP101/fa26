@@ -63,8 +63,15 @@
 {%- else -%}
 <span class="schedule-topic-title">{% if topic.title_html %}{{ topic.title_html }}{% else %}{{ topic.title | escape }}{% endif %}</span>
 {%- endif -%}
+{%- if topic.guest -%}
+<p class="schedule-guest-byline">Guest Lecture: {{ topic.guest | escape }}</p>
+{%- endif -%}
 {%- if topic.subtopics -%}
-<p class="schedule-topic-detail">{%- for sub in topic.subtopics -%}{{ sub | escape }}{%- unless forloop.last %} · {% endunless -%}{%- endfor -%}</p>
+<ul class="schedule-topic-detail">
+{%- for sub in topic.subtopics -%}
+<li>{{ sub | escape }}</li>
+{%- endfor -%}
+</ul>
 {%- endif -%}
 {%- endfor -%}
 {%- if session.flags -%}

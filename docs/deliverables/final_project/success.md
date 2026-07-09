@@ -46,7 +46,7 @@ You should be able to explain why you made each one and acknowledge, at least br
 ### Data cleaning
 
 - Explain what rules you applied to remove or retain rows and why those rules are defensible given your data and research question.
-- If you dropped rows with missing values — a practice called listwise deletion (removing any row that contains at least one missing field) — state why dropping was more appropriate than filling in an estimated value or keeping the row with a flag. This is addressed in detail in Section 3.
+- If you dropped rows with missing values, a practice called listwise deletion (removing any row that contains at least one missing field), state why dropping was more appropriate than filling in an estimated value or keeping the row with a flag. This is addressed in detail in Section 3.
 
 ### Method and analytical choices
 
@@ -110,7 +110,7 @@ A grader should be able to clone your repository, install your dependencies, and
 
 ### Repository structure
 
-This may seem like a minor detail, but it is not. How you organize a project repository is one of the first things a colleague, a supervisor, or a client will see when they open your work. A well-structured repository signals that you understand how collaborative technical work actually functions. A disorganized one signals the opposite, regardless of how good the analysis inside it is. Every professional data role you will encounter — in a city agency, a planning firm, a research lab, or a tech company — requires this. It is worth getting right now.
+This may seem like a minor detail, but it is not. How you organize a project repository is one of the first things a colleague, a supervisor, or a client will see when they open your work. A well-structured repository signals that you understand how collaborative technical work actually functions. A disorganized one signals the opposite, regardless of how good the analysis inside it is. Every professional data role you will encounter, whether in a city agency, a planning firm, a research lab, or a tech company, requires this. It is worth getting right now.
 
 - Organize your files clearly. At minimum: a top-level README that explains what the project does and how to run it, a data folder, a notebooks or src folder, and a separate folder for output files.
 - Include a `requirements.txt` or `environment.yml` that lists every library your notebook imports, with version numbers. If the grader cannot install your dependencies, they cannot run your notebook.
@@ -140,7 +140,7 @@ Apply the same standards you would to a report you were submitting to a client o
 
 - The report should read as a single unified argument, not a sequence of disconnected tasks. Each section should set up the next, and the logic connecting them should be explicit.
 - Your introduction must state your research question clearly and explain why it matters. Your conclusion must return to that question and answer it directly, with appropriate qualifications, using the evidence your analysis produced.
-- **Every empirical claim in the text must be supported by a figure, a table, or a cited source.** Methodological explanations and definitions do not require citations, but any claim about the world — about a place, a population, a trend, or a pattern — does.
+- **Every empirical claim in the text must be supported by a figure, a table, or a cited source.** Methodological explanations and definitions do not require citations, but any claim about the world, whether about a place, a population, a trend, or a pattern, does.
 
 ---
 

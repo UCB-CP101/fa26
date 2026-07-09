@@ -19,7 +19,7 @@ The GitHub Student Developer Pack offers a comprehensive suite of tools and reso
 ## GitHub Codespaces
 
 - **Cloud Development Made Easy**: Enjoy 180 hours per month of cloud-based development, accessible from any device.
-- **Consistent Environment**: Say goodbye to setup headaches—your dev tools are ready wherever you are.
+- **Consistent Environment**: Say goodbye to setup headaches: your dev tools are ready wherever you are.
 
 ## 🤖 GitHub Copilot
 

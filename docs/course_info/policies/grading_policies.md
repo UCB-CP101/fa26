@@ -17,7 +17,7 @@ and a **Final project** to submit by  May 10, 11:59 pm.
 - Class Activities and Participation: 15%
 - Lab Activities and Participation: 15%
 - Assignments: 30%
-  - 4 assignments
+  - 5 assignments total: (A1 is hands-on in the lab)
   - The lowest grade among submitted assignments will be dropped.
   - Unsubmitted, or empty assignments receive a zero and are not eligible to be dropped.
 - Final Project: 40%
@@ -28,10 +28,10 @@ and a **Final project** to submit by  May 10, 11:59 pm.
 {: .highlight }
 > You will lose points if you leave any GenAI “fingerprints” in your code (e.g., boilerplate comments not written by you, example code or helper text, or advanced constructs we have not covered and that you cannot explain). You are responsible for reviewing any GenAI-generated code you use and for ensuring that you fully understand every line you submit. If you cannot explain your own code when asked, you will receive a zero for that activity.
 
-The GSI will go over the solutions for each assignment, one week after the deadline.
+The GSIs will go over the solutions for each assignment, one week after the deadline.
 **It is your responsibility to compare your answers with the answer key, and ask any questions you have from your GSI or during OH.**
 
-If you notice a mistake in your grade, you have 10 days from the time your score is released to bring it to your grader or GSI.
+If you notice a mistake in your grade, you have 10 days from the time your score is released to bring it to your grader or GSIs.
 After this 10-day period, no further inquiries or grade revisions will be considered.
 
 {: .highlight }

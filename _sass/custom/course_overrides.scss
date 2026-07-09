@@ -112,6 +112,7 @@ table.week ul.resources a {
 table.week .title,
 table.week .schedule-topic-title {
     font-weight: 500; /* Moderate font weight for titles */
+    color: #1F3A5F; /* light mode only: dark slate-blue, distinct from body text */
 }
 
 .schedule-session-topics {
@@ -123,6 +124,22 @@ table.week .schedule-topic-title {
   font-size: 14.7px;
   line-height: 1.4;
   margin: 0.25rem 0 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+
+// Guest lecture byline: distinguished by style (italic + accent color),
+// not a colored pill/badge - sits quietly between the title and subtopics.
+.schedule-guest-byline {
+  font-style: italic;
+  font-weight: 500;
+  color: #6b5fb3;
+  font-size: 14.7px;
+  margin: 0.15rem 0 0;
+}
+
+.schedule-topic-detail li {
+  margin: 0.1rem 0;
 }
 
 .schedule-flags {
@@ -542,6 +559,20 @@ blockquote.finalproj > .finalproj-title {
 // The original CP255 site was light-mode only; its hard-coded chip and caption
 // colors need dark-scheme equivalents to stay readable (WCAG AA).
 @if $color-scheme == dark {
+  // The light-mode-only dark slate-blue on .schedule-topic-title (in
+  // course_overrides.scss above) is unreadable on a dark background -
+  // reset back to the theme's normal light body text color here.
+  table.week .title,
+  table.week .schedule-topic-title {
+    color: $body-text-color;
+  }
+
+  // Lighter purple than the light-mode byline (#6b5fb3 only hits ~3.4:1
+  // on the dark background); #A99BDB clears AA at ~7.4:1.
+  .schedule-guest-byline {
+    color: #A99BDB;
+  }
+
   .module-section {
     border-color: #3d3d3d;
   }

@@ -80,6 +80,13 @@ p.note::before {
       background-color: #C1121F; // red, S 83% L 41% (was #A13D3D at S 45% — too muted, read as gray)
       color: white;
     }
+    // Muted blue (same as the Module 2 badge): in-class/hands-on lab
+    // activities (A0, A1), distinct from the vivid "released" green so
+    // they don't read as a homework release. ~5.3:1 with white text (AA).
+    &.label-handson {
+      background-color: #3f6f98;
+      color: white;
+    }
     &.label-exam {
       background-color: #CA0C0C;
       color: white;

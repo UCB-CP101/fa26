@@ -35,7 +35,7 @@ Reproducibility is not just “a link exists.” It is also “the file I got is
 
 Start every notebook with a setup cell that creates a predictable local folder structure. This gives the notebook a home for data, outputs, and metadata without relying on any external path.
 
-Setup cell — run this first:
+Setup cell (run this first):
 
 ```python
 from pathlib import Path
@@ -62,7 +62,7 @@ your-project/
 └── report.pdf
 ```
 
-`data/raw/` is read-only — original files go there and are never modified. All transformations write to `data/processed/`. Add `data/` to `.gitignore` and keep a `.gitkeep` inside each subfolder so the empty folders stay tracked in Git.
+`data/raw/` is read-only: original files go there and are never modified. All transformations write to `data/processed/`. Add `data/` to `.gitignore` and keep a `.gitkeep` inside each subfolder so the empty folders stay tracked in Git.
 
 ---
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Python Functions Lab — CP 101</title>
+<title>Python Functions Lab · CP 101</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -695,7 +695,7 @@ const EXERCISES = [
     functionName: 'greet',
     tabType: 'Assemble',
     title: 'greet()',
-    prompt: `A web app needs to welcome each user by name. Complete <code>greet(name: str)</code> — it receives one argument called <code>name</code>, a <code>str</code>, and returns a greeting string. For example, <code>greet("Alice")</code> should return <code>'Hello, Alice!'</code>.<br>Drag the three lines into the correct order, then set each indentation level.`,
+    prompt: `A web app needs to welcome each user by name. Complete <code>greet(name: str)</code>: it receives one argument called <code>name</code>, a <code>str</code>, and returns a greeting string. For example, <code>greet("Alice")</code> should return <code>'Hello, Alice!'</code>.<br>Drag the three lines into the correct order, then set each indentation level.`,
     lines: [
       { lineId: 'signature', text: 'def greet(name: str) -> str:',       correctIndent: 0 },
       { lineId: 'body',      text: 'message = "Hello, " + name + "!"',   correctIndent: 1 },
@@ -772,7 +772,7 @@ const EXERCISES = [
     functionName: 'clean_column_names',
     tabType: 'Assemble',
     title: 'clean_column_names()',
-    prompt: `City permit datasets often arrive with messy column headers — capital letters, spaces between words, and extra whitespace at the edges. Complete <code>clean_column_names(df)</code> — it takes a DataFrame and uses the pandas <code>.str</code> accessor to clean every column name in one vectorized expression: strip whitespace, lowercase, replace spaces with underscores. Returns the updated DataFrame.<br><br><span class="prompt-table-label">Five columns from a NYC permits dataset, before and after:</span><table class="prompt-table"><thead><tr><th>Raw column name</th><th>Cleaned</th></tr></thead><tbody><tr><td><code>" Street Name "</code></td><td><code>street_name</code></td></tr><tr><td><code>"Zip Code"</code></td><td><code>zip_code</code></td></tr><tr><td><code>"Permit Type"</code></td><td><code>permit_type</code></td></tr><tr><td><code>" Issue Date"</code></td><td><code>issue_date</code></td></tr><tr><td><code>"Owner Name "</code></td><td><code>owner_name</code></td></tr></tbody></table>`,
+    prompt: `City permit datasets often arrive with messy column headers: capital letters, spaces between words, and extra whitespace at the edges. Complete <code>clean_column_names(df)</code>: it takes a DataFrame and uses the pandas <code>.str</code> accessor to clean every column name in one vectorized expression: strip whitespace, lowercase, replace spaces with underscores. Returns the updated DataFrame.<br><br><span class="prompt-table-label">Five columns from a NYC permits dataset, before and after:</span><table class="prompt-table"><thead><tr><th>Raw column name</th><th>Cleaned</th></tr></thead><tbody><tr><td><code>" Street Name "</code></td><td><code>street_name</code></td></tr><tr><td><code>"Zip Code"</code></td><td><code>zip_code</code></td></tr><tr><td><code>"Permit Type"</code></td><td><code>permit_type</code></td></tr><tr><td><code>" Issue Date"</code></td><td><code>issue_date</code></td></tr><tr><td><code>"Owner Name "</code></td><td><code>owner_name</code></td></tr></tbody></table>`,
     lines: [
       { lineId: 'signature', text: 'def clean_column_names(df: pd.DataFrame) -> pd.DataFrame:',                              correctIndent: 0 },
       { lineId: 'assign',    text: 'df.columns = (df.columns\n    .str.strip()\n    .str.lower()\n    .str.replace(" ", "_"))', correctIndent: 1 },
@@ -781,8 +781,8 @@ const EXERCISES = [
     tryIt: {
       staticOnly: true,
       examples: [
-        { callHtml: '<span class="ex-fn">clean_column_names</span>(df) <span style="color:var(--muted)">— df.columns before:</span> <span class="ex-str">[" Street Name ", "Zip Code", "Permit Type"]</span>', output: '["street_name", "zip_code", "permit_type"]' },
-        { callHtml: '<span class="ex-fn">clean_column_names</span>(df) <span style="color:var(--muted)">— df.columns before:</span> <span class="ex-str">[" Issue Date", "Owner Name "]</span>',              output: '["issue_date", "owner_name"]' },
+        { callHtml: '<span class="ex-fn">clean_column_names</span>(df) <span style="color:var(--muted)">· df.columns before:</span> <span class="ex-str">[" Street Name ", "Zip Code", "Permit Type"]</span>', output: '["street_name", "zip_code", "permit_type"]' },
+        { callHtml: '<span class="ex-fn">clean_column_names</span>(df) <span style="color:var(--muted)">· df.columns before:</span> <span class="ex-str">[" Issue Date", "Owner Name "]</span>',              output: '["issue_date", "owner_name"]' },
       ]
     }
   },
@@ -792,7 +792,7 @@ const EXERCISES = [
     functionName: 'celsius_to_f',
     tabType: 'Assemble',
     title: 'celsius_to_f()',
-    prompt: `Sensor readings from weather stations arrive in Celsius, but your analysis pipeline expects Fahrenheit. Complete <code>celsius_to_f(c: float)</code> — it takes a temperature <code>c</code> as a <code>float</code> and returns the converted value using F = C × 9/5 + 32. For example, <code>celsius_to_f(100)</code> should return <code>212.0</code>.`,
+    prompt: `Sensor readings from weather stations arrive in Celsius, but your analysis pipeline expects Fahrenheit. Complete <code>celsius_to_f(c: float)</code>: it takes a temperature <code>c</code> as a <code>float</code> and returns the converted value using F = C × 9/5 + 32. For example, <code>celsius_to_f(100)</code> should return <code>212.0</code>.`,
     lines: [
       { lineId: 'signature', text: 'def celsius_to_f(c: float) -> float:', correctIndent: 0 },
       { lineId: 'body',      text: 'result = c * 9/5 + 32',                correctIndent: 1 },
@@ -813,7 +813,7 @@ const EXERCISES = [
     functionName: 'absolute_value',
     tabType: 'Fill the Gaps',
     title: 'absolute_value()',
-    prompt: `Elevation readings in a coastal flooding dataset can be negative (below sea level). Complete <code>absolute_value(n: float)</code> — it takes a number <code>n</code> and returns its magnitude: if <code>n</code> is negative, return its negation; otherwise return <code>n</code> unchanged. For example, <code>absolute_value(-7)</code> → <code>7</code> and <code>absolute_value(3)</code> → <code>3</code>.`,
+    prompt: `Elevation readings in a coastal flooding dataset can be negative (below sea level). Complete <code>absolute_value(n: float)</code>: it takes a number <code>n</code> and returns its magnitude: if <code>n</code> is negative, return its negation; otherwise return <code>n</code> unchanged. For example, <code>absolute_value(-7)</code> → <code>7</code> and <code>absolute_value(3)</code> → <code>3</code>.`,
     rows: [
       { indent: 0, template: 'def [absolute_value](n: float) -> float:' },
       { indent: 1, template: 'if n < [0]:' },
@@ -835,7 +835,7 @@ const EXERCISES = [
     functionName: 'classify_grade',
     tabType: 'Fill the Gaps',
     title: 'classify_grade()',
-    prompt: `An automated grading script converts numeric scores to letter grades. Complete <code>classify_grade(score: int)</code> — it takes a whole-number <code>score</code> (0–100) and returns a letter grade string: <code>"A"</code> for 90 and above, <code>"B"</code> for 80 and above, and <code>"C"</code> for everything else.`,
+    prompt: `An automated grading script converts numeric scores to letter grades. Complete <code>classify_grade(score: int)</code>: it takes a whole-number <code>score</code> (0–100) and returns a letter grade string: <code>"A"</code> for 90 and above, <code>"B"</code> for 80 and above, and <code>"C"</code> for everything else.`,
     rows: [
       { indent: 0, template: 'def classify_grade([score: int]) -> str:' },
       { indent: 1, template: 'if score >= [90]:' },
@@ -860,7 +860,7 @@ const EXERCISES = [
     functionName: null,
     tabType: 'Matching',
     title: 'classify_grade()',
-    prompt: `Functions can branch: they take different paths through the code depending on the input. Study <code>classify_grade()</code> below — it uses an if / elif / else chain. Match each highlighted snippet to its correct name.`,
+    prompt: `Functions can branch: they take different paths through the code depending on the input. Study <code>classify_grade()</code> below: it uses an if / elif / else chain. Match each highlighted snippet to its correct name.`,
     contextLines: [
       'def classify_grade(score: int) -> str:',
       '    if score >= 90:',
@@ -910,7 +910,7 @@ const EXERCISES = [
       {
         snippetId: 'early-return',
         displayCode: 'return "C"  ← exits immediately in else',
-        hint: 'A return inside a conditional. The moment Python hits it the function is done — it never reaches any later code.',
+        hint: 'A return inside a conditional. The moment Python hits it the function is done; it never reaches any later code.',
         term: 'early return'
       },
     ]
@@ -1100,14 +1100,14 @@ function buildHelpPanel() {
 <div class="help-section">
   <div class="help-section-header">
     <span class="exercise-badge badge-dnd help-section-badge">Assemble</span>
-    <span class="help-section-title">Drag &amp; Drop — putting lines in order</span>
+    <span class="help-section-title">Drag &amp; Drop · putting lines in order</span>
   </div>
   <div class="help-section-body">
     <div class="help-text">
       <p>The <strong>Code Bank</strong> on the left holds all the lines of a function, shuffled. Your job is to drag each line into the <strong>Build Here</strong> zone on the right, in the correct order from top to bottom.</p>
       <p>Grab any line from either side using the <strong>⋮ handle</strong> at its left edge. Drop it onto the zone to place it, or drop it between two lines already in the zone to insert it at that position.</p>
       <p>Once a line is in the zone you can <strong>reorder it</strong> by dragging it up or down with the same handle. Use <strong>✕</strong> to send a line back to the bank.</p>
-      <p><strong>Indentation matters.</strong> Python uses indentation to define which lines belong inside a function, loop, or conditional. Use the <strong>← →</strong> arrows on the right of each zone line to set the correct indent level. The coloured bars on the left show the current depth — blue for level 1, amber for 2, green for 3.</p>
+      <p><strong>Indentation matters.</strong> Python uses indentation to define which lines belong inside a function, loop, or conditional. Use the <strong>← →</strong> arrows on the right of each zone line to set the correct indent level. The coloured bars on the left show the current depth: blue for level 1, amber for 2, green for 3.</p>
     </div>
     <div class="help-demo">
       <div class="help-demo-label">Drag a line from bank → zone</div>
@@ -1155,13 +1155,13 @@ function buildHelpPanel() {
 <div class="help-section">
   <div class="help-section-header">
     <span class="exercise-badge badge-fill help-section-badge">Fill the Gaps</span>
-    <span class="help-section-title">Fill in Blanks — complete the missing pieces</span>
+    <span class="help-section-title">Fill in Blanks · complete the missing pieces</span>
   </div>
   <div class="help-section-body">
     <div class="help-text">
       <p>The function is mostly written for you. Each <strong>underlined blank</strong> is a word or value that's been removed. Click a blank and type what belongs there.</p>
       <p>Press <strong>Enter</strong> or click <strong>Check Answer</strong> to check. Correct blanks turn <span style="color:var(--blue)">blue</span>; wrong ones turn <span style="color:var(--brown)">brown</span>. Fix the brown ones and check again.</p>
-      <p>The blank's width is a hint — a wide blank expects a longer answer like a function name, a narrow one expects a number or a short keyword.</p>
+      <p>The blank's width is a hint: a wide blank expects a longer answer like a function name, a narrow one expects a number or a short keyword.</p>
     </div>
     <div class="help-demo">
       <div class="help-demo-label">Type into the blank, then check</div>
@@ -1179,7 +1179,7 @@ function buildHelpPanel() {
 <div class="help-section">
   <div class="help-section-header">
     <span class="exercise-badge badge-match help-section-badge">Matching</span>
-    <span class="help-section-title">Anatomy — name each part of the function</span>
+    <span class="help-section-title">Anatomy · name each part of the function</span>
   </div>
   <div class="help-section-body">
     <div class="help-text">
@@ -1348,7 +1348,7 @@ function renderDragDrop(exerciseId) {
         <div class="code-bank" id="bank-${exerciseId}"></div>
       </div>
       <div>
-        <div class="column-heading">Build Here — drag lines in, set indent with arrows on the right</div>
+        <div class="column-heading">Build Here · drag lines in, set indent with arrows on the right</div>
         <div class="drop-zone" id="zone-${exerciseId}">
           ${exerciseState.zone.length === 0
             ? '<div class="drop-zone-empty">Drag lines here<br>Indent guides are shown as vertical lines</div>'
@@ -1781,7 +1781,7 @@ function checkAnswer(exerciseId) {
       blankInput.classList.toggle('is-wrong',  !isCorrect);
       if (!isCorrect) allCorrect = false;
     });
-    setFeedback(exerciseId, allCorrect ? '✓ Perfect!' : 'Some blanks are wrong — shown in brown.', allCorrect);
+    setFeedback(exerciseId, allCorrect ? '✓ Perfect!' : 'Some blanks are wrong, shown in brown.', allCorrect);
     if (allCorrect) markExerciseComplete(exerciseId); else unmarkExerciseComplete(exerciseId);
     return;
   }
@@ -1805,7 +1805,7 @@ function checkAnswer(exerciseId) {
         if (termEl) { termEl.classList.toggle('is-correct', isCorrect); termEl.classList.toggle('is-wrong', !isCorrect); }
       }
     });
-    setFeedback(exerciseId, allCorrect ? '✓ All matched!' : 'Some matches are wrong — shown in brown.', allCorrect);
+    setFeedback(exerciseId, allCorrect ? '✓ All matched!' : 'Some matches are wrong, shown in brown.', allCorrect);
     if (allCorrect) markExerciseComplete(exerciseId); else unmarkExerciseComplete(exerciseId);
     return;
   }
@@ -1955,7 +1955,7 @@ function buildTryItWidget(exercise) {
     <div class="try-it-widget">
       <div class="try-it-header">
         <span class="try-it-label">Try It</span>
-        <span class="try-it-note">${tryItConfig.staticOnly ? 'expected outputs for reference' : 'runs your assembled function — check answer first'}</span>
+        <span class="try-it-note">${tryItConfig.staticOnly ? 'expected outputs for reference' : 'runs your assembled function, check answer first'}</span>
       </div>
       <div class="try-it-examples">${exampleRowsHtml}</div>
       ${replHtml}
@@ -1971,7 +1971,7 @@ function runTryIt(exerciseId) {
   if (!completedExercises.has(exerciseId)) {
     const studentCode = extractStudentCode(exerciseId);
     outputElement.innerHTML = studentCode
-      ? `<span class="result-error">Check your answer first — the function must be correct before running.</span>`
+      ? `<span class="result-error">Check your answer first: the function must be correct before running.</span>`
       : `<span class="result-error">Assemble or fill the function first.</span>`;
     return;
   }
