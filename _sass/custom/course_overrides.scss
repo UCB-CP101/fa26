@@ -138,6 +138,11 @@ table.week .schedule-topic-title {
   margin: 0.15rem 0 0;
 }
 
+.schedule-guest-byline a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .schedule-topic-detail li {
   margin: 0.1rem 0;
 }
@@ -309,7 +314,7 @@ blockquote.lab.content-type::before {
 .course-schedule .schedule-week-heading .schedule-week-module-tag {
     font-size: 14px;
     font-weight: 500;
-    color: #8a8a8a;
+    color: #646464; // was #8a8a8a: only 3.45:1 on white, fails WCAG AA (needs 4.5:1)
 }
 
 // One collapsible <details> per module (grouped by module.text in the
@@ -601,7 +606,10 @@ blockquote.finalproj > .finalproj-title {
     color: #a3adc2;
   }
 
-  .schedule-week-module-tag {
+  // Matches the base rule's selector specificity (0,3,0); a bare
+  // .schedule-week-module-tag (0,1,0) was losing to it, so this never
+  // actually applied and the light-mode gray leaked into dark mode too.
+  .course-schedule .schedule-week-heading .schedule-week-module-tag {
     color: #8a93a8;
   }
 

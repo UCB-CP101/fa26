@@ -103,7 +103,7 @@ weeks:
       class: required
       items:
       - class: ref
-        text: ''
+        text: 'Bad Choices Ch.1: paired discussion'
         url: https://bookofbadchoices.com/index.html#page/3
 - week: 3
   module:
@@ -221,7 +221,7 @@ weeks:
     - date: '2026-09-16'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Module 1 review
+    - title: Module 1 Workshop
     resources:
     - title: Lab
       class: required
@@ -319,7 +319,6 @@ weeks:
       - Exploratory data analysis (EDA) 
       - Sanity checks
       - Groupby & merge
-      - Handling missing data 
 
   - type: lecture
     dates:
@@ -328,10 +327,9 @@ weeks:
     topics:
     - title: 'GeoPandas I: Spatial Data Model'
       subtopics:
-      - GeoDataFrame & CRS
+      - Geospatial data types in Shapely
+      - GeoDataFrame and GeoSeries
       - Spatial data I/O
-      
-
     resources:
     - title: Watch before class
       class: optional
@@ -379,7 +377,9 @@ weeks:
     topics:
     - title: 'GeoPandas III: Spatial Operations & Overlay'
       subtopics:
-      - Overlay · Missing data · Workshop
+      - Spatial join & Overlay
+      - Missing Data in Pandas and GeoPandas
+      - Hands on workshop
     flags:
     - text: A4 release
       label_class: label-homework-released
@@ -419,31 +419,19 @@ weeks:
     - date: '2026-10-12'
       text: Mon, Oct 12
     topics:
-    - title: 'Visualization, Interactivity and Co-design in Exploring Humanity and the Built Environment through Data'
-      guest: Sam Pottinger
+    - title: Data Ethics and Governance
+      guest: Lucy Andrews
+      guest_url: https://www.lucyrandrews.com/about
+      subtopics:
+      - Senior Environmental Scientist, Department of Water Resources
   - type: lecture
     dates:
     - date: '2026-10-14'
       text: Wed, Oct 14
     topics:
-    - title: Value of Vis
-      subtopics:
-      - Graphical marks
-      - Visual encoding channels
-      - Expressiveness & effectiveness
-    resources:
-    - title: Required
-      class: required
-      items:
-      - class: ref
-        text: Wilke FDV Ch.19
-        url: https://clauswilke.com/dataviz/historical-examples.html
-      - class: ref
-        text: Wilke FDV Ch.20
-        url: https://clauswilke.com/dataviz/redundant-coding.html
-      - class: ref
-        text: Do No Harm Guide
-        url: https://urban-institute.medium.com/do-no-harm-guide-applying-equity-awareness-in-data-visualization-38e12f3f20a9
+    - title: 'Visualization, Interactivity and Co-design in Exploring Humanity and the Built Environment through Data'
+      guest: Sam Pottinger
+      guest_url: https://dse.berkeley.edu/people/sam-pottinger
   - type: lab
     dates:
     - date: '2026-10-14'
@@ -469,18 +457,27 @@ weeks:
     - date: '2026-10-19'
       text: Mon, Oct 19
     topics:
-    - title: 'Color and Perception in Visualization'
+    - title: The Value of Visualization
       subtopics:
-      - Color Accessibility
-    - title: 'Chart Types: Bars & Distributions'
-      subtopics:
-      - Bar Charts
-      - Visualizing Distributions
-      - Hands-on Vis Critique
+      - Graphical marks & visual encoding channels
+      - Expressiveness & effectiveness
+      - Color perception & accessibility
     flags:
     - text: FP Midterm due
       label_class: label-project
     resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Wilke FDV Ch.19
+        url: https://clauswilke.com/dataviz/historical-examples.html
+      - class: ref
+        text: Wilke FDV Ch.20
+        url: https://clauswilke.com/dataviz/redundant-coding.html
+      - class: ref
+        text: Do No Harm Guide
+        url: https://www.urban.org/sites/default/files/publication/104296/do-no-harm-guide.pdf
     - title: Final Project
       class: project
       items:
@@ -493,12 +490,14 @@ weeks:
     - date: '2026-10-21'
       text: Wed, Oct 21
     topics:
-    - title: 'Chart Types: Lines & Correlations'
+    - title: 'Chart Types: Bar & Line'
       subtopics:
+      - Bar Charts
       - Line Charts
-      - (Avoiding) Pie Charts
-      - Visualizing Correlations
-      - Seaborn & marginal plots
+      - Bar charts & visualizing distributions
+      - Line charts & visualizing correlations
+      - (Avoiding!) pie charts
+
     flags:
     - text: A4 due
       label_class: label-homework
@@ -510,7 +509,7 @@ weeks:
       items:
       - class: ref
         text: 'Design and Redesign: Wattenberg & Viégas'
-        url: https://medium.com/@hint_fm/design-and-redesign-4ab77206d788
+        url: https://medium.com/@hint_fm/design-and-redesign-4ab77206cf9 
   - type: lab
     dates:
     - date: '2026-10-21'
@@ -536,38 +535,45 @@ weeks:
     - date: '2026-10-26'
       text: Mon, Oct 26
     topics:
-    - title: Thematic mapping
+    - title: 'Thematic Mapping: Map Types & Classification Schemes'
       subtopics:
-      - Choropleth · Classification schemes · Normalization
+      - Elements of Maps
+      - Choropleth maps
+      - Proportional symbol maps
+      - Classification schemes
+      - Data Normalization'
   - type: lecture
     dates:
     - date: '2026-10-28'
       text: Wed, Oct 28
     topics:
-    - title: 'Street networks: who can get where, and how fast?'
+    - title: 'Geopandas & Visualization Workshop'
       subtopics:
-      - OSMnx · Walkability · Accessibility metrics
-    resources:
-    - title: Required
-      class: required
-      items:
-      - class: ref
-        text: Boeing (2019) Urban Spatial Order
-        url: https://doi.org/10.1371/journal.pone.0224498
+      - OSMNX 
+      - Charts 
+      - Seaborn & Marginal plots
+    # resources:
+    # - title: Required
+    #   class: required
+    #   items:
+    #   - class: ref
+    #     text: Boeing (2019) Urban Spatial Order
+    #     url: https://link.springer.com/article/10.1007/s41109-019-0189-1
   - type: lab
     dates:
-    - date: '2026-10-28'
+    - date: '2026-10-29'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: 'Publish a map with StoryMaps + GitHub Pages'
+    - title: 'ArcGIS StoryMaps & GitHub Pages'
       subtopics:
       - 'A4 walkthrough & review'
+      - Module 2 Workshop 
     resources:
     - title: Lab
       class: required
       items:
       - class: ref
-        text: Publish a map with StoryMaps + GitHub Pages
+        text: ArcGIS StoryMaps & GitHub Pages
         url: "#"
 - week: 11
   module:
@@ -766,6 +772,10 @@ weeks:
     dates:
     - date: '2026-12-02'
       text: Wed, Dec 2
+    topics:
+    - title: Final project work session
+      subtopics:
+      - Bring your draft, instructors and TAs circulate
     flags:
     - text: Formal classes end Fri Dec 4.
       label_class: label-gray

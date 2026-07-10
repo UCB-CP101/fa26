@@ -64,7 +64,7 @@
 <span class="schedule-topic-title">{% if topic.title_html %}{{ topic.title_html }}{% else %}{{ topic.title | escape }}{% endif %}</span>
 {%- endif -%}
 {%- if topic.guest -%}
-<p class="schedule-guest-byline">Guest Lecture: {{ topic.guest | escape }}</p>
+<p class="schedule-guest-byline">Guest Lecture: {% if topic.guest_url %}<a href="{{ topic.guest_url }}" target="_blank" rel="noopener noreferrer">{{ topic.guest | escape }}</a>{% else %}{{ topic.guest | escape }}{% endif %}</p>
 {%- endif -%}
 {%- if topic.subtopics -%}
 <ul class="schedule-topic-detail">
