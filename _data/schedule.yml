@@ -2,6 +2,11 @@
 # CP 101 · Introduction to Urban Data Analytics · Fall 2026
 # Calendar weeks: Mon–Sun bounds from _data/academic_calendar_fa26.yml
 # Validate with: bundle exec rspec spec/schedule_dates_spec.rb
+#
+# Labs meet Thu/Fri in real life but are dated to that week's Wed (matching
+# the lecture) here - do NOT set a lab's `date:` to an actual Thu/Fri date,
+# it will fail the Mon/Wed check in schedule_dates_spec.rb. The "Lab: Thu,
+# Fri" text is what students see; see academic_calendar_fa26.yml for why.
 
 weeks:
 - week: 1
@@ -561,7 +566,7 @@ weeks:
     #     url: https://link.springer.com/article/10.1007/s41109-019-0189-1
   - type: lab
     dates:
-    - date: '2026-10-29'
+    - date: '2026-10-28'
       text: 'Lab: Thu, Fri'
     topics:
     - title: 'ArcGIS StoryMaps & GitHub Pages'
@@ -635,7 +640,7 @@ weeks:
     - date: '2026-11-09'
       text: Mon, Nov 9
     topics:
-    - title: 
+    - title: Parcel & zoning data
       subtopics:
       - Aggregation · Large-dataset visualization with Lonboard
   - type: lab
@@ -709,9 +714,9 @@ weeks:
     - date: '2026-11-23'
       text: Mon, Nov 23
     topics:
-    - title: 
+    - title: Environmental justice
       subtopics:
-      - 
+      - Cumulative exposure · CalEnviroScreen · Demographics overlay
     resources:
     - title: Required
       class: required

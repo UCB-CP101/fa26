@@ -1,5 +1,15 @@
 # Berkeley Fall 2026 · CP101 Mon/Wed
 # Source: UCB Academic Calendar 2026-27 (registrar PDF)
+#
+# Lab sections actually meet Thu/Fri (sections 101/102 Thu, 103/104 Fri; see
+# _data/schedule.yml header). In the schedule data, every `type: lab` session
+# is deliberately dated the same as that week's Wed lecture, not a real
+# Thu/Fri date - this keeps one canonical date per week for sorting, holiday
+# checks, and "jump to current week," and matches what
+# spec/schedule_dates_spec.rb validates ("uses Mon/Wed class days"). The
+# visible "Lab: Thu, Fri" text is what students actually see; do not change
+# a lab's `date:` field to a real Thursday/Friday, or the Mon/Wed check in
+# schedule_dates_spec.rb will fail (this has happened before).
 
 instruction_begins: '2026-08-26'
 formal_classes_end: '2026-12-04'

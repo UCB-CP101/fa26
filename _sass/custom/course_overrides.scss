@@ -573,9 +573,12 @@ blockquote.finalproj > .finalproj-title {
   }
 
   // Lighter purple than the light-mode byline (#6b5fb3 only hits ~3.4:1
-  // on the dark background); #A99BDB clears AA at ~7.4:1.
+  // on the dark background). #A99BDB (~7.4:1 against the page bg #141414)
+  // still only cleared 4.34:1 against this element's actual rendered
+  // background (#3d3d3d, table.week's dark surface) - failed AA at 4.5:1.
+  // #B8ACE0 clears ~5.2:1 against #3d3d3d.
   .schedule-guest-byline {
-    color: #A99BDB;
+    color: #B8ACE0;
   }
 
   .module-section {
