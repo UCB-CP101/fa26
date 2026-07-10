@@ -146,15 +146,16 @@ RSpec.describe 'Course schedule dates' do
     expect(titles).to eq(titles.uniq), "Duplicate lectures: #{titles.group_by(&:itself).select { |_, v| v.size > 1 }.keys.join(', ')}"
   end
 
-  it 'places Data behind the map on Wed Sep 2 with A0 on Mon Aug 31' do
+  it 'places Data behind the map on Wed Sep 2, with A0 hands-on in the week 1 lab' do
+    week1 = schedule.fetch('weeks').find { |w| w.fetch('week') == 1 }
     week2 = schedule.fetch('weeks').find { |w| w.fetch('week') == 2 }
+    week1_lab = week1.fetch('sessions').find { |s| s.fetch('type') == 'lab' }
     mon = week2.fetch('sessions').find { |s| s.fetch('type') == 'lecture' && s.fetch('dates').any? { |d| d.fetch('date') == '2026-08-31' } }
     wed = week2.fetch('sessions').find { |s| s.fetch('type') == 'lecture' && s.fetch('dates').any? { |d| d.fetch('date') == '2026-09-02' } }
-    expect(mon.fetch('topics').first.fetch('title')).to eq('Computational thinking through urban problems')
+    expect(mon.fetch('topics').first.fetch('title')).to eq('Computational Thinking (CT) through urban problems')
     expect(wed.fetch('topics').first.fetch('title')).to eq('The data behind the map')
-    flag_text = (mon['flags'] || []).map { |f| f.fetch('text') }.join(' ')
+    flag_text = (week1_lab['flags'] || []).map { |f| f.fetch('text') }.join(' ')
     expect(flag_text).to include('A0')
-    expect(flag_text).to include('Aug 31')
   end
 
   it 'schedules every instruction Mon/Wed through formal classes end' do
