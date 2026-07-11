@@ -23,7 +23,10 @@ weeks:
     topics:
     - title: Cities as complex systems
       subtopics:
-      - Course logistics, Final Project overview, MTC collaboration and presentation
+      - Cities are complex systems
+      - Course logistics
+      - Final Project overview
+      - MTC collaboration and presentation
     resources:
     - title: Required
       class: required
@@ -64,8 +67,8 @@ weeks:
     topics:
     - title: Computational Thinking (CT) through urban problems
       subtopics:
-      - Computational Thinking principles
-      - Problem definition
+      - CT Principles
+      - Problem formation
     resources:
     - title: Required
       class: required
@@ -83,7 +86,7 @@ weeks:
       - Intro to Geospatial Data
       - CRS & Projection overview
       - Raster & Vector data
-      - CT Decomposition & Abstraction in Maps
+      - 'CT: Decomposition & Abstraction in Maps'
     resources:
     - title: Optional
       class: optional
@@ -94,6 +97,9 @@ weeks:
       - class: ext_ref
         text: True Size of Africa
         url: http://kai.sub.blue/images/True-Size-of-Africa-kk-v3.pdf
+      - class: ext_ref
+        text: Axis Maps - Map Projections
+        url: https://www.axismaps.com/guide/map-projections
   - type: lab
     dates:
     - date: '2026-09-02'
@@ -164,6 +170,16 @@ weeks:
       - class: video
         text: Lists (cs50)
         url: https://cs50.harvard.edu/python/shorts/lists/
+    - title: Optional
+      class: optional
+      items:
+      - class: ext_ref
+        text: Python Standard Library
+        url: https://docs.python.org/3/library/index.html
+      - class: ref
+        text: Variables (Advanced)
+        url: "/docs/tutorials/advanced/variables/"
+        internal: true
   - type: lab
     dates:
     - date: '2026-09-09'
@@ -194,24 +210,16 @@ weeks:
       - Truthiness
       - Conditionals
       - Loops
-  - type: lecture
-    dates:
-    - date: '2026-09-16'
-      text: Wed, Sep 16
-    topics:
-    - title: Control flow 
-      subtopics:
-      - Type Recap
-      - for loop Patterns
-    flags:
-    - text: A2 due
-      label_class: label-homework
-    - text: A3 release
-      label_class: label-homework-released
     resources:
     - title: Required
       class: required
       items:
+      - class: video
+        text: Conditionals - Full Lesson (cs50)
+        url: https://cs50.harvard.edu/python/weeks/1/
+      - class: video
+        text: Boolean Expressions (cs50)
+        url: https://cs50.harvard.edu/python/shorts/boolean_expressions/
       - class: video
         text: Conditionals (cs50)
         url: https://cs50.harvard.edu/python/shorts/conditionals/
@@ -221,6 +229,57 @@ weeks:
       - class: ref
         text: Conditional Execution (py4e)
         url: https://www.py4e.com/html3/03-conditional
+    - title: Watch
+      class: optional
+      items:
+      - class: video
+        text: 'Conditional Execution: Part I & II (py4e)'
+        url: https://www.py4e.com/lessons/logic
+      - class: video
+        text: Loops and Iterations (py4e)
+        url: https://www.py4e.com/lessons/loops
+  - type: lecture
+    dates:
+    - date: '2026-09-16'
+      text: Wed, Sep 16
+    topics:
+    - title: Writing Your Own Functions
+    - title: 'Errors, Tracebacks, & Debugging'
+      subtopics:
+      - Error & Tracebacks
+      - Error Types
+      - Debugging
+    flags:
+    - text: A2 due
+      label_class: label-homework
+    - text: A3 release
+      label_class: label-homework-released
+    resources:
+    - title: Writing Your Own Functions
+      class: required
+      items:
+      - class: video
+        text: Functions (cs50)
+        url: https://cs50.harvard.edu/python/shorts/functions/
+      - class: video
+        text: Return Values (cs50)
+        url: https://cs50.harvard.edu/python/shorts/return_values/
+      - class: video
+        text: Side Effects (cs50)
+        url: https://cs50.harvard.edu/python/shorts/side_effects/
+      - class: ref
+        text: Function Sandbox
+        url: "/docs/tutorials/sandbox/functions_lab/"
+        internal: true
+    - title: 'Errors, Tracebacks, & Debugging'
+      class: required
+      items:
+      - class: ref
+        text: 'How to Think Like a Computer Scientist: Debugging'
+        url: https://runestone.academy/ns/books/published/thinkcspy/GeneralIntro/WhatisDebugging.html
+      - class: video
+        text: Debugging (cs50)
+        url: https://cs50.harvard.edu/python/shorts/debugging/
   - type: lab
     dates:
     - date: '2026-09-16'
@@ -258,6 +317,12 @@ weeks:
     - text: FP proposal due
       label_class: label-project
     resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Dark Data Ch.1-2
+        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
     - title: Final Project
       class: project
       items:
@@ -283,14 +348,29 @@ weeks:
       class: required
       items:
       - class: ref
-        text: Dark Data Ch.1-2
-        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
-      - class: ref
         text: Glaeser et al. (2018)
         url: https://research-ebsco-com.libproxy.berkeley.edu/c/p54vgy/viewer/pdf/5jaxv75lv5
       - class: ref
         text: Getting Started with pandas
         url: https://wesmckinney.com/book/pandas-basics
+      - class: ref
+        text: Pandas Comparison with Spreadsheets
+        url: https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_spreadsheets.html
+      - class: video
+        text: Dictionaries (cs50)
+        url: https://cs50.harvard.edu/python/2022/shorts/dictionaries/
+      - class: video
+        text: Dictionary Methods (cs50)
+        url: https://cs50.harvard.edu/python/2022/shorts/dictionary_methods/
+    - title: Optional
+      class: optional
+      items:
+      - class: ext_ref
+        text: Pandas Visual Intro
+        url: https://jalammar.github.io/gentle-visual-intro-to-data-analysis-python-pandas/
+      - class: video
+        text: Pandas (Data School)
+        url: https://youtu.be/ZyhVh-qRZPA
   - type: lab
     dates:
     - date: '2026-09-23'
@@ -321,10 +401,26 @@ weeks:
     topics:
     - title: Pandas II
       subtopics:
-      - Exploratory data analysis (EDA) 
+      - Exploratory data analysis (EDA)
       - Sanity checks
       - Groupby & merge
-
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Pandas Data Explore
+        url: "/docs/tutorials/basic/pandas_data_explore/"
+        internal: true
+    - title: Optional
+      class: optional
+      items:
+      - class: ext_ref
+        text: Pandas Pivoting & Reshaping
+        url: https://jalammar.github.io/visualizing-pandas-pivoting-and-reshaping/
+      - class: video
+        text: Pandas Groupby (Data School)
+        url: https://youtu.be/DkjCaAMBGWM
   - type: lecture
     dates:
     - date: '2026-09-30'
@@ -375,6 +471,16 @@ weeks:
       - Spatial relationship (predicates)
       - Spatial operations
       - Spatial join
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Dark Data Ch.3
+        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
+      - class: ref
+        text: Spatial Relationships (predicates)
+        url: https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html
   - type: lecture
     dates:
     - date: '2026-10-07'
@@ -393,12 +499,15 @@ weeks:
       class: required
       items:
       - class: ref
-        text: Dark Data Ch.3
-        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
-      - class: ref
         text: Spatial Predicates Lab
         url: "/docs/tutorials/sandbox/predicates_lab/"
         internal: true
+    - title: Optional
+      class: optional
+      items:
+      - class: video
+        text: Introduction to GeoPandas and Its Python Ecosystem
+        url: https://av.tib.eu/media/59414
   - type: lab
     dates:
     - date: '2026-10-07'
@@ -429,6 +538,13 @@ weeks:
       guest_url: https://www.lucyrandrews.com/about
       subtopics:
       - Senior Environmental Scientist, Department of Water Resources
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Dark Data Ch.4
+        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
   - type: lecture
     dates:
     - date: '2026-10-14'
@@ -462,11 +578,13 @@ weeks:
     - date: '2026-10-19'
       text: Mon, Oct 19
     topics:
-    - title: The Value of Visualization
+    - title: Value of Vis
       subtopics:
-      - Graphical marks & visual encoding channels
       - Expressiveness & effectiveness
       - Color perception & accessibility
+    - title: 'Chart Types: Bar & Line'
+      subtopics:
+      - (Avoiding!) pie charts
     flags:
     - text: FP Midterm due
       label_class: label-project
@@ -476,13 +594,34 @@ weeks:
       items:
       - class: ref
         text: Wilke FDV Ch.19
-        url: https://clauswilke.com/dataviz/historical-examples.html
+        url: https://clauswilke.com/dataviz/color-pitfalls.html
       - class: ref
         text: Wilke FDV Ch.20
         url: https://clauswilke.com/dataviz/redundant-coding.html
       - class: ref
         text: Do No Harm Guide
         url: https://www.urban.org/sites/default/files/publication/104296/do-no-harm-guide.pdf
+      - class: ref
+        text: Pypalettes (Color Maps for Python)
+        url: https://github.com/JosephBARBIERDARNAL/pypalettes
+    - title: Optional
+      class: optional
+      items:
+      - class: ext_ref
+        text: From Data to Viz
+        url: https://www.data-to-viz.com/
+      - class: ext_ref
+        text: ColorBrewer
+        url: https://colorbrewer2.org
+      - class: ext_ref
+        text: Coblis Color Blindness Simulator
+        url: https://www.color-blindness.com/coblis-color-blindness-simulator/
+      - class: ext_ref
+        text: 'Datawrapper: A Detailed Guide to Colors in Data Vis'
+        url: https://www.datawrapper.de/blog/colors-for-data-vis-style-guides
+      - class: ext_ref
+        text: Python Graph Gallery
+        url: https://python-graph-gallery.com
     - title: Final Project
       class: project
       items:
@@ -495,38 +634,31 @@ weeks:
     - date: '2026-10-21'
       text: Wed, Oct 21
     topics:
-    - title: 'Chart Types: Bar & Line'
+    - title: Static and Interactive Plots in Python
       subtopics:
-      - Bar Charts
-      - Line Charts
-      - Bar charts & visualizing distributions
-      - Line charts & visualizing correlations
-      - (Avoiding!) pie charts
-
+      - Plotly Express
     flags:
     - text: A4 due
       label_class: label-homework
-    - text: A5 release
-      label_class: label-homework-released
     resources:
     - title: Required
       class: required
       items:
       - class: ref
         text: 'Design and Redesign: Wattenberg & Viégas'
-        url: https://medium.com/@hint_fm/design-and-redesign-4ab77206cf9 
+        url: https://medium.com/@hint_fm/design-and-redesign-4ab77206cf9
   - type: lab
     dates:
     - date: '2026-10-21'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Visualization practice
+    - title: Functions in data vis
     resources:
     - title: Lab
       class: required
       items:
       - class: ref
-        text: Visualization practice
+        text: Functions in data vis
         url: "#"
 - week: 10
   module:
@@ -546,7 +678,7 @@ weeks:
       - Choropleth maps
       - Proportional symbol maps
       - Classification schemes
-      - Data Normalization'
+      - Data Normalization
   - type: lecture
     dates:
     - date: '2026-10-28'
@@ -554,16 +686,18 @@ weeks:
     topics:
     - title: 'Geopandas & Visualization Workshop'
       subtopics:
-      - OSMNX 
-      - Charts 
+      - Spatial join & overlay
       - Seaborn & Marginal plots
-    # resources:
-    # - title: Required
-    #   class: required
-    #   items:
-    #   - class: ref
-    #     text: Boeing (2019) Urban Spatial Order
-    #     url: https://link.springer.com/article/10.1007/s41109-019-0189-1
+    flags:
+    - text: A5 release
+      label_class: label-homework-released
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: Boeing (2019) Urban Spatial Order
+        url: https://doi.org/10.1371/journal.pone.0224498
   - type: lab
     dates:
     - date: '2026-10-28'
@@ -580,11 +714,14 @@ weeks:
       - class: ref
         text: ArcGIS StoryMaps & GitHub Pages
         url: "#"
+      - class: video
+        text: Github for Planners
+        url: https://www.youtube.com/watch?v=gVa4d728T0k
 - week: 11
   module:
     label_class: label-module4
-    group: 'Module 3: Urban Systems'
-    text: 'Transportation & Accessibility'
+    group: 'Module 3: Data, Decisions, and the City'
+    text: ''
   start: '2026-11-02'
   end: '2026-11-08'
   sessions:
@@ -593,20 +730,60 @@ weeks:
     - date: '2026-11-02'
       text: Mon, Nov 2
     topics:
-    - title: Network analysis in planning
+    - title: ""
       subtopics:
-      - OSMnx · Isochrones · Accessibility indices
-    flags:
-    - text: A5 due
-      label_class: label-homework
+      - ""
   - type: lecture
     dates:
     - date: '2026-11-04'
       text: Wed, Nov 4
     topics:
-    - title: Transit equity
+    - title: "Accessibility, Equity, and the Built Environment"
+      guest: 'Anwar Baroudi'
       subtopics:
-      - GTFS · Headways · Service area by income quintile
+      - ""
+    - title: 'Workshop by Min Ragan Kelley'
+      subtopics:
+      - Interactive Visual Analytics
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: The Peril of Laziness Lost
+        url: https://bcantrill.dtrace.org/2026/04/12/the-peril-of-laziness-lost/
+  - type: lab
+    dates:
+    - date: '2026-11-04'
+      text: 'Lab: Thu, Fri'
+    topics:
+    - title: ""
+    resources:
+    - title: Lab
+      class: required
+      items:
+      - class: ref
+        text: ""
+        url: "#"
+- week: 12
+  module:
+    label_class: label-module4
+    group: 'Module 3: Data, Decisions, and the City'
+    text: 
+  start: '2026-11-09'
+  end: '2026-11-15'
+  sessions:
+  - type: lecture
+    dates:
+    - date: '2026-11-09'
+      text: Mon, Nov 9
+    topics:
+    # - title: Built environment & Accessibility
+    - title: '17 Years on Wheels: Subways, Maps, Handcycles and Disability Pride'
+      guest: 'Sasha Blair-Goldensohn'
+      guest_url: 'https://www.wbur.org/hereandnow/2025/06/30/google-engineer-accessibility'
+      subtopics: 
+      - Google Maps Staff Accessibility Lead
     resources:
     - title: Required
       class: required
@@ -616,41 +793,15 @@ weeks:
         url: https://doi.org/10.1007/s10109-012-0157-2
   - type: lab
     dates:
-    - date: '2026-11-04'
-      text: 'Lab: Thu, Fri'
-    topics:
-    - title: Module 2 review
-    resources:
-    - title: Lab
-      class: required
-      items:
-      - class: ref
-        text: Module 2 review
-        url: "#"
-- week: 12
-  module:
-    label_class: label-module4
-    group: 'Module 3: Urban Systems'
-    text: Data Ethics and Privacy
-  start: '2026-11-09'
-  end: '2026-11-15'
-  sessions:
-  - type: lecture
-    dates:
-    - date: '2026-11-09'
-      text: Mon, Nov 9
-    topics:
-    - title: Parcel & zoning data
-      subtopics:
-      - Aggregation · Large-dataset visualization with Lonboard
-  - type: lab
-    dates:
     - date: '2026-11-09'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Module 3a review
+    - title: Network Analysis & Routing
       subtopics:
-      - 'A5 walkthrough & review'
+      - -Basic Street Network Measures
+      - Isochrones and distance based metrics
+      - Network-based catchments (distance-bounded subgraphs)
+      # - 'A5 walkthrough & review'
     resources:
     - title: Lab
       class: required
@@ -667,8 +818,8 @@ weeks:
 - week: 13
   module:
     label_class: label-module4
-    group: 'Module 3: Urban Systems'
-    text: 'Module 3b: Built Environment & Land Use'
+    group: 'Module 3: Data, Decisions, and the City'
+    text: ''
   start: '2026-11-16'
   end: '2026-11-22'
   sessions:
@@ -677,17 +828,44 @@ weeks:
     - date: '2026-11-16'
       text: Mon, Nov 16
     topics:
-    - title: Housing data
-      subtopics:
-      - Affordability metrics · Price-to-income ratios · Spatial mismatch
+    - title: Data Ethics and Privacy
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: 'Dark Data Ch.6: Intentional Dark Data: Fraud and Deception'
+        url: https://www-jstor-org.libproxy.berkeley.edu/stable/j.ctvmd85db
   - type: lecture
     dates:
     - date: '2026-11-18'
       text: Wed, Nov 18
     topics:
-    - title: Raster basics
+    - title: 'Misinformation, Deceptive Visualizations, & Spurious Correlations'
       subtopics:
-      - NDVI · Land surface temperature · Urban heat islands
+      - Deceptive Patterns
+      - Spurious Correlation
+      - Modifiable Areal Unit Problem (MAUP)
+      - Ecological Fallacy
+    flags:
+    - text: A5 due
+      label_class: label-homework
+    resources:
+    - title: Required
+      class: required
+      items:
+      - class: ref
+        text: 'Pennycook et al. (2015): On the Reception and Detection of Pseudo-Profound Bullshit'
+        url: https://www.cambridge.org/core/journals/judgment-and-decision-making/article/on-the-reception-and-detection-of-pseudoprofound-bullshit/0D3C87BCC238BCA38BC55E395BDC9999
+      - class: ref
+        text: Kwan (2012) Uncertain Geographic Context
+        url: https://doi.org/10.1080/00045608.2012.687349
+    - title: Watch
+      class: optional
+      items:
+      - class: video
+        text: How to Mop the MAUP
+        url: https://www.youtube.com/watch?v=7mt-lpyM1HM
   - type: lab
     dates:
     - date: '2026-11-18'
@@ -704,8 +882,8 @@ weeks:
 - week: 14
   module:
     label_class: label-module4
-    group: 'Module 3: Urban Systems'
-    text: 'Module 3b: Built Environment & Land Use'
+    group: 'Module 3: Data, Decisions, and the City'
+    text: ''
   start: '2026-11-23'
   end: '2026-11-29'
   sessions:
@@ -714,16 +892,7 @@ weeks:
     - date: '2026-11-23'
       text: Mon, Nov 23
     topics:
-    - title: Environmental justice
-      subtopics:
-      - Cumulative exposure · CalEnviroScreen · Demographics overlay
-    resources:
-    - title: Required
-      class: required
-      items:
-      - class: ref
-        text: CalEnviroScreen 4.0
-        url: https://oehha.ca.gov/calenviroscreen/report/calenviroscreen-40
+    - title: 'Quantification trap: what is it?'
   - type: lab
     dates:
     - date: '2026-11-23'
@@ -762,7 +931,7 @@ weeks:
     - title: Computer vision & AI in urban planning
       subtopics:
       - What models see vs. what planners see · Responsible use
-      - Deceptive visualizations & MAUP
+      - 'AI in everything! Do we really need that?'
     resources:
     - title: Required
       class: required
