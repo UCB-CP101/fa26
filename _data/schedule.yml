@@ -443,9 +443,9 @@ weeks:
     - date: '2026-09-30'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Pandas recap & A3 
+    - title: Seaborn Plotting & A3 Review
       subtopics:
-      -  Plotting with Seaborn
+      - Plotting with Seaborn
       - 'A3 walkthrough & review'
     resources:
     - title: Lab
@@ -578,12 +578,17 @@ weeks:
     - date: '2026-10-19'
       text: Mon, Oct 19
     topics:
-    - title: Value of Vis
+    - title: The Value of Visualization
       subtopics:
+      - Graphical marks & visual encoding channels
       - Expressiveness & effectiveness
       - Color perception & accessibility
     - title: 'Chart Types: Bar & Line'
       subtopics:
+      - Bar Charts
+      - Line Charts
+      - Bar charts & visualizing distributions
+      - Line charts & visualizing correlations
       - (Avoiding!) pie charts
     flags:
     - text: FP Midterm due
@@ -652,13 +657,13 @@ weeks:
     - date: '2026-10-21'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Functions in data vis
+    - title: Chart Critique Practice
     resources:
     - title: Lab
       class: required
       items:
       - class: ref
-        text: Functions in data vis
+        text: Chart Critique Practice
         url: "#"
 - week: 10
   module:
@@ -730,9 +735,9 @@ weeks:
     - date: '2026-11-02'
       text: Mon, Nov 2
     topics:
-    - title: ""
+    - title: 'Workshop by Min Ragan Kelley'
       subtopics:
-      - ""
+      - Interactive Visual Analytics
   - type: lecture
     dates:
     - date: '2026-11-04'
@@ -740,31 +745,29 @@ weeks:
     topics:
     - title: "Accessibility, Equity, and the Built Environment"
       guest: 'Anwar Baroudi'
-      subtopics:
-      - ""
-    - title: 'Workshop by Min Ragan Kelley'
-      subtopics:
-      - Interactive Visual Analytics
-    resources:
-    - title: Required
-      class: required
-      items:
-      - class: ref
-        text: The Peril of Laziness Lost
-        url: https://bcantrill.dtrace.org/2026/04/12/the-peril-of-laziness-lost/
+    flags:
+    - text: A5 due
+      label_class: label-homework
   - type: lab
     dates:
     - date: '2026-11-04'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: ""
+    - title: Network Analysis & Routing
+      subtopics:
+      - Basic Street Network Measures
+      - Isochrones and distance based metrics
+      - Network-based catchments (distance-bounded subgraphs)
     resources:
     - title: Lab
       class: required
       items:
       - class: ref
-        text: ""
+        text: Network Analysis & Routing
         url: "#"
+      - class: ref
+        text: 'Boeing (2017) OSMnx: New Methods for Acquiring, Constructing, Analyzing, and Visualizing Complex Street Networks'
+        url: https://doi.org/10.1016/j.compenvurbsys.2017.05.004
 - week: 12
   module:
     label_class: label-module4
@@ -796,12 +799,9 @@ weeks:
     - date: '2026-11-09'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Network Analysis & Routing
+    - title: Land Use & Building Footprint Data
       subtopics:
-      - -Basic Street Network Measures
-      - Isochrones and distance based metrics
-      - Network-based catchments (distance-bounded subgraphs)
-      # - 'A5 walkthrough & review'
+      - Working with land use and building footprint datasets
     resources:
     - title: Lab
       class: required
@@ -829,6 +829,12 @@ weeks:
       text: Mon, Nov 16
     topics:
     - title: Data Ethics and Privacy
+      subtopics:
+      - Responsible data collection and use
+    - title: Large data visualization
+      subtopics:
+      - LonBoard and Overture Maps
+      - Interactive visualization
     resources:
     - title: Required
       class: required
@@ -847,9 +853,6 @@ weeks:
       - Spurious Correlation
       - Modifiable Areal Unit Problem (MAUP)
       - Ecological Fallacy
-    flags:
-    - text: A5 due
-      label_class: label-homework
     resources:
     - title: Required
       class: required
@@ -871,13 +874,15 @@ weeks:
     - date: '2026-11-18'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Built environment
+    - title: Publishing Interactive Maps
+      subtopics:
+      - Publish your interactive map to your GitHub Pages site
     resources:
     - title: Lab
       class: required
       items:
       - class: ref
-        text: Built environment
+        text: Publishing Interactive Maps
         url: "#"
 - week: 14
   module:
@@ -942,6 +947,9 @@ weeks:
       - class: ref
         text: Kwan (2012) Uncertain Geographic Context
         url: https://doi.org/10.1080/00045608.2012.687349
+      - class: ref
+        text: The Peril of Laziness Lost
+        url: https://bcantrill.dtrace.org/2026/04/12/the-peril-of-laziness-lost/
   - type: lecture
     dates:
     - date: '2026-12-02'
