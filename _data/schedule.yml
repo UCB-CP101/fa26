@@ -583,13 +583,7 @@ weeks:
       - Graphical marks & visual encoding channels
       - Expressiveness & effectiveness
       - Color perception & accessibility
-    - title: 'Chart Types: Bar & Line'
-      subtopics:
-      - Bar Charts
-      - Line Charts
-      - Bar charts & visualizing distributions
-      - Line charts & visualizing correlations
-      - (Avoiding!) pie charts
+      - Hands-on critique
     flags:
     - text: FP Midterm due
       label_class: label-project
@@ -639,6 +633,13 @@ weeks:
     - date: '2026-10-21'
       text: Wed, Oct 21
     topics:
+    - title: 'Chart Types: Bar & Line'
+      subtopics:
+      - Bar Charts
+      - Line Charts
+      - Bar charts & visualizing distributions
+      - Line charts & visualizing correlations
+      - (Avoiding!) pie charts
     - title: Static and Interactive Plots in Python
       subtopics:
       - Plotly Express
