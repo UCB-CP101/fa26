@@ -130,10 +130,10 @@ RSpec.describe 'Course schedule dates' do
     end
     expect(veterans).not_to be_nil
     week11 = schedule.fetch('weeks').find { |w| w.fetch('week') == 11 }
-    transit_lecture = week11.fetch('sessions').find do |s|
+    nov4_lecture = week11.fetch('sessions').find do |s|
       s.fetch('type') == 'lecture' && s.fetch('dates').any? { |d| d.fetch('date') == '2026-11-04' }
     end
-    expect(transit_lecture.fetch('topics').first.fetch('title')).to eq('Transit equity')
+    expect(nov4_lecture.fetch('topics').first.fetch('title')).to eq('Accessibility, Equity, and the Built Environment')
   end
 
   it 'has each curriculum lecture title at most once' do
