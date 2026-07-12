@@ -941,7 +941,7 @@ weeks:
     - date: '2026-11-30'
       text: Mon, Nov 30
     topics:
-    - title: 'Advanced topics: Computer Vision & LLMs in Urban Planning'
+    - title: 'Advanced topics: Computer Vision in Urban Planning'
       subtopics:
       - Computer vision applications in urban planning
       - 'AI in everything! Do we really need it?'
