@@ -280,6 +280,10 @@ weeks:
       - class: video
         text: Debugging (cs50)
         url: https://cs50.harvard.edu/python/shorts/debugging/
+      - class: ref
+        text: Python Error Types Lab
+        url: "/docs/tutorials/sandbox/error_types_lab/"
+        internal: true
   - type: lab
     dates:
     - date: '2026-09-16'
@@ -383,10 +387,7 @@ weeks:
     - title: Lab
       class: required
       items:
-      # - class: ref
-      #   text: Python Error Types Lab
-      #   url: "/docs/tutorials/sandbox/error_types_lab/"
-      #   internal: true
+
 - week: 6
   module:
     label_class: label-blue
@@ -898,19 +899,25 @@ weeks:
     - date: '2026-11-23'
       text: Mon, Nov 23
     topics:
-    - title: 'Quantification trap: what is it?'
+    - title: 'Quantification Trap'
+      subtopics:
+      - "Quantification Trap: What is measured is not always what matters"
+      - Data-driven decision making? 
+    - title: 'Advanced Topics: LLMs in Urban Analytics'
+      subtopics:
+      - "LLM basics: it's all about probability"
   - type: lab
     dates:
     - date: '2026-11-23'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Module 3b review
+    - title: Module 3 review
     resources:
     - title: Lab
       class: required
       items:
       - class: ref
-        text: Module 3b review
+        text: Module 3 review
         url: "#"
   - type: holiday
     dates:
@@ -925,7 +932,7 @@ weeks:
   module:
     label_class: label-module4
     group: 'Module 3: Urban Systems'
-    text: 'Module 3c: Environment & Climate'
+    text: 
   start: '2026-11-30'
   end: '2026-12-06'
   sessions:
@@ -934,10 +941,11 @@ weeks:
     - date: '2026-11-30'
       text: Mon, Nov 30
     topics:
-    - title: Computer vision & AI in urban planning
+    - title: 'Advanced topics: Computer Vision & LLMs in Urban Planning'
       subtopics:
-      - What models see vs. what planners see · Responsible use
-      - 'AI in everything! Do we really need that?'
+      - Computer vision applications in urban planning
+      - 'AI in everything! Do we really need it?'
+    - title: 
     resources:
     - title: Required
       class: required
