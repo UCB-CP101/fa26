@@ -964,9 +964,7 @@ weeks:
     - date: '2026-12-02'
       text: Wed, Dec 2
     topics:
-    - title: Final project work session
-      subtopics:
-      - Bring your draft, instructors and TAs circulate
+    - title: Final project Workshop
     flags:
     - text: Formal classes end Fri Dec 4.
       label_class: label-gray
