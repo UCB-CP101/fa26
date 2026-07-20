@@ -704,7 +704,7 @@ weeks:
       items:
       - class: ref
         text: Boeing (2019) Urban Spatial Order
-        url: https://doi.org/10.1371/journal.pone.0224498
+        url: https://link.springer.com/article/10.1007/s41109-019-0189-1
   - type: lab
     dates:
     - date: '2026-10-28'
@@ -795,7 +795,7 @@ weeks:
       items:
       - class: ref
         text: Páez et al. (2012) Measuring Accessibility
-        url: https://doi.org/10.1007/s10109-012-0157-2
+        url: https://doi.org/10.1016/j.jtrangeo.2012.03.016
   - type: lab
     dates:
     - date: '2026-11-09'
