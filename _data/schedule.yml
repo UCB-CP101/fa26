@@ -979,7 +979,7 @@ weeks:
       class: required
       items:
       - class: ref
-        text: 
+        text: Final Project Studio II
         url: "#"
 - week: 16
   module:
