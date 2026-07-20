@@ -801,7 +801,7 @@ weeks:
     - date: '2026-11-09'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Land Use & Building Footprint Data
+    - title: Land Use & Building Footprint
       subtopics:
       - Working with land use and building footprint datasets
     resources:
@@ -809,7 +809,7 @@ weeks:
       class: required
       items:
       - class: ref
-        text: Module 3a review
+        text: Land Use & Building Footprint
         url: "#"
   - type: holiday
     dates:
@@ -911,13 +911,13 @@ weeks:
     - date: '2026-11-23'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Module 3 review
+    - title: Final Project Studio I
     resources:
     - title: Lab
       class: required
       items:
       - class: ref
-        text: Module 3 review
+        text: Hands on session to work on FP and ask questions
         url: "#"
   - type: holiday
     dates:
@@ -964,7 +964,7 @@ weeks:
     - date: '2026-12-02'
       text: Wed, Dec 2
     topics:
-    - title: Final project Workshop
+    - title: Final Project Workshop
     flags:
     - text: Formal classes end Fri Dec 4.
       label_class: label-gray
@@ -973,13 +973,13 @@ weeks:
     - date: '2026-12-02'
       text: 'Lab: Thu, Fri'
     topics:
-    - title: Final project prep
+    - title: Final project Studio II
     resources:
     - title: Lab
       class: required
       items:
       - class: ref
-        text: Final project prep
+        text: 
         url: "#"
 - week: 16
   module:
